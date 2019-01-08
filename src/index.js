@@ -1,5 +1,5 @@
 const mqttPattern = require("mqtt-pattern");
-const logger = require("./logger");
+const {logger} = require("./logger");
 const protocolPatterns = require("./protocol-patterns.json");
 const ipsoObjects = require("./IPSO/ipso-objects.json");
 const mySensorsApi = require("./MySensors/mysensors-api.json");
@@ -15,15 +15,18 @@ const extractProtocol = (pattern, topic) =>
     reject(protocol);
   });
 
-const patternDetector = async (packet) => {
+const patternDetector = (packet) => {
   try {
     const pattern = {name: "empty", value: null};
-    logger.publish(2, "handlers", "patternDetector:req", packet.topic);
+    logger(2, "handlers", "patternDetector:req", packet.topic);
     if (packet.topic.split("/")[0] === "$SYS") return null;
     if (mqttPattern.matches(protocolPatterns.aloesClient.collectionPattern, packet.topic)) {
-      logger.publish(2, "handlers", "patternDetector:res", "reading AloesClient API...");
-      const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.collectionPattern, packet.topic);
-      logger.publish(2, "handlers", "patternDetector:res", aloesClientProtocol);
+      logger(2, "handlers", "patternDetector:res", "reading AloesClient API...");
+      //  const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.collectionPattern, packet.topic);
+      const aloesClientProtocol = mqttPattern.exec(protocolPatterns.aloesClient.collectionPattern, packet.topic);
+      logger(2, "handlers", "patternDetector:res", aloesClientProtocol);
+      //  if (aloesClientProtocol === null) return null;
+
       const collectionExists = protocolPatterns.aloesClient.validators.collectionName.some(
         (collection) => collection === aloesClientProtocol.collectionName,
       );
@@ -43,9 +46,11 @@ const patternDetector = async (packet) => {
       }
     }
     if (mqttPattern.matches(protocolPatterns.aloesClient.instancePattern, packet.topic)) {
-      logger.publish(2, "handlers", "patternDetector:res", "reading AloesClient API ...");
-      const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.instancePattern, packet.topic);
-      logger.publish(4, "handlers", "patternDetector:res", aloesClientProtocol);
+      logger(2, "handlers", "patternDetector:res", "reading AloesClient API ...");
+      //  const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.instancePattern, packet.topic);
+      const aloesClientProtocol = mqttPattern.exec(protocolPatterns.aloesClient.instancePattern, packet.topic);
+      logger(4, "handlers", "patternDetector:res", aloesClientProtocol);
+      //  if (aloesClientProtocol === null) return null;
       const methodExists = protocolPatterns.aloesClient.validators.method.some(
         (meth) => meth === aloesClientProtocol.method,
       );
@@ -65,18 +70,20 @@ const patternDetector = async (packet) => {
       }
     }
     if (mqttPattern.matches(protocolPatterns.mySensors.pattern, packet.topic)) {
-      logger.publish(2, "handlers", "patternDetector:res", "reading MySensors API ...");
-      const mysensorsProtocol = await extractProtocol(protocolPatterns.mySensors.pattern, packet.topic);
-      logger.publish(4, "handlers", "patternDetector:res", mysensorsProtocol);
+      logger(2, "handlers", "patternDetector:res", "reading MySensors API ...");
+      //  const mysensorsProtocol = await extractProtocol(protocolPatterns.mySensors.pattern, packet.topic);
+      const mysensorsProtocol = mqttPattern.exec(protocolPatterns.mySensors.pattern, packet.topic);
+      logger(4, "handlers", "patternDetector:res", mysensorsProtocol);
       let typeExists = false;
       const methodExists = protocolPatterns.mySensors.validators.method.some(
-        (meth) => meth === mysensorsProtocol.method,
+        (meth) => meth === Number(mysensorsProtocol.method),
       );
       if (Number(mysensorsProtocol.method) === 0) {
-        typeExists = mySensorsApi.labelsPresentation.some((type) => type.value === mysensorsProtocol.subType);
+        typeExists = mySensorsApi.labelsPresentation.some((label) => label.value === Number(mysensorsProtocol.subType));
       } else if (Number(mysensorsProtocol.method) > 0 && Number(mysensorsProtocol.method) < 2) {
-        typeExists = mySensorsApi.labelsSet.some((type) => type.value === mysensorsProtocol.subType);
+        typeExists = mySensorsApi.labelsSet.some((label) => label.value === Number(mysensorsProtocol.subType));
       }
+      logger(4, "handlers", "patternDetector:res", {methodExists, typeExists});
       if (methodExists && typeExists) {
         pattern.name = "mySensors";
         pattern.value = mysensorsProtocol;
@@ -84,11 +91,13 @@ const patternDetector = async (packet) => {
       }
     }
     if (mqttPattern.matches(protocolPatterns.aloes.pattern, packet.topic)) {
-      logger.publish(2, "handlers", "patternDetector:res", "reading Aloes API ...");
-      const aloesProtocol = await extractProtocol(protocolPatterns.aloes.pattern, packet.topic);
-      logger.publish(4, "handlers", "patternDetector:res", aloesProtocol);
+      logger(2, "handlers", "patternDetector:res", "reading Aloes API ...");
+      //  const aloesProtocol = await extractProtocol(protocolPatterns.aloes.pattern, packet.topic);
+      const aloesProtocol = mqttPattern.exec(protocolPatterns.aloes.pattern, packet.topic);
+      logger(4, "handlers", "patternDetector:res", aloesProtocol);
       const methodExists = protocolPatterns.aloes.validators.method.some((meth) => meth === aloesProtocol.method);
-      const ipsoObjectIdExists = ipsoObjects.some((object) => object.value === aloesProtocol.ipsoObjectId);
+      const ipsoObjectIdExists = ipsoObjects.some((object) => object.value === Number(aloesProtocol.ipsoObjectId));
+      logger(4, "handlers", "patternDetector:res", {methodExists, ipsoObjectIdExists});
       if (methodExists && ipsoObjectIdExists) {
         pattern.name = "aloes";
         pattern.value = aloesProtocol;
@@ -98,7 +107,7 @@ const patternDetector = async (packet) => {
     pattern.value = "topic doesn't match pattern";
     return pattern;
   } catch (error) {
-    logger.publish(2, "handlers", "patternDetector:err", error);
+    logger(2, "handlers", "patternDetector:err", error);
     return error;
   }
 };
@@ -116,19 +125,20 @@ const isEmpty = (obj) => {
   return true;
 };
 
-const publish = async (options) => {
+const publish = (options) => {
   //  logger.publish(4, "pubsub", "publish:req", options);
-  if (options && !isEmpty(options)) {
+  //  if (options && !isEmpty(options)) {
+  if (options) {
     let topic = null;
     const data = options.data;
     if (options.pattern.toLowerCase() === "mysensors") {
       const params = {
         prefixedDevEui: `${data.nativeGwId}${data.inPrefix}`,
-        nodeId: data.nodeId,
-        sensorId: data.sensorId,
+        nodeId: data.nativeNodeId,
+        sensorId: data.nativeSensorId,
         subType: data.nativeResource,
       };
-      logger.publish(4, "pubsub", "publish", params);
+      logger(4, "handlers", "publish", params);
       if (options.method === "POST") {
         params.ack = 0;
         params.method = 1;
@@ -148,7 +158,7 @@ const publish = async (options) => {
         modelId: options.modelId,
         method: options.method,
       };
-      logger.publish(4, "pubsub", "publish", params);
+      logger(4, "handlers", "publish", params);
       if (options.method === "POST") {
         topic = mqttPattern.fill(protocolPatterns.aloesClient.collectionPattern, params);
       } else if (options.method === "DELETE") {
@@ -164,7 +174,7 @@ const publish = async (options) => {
 };
 
 const subscribe = async (socket, options) => {
-  logger.publish(4, "pubsub", "subscribe:req", options);
+  logger(4, "handlers", "subscribe:req", options);
   if (options && !isEmpty(options)) {
     let topic = null;
     if (options.pattern.toLowerCase() === "mysensors") {

@@ -1,8 +1,8 @@
 const mqttPattern = require("mqtt-pattern");
-const logger = require("../logger");
+const {logger} = require("../logger");
 const protocolPatterns = require("../protocol-patterns.json");
 
-const clientToAloesIoT = async (instance, protocol) => {
+const clientToAloesIoT = (instance, protocol) => {
   // "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
   let params;
   let payload = null;
@@ -28,11 +28,11 @@ const clientToAloesIoT = async (instance, protocol) => {
   }
   if (payload === null || !params) return null;
   const topic = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
-  logger.publish(4, "handlers", "clientToAloesIoT:res", {topic, payload});
+  logger(4, "handlers", "clientToAloesIoT:res", {topic, payload});
   return {topic, payload};
 };
 
-const clientToMySensors = async (instance, protocol) => {
+const clientToMySensors = (instance, protocol) => {
   //  "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType",
   let params;
   let payload = null;
@@ -60,22 +60,22 @@ const clientToMySensors = async (instance, protocol) => {
   }
   if (payload === null || !params) return null;
   const topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
-  logger.publish(4, "handlers", "clientToMySensors:res", {topic, payload});
+  logger(4, "handlers", "clientToMySensors:res", {topic, payload});
   return {topic, payload: instance.value};
 };
 
-const aloesClientDecoder = async (packet, protocol) => {
+const aloesClientDecoder = (packet, protocol) => {
   try {
-    logger.publish(4, "handlers", "aloesClientDecoder:req", protocol);
+    logger(4, "handlers", "aloesClientDecoder:req", protocol);
     const instance = JSON.parse(packet.payload);
     let decodedPayload;
-    logger.publish(4, "handlers", "aloesClientDecoder:req", instance);
+    logger(4, "handlers", "aloesClientDecoder:req", instance);
     switch (instance.protocolName) {
       case "aloes":
-        decodedPayload = await clientToAloesIoT(instance, protocol);
+        decodedPayload = clientToAloesIoT(instance, protocol);
         break;
       case "mySensors":
-        decodedPayload = await clientToMySensors(instance, protocol);
+        decodedPayload = clientToMySensors(instance, protocol);
         break;
       case "nodeWebcam": // Req
         //  await clientToMySensors(app, newPayload);
@@ -85,7 +85,7 @@ const aloesClientDecoder = async (packet, protocol) => {
     }
     return decodedPayload;
   } catch (error) {
-    logger.publish(4, "handlers", "aloesClientDecoder:err", error);
+    logger(4, "handlers", "aloesClientDecoder:err", error);
     throw error;
   }
 };

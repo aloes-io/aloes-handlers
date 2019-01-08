@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
-const logger = {};
-
-logger.publish = (priority, collectionName, command, content) => {
+function logger(priority, collectionName, command, content) {
     // define priority based on process.env.NODE_ENV
     const logLevel = Number(process.env.SERVER_LOGGER_LEVEL) || 4;
     let fullContent;
@@ -17,9 +15,8 @@ logger.publish = (priority, collectionName, command, content) => {
         return null;
     }
     throw new Error("INVALID_LOG", "Missing argument in logger");
-};
+}
 
 module.exports = {
     logger,
 };
-//  export default logger;

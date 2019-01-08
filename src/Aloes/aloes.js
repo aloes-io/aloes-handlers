@@ -1,18 +1,15 @@
 const mqttPattern = require("mqtt-pattern");
-const logger = require("../logger");
+const {logger} = require("../logger");
 const ipsoObjects = require("../IPSO/ipso-objects.json");
 const protocolPatterns = require("../protocol-patterns.json");
 
-const aloesToIpsoObject = async (msg) => {
+const aloesToIpsoObject = (msg) => {
   try {
-    logger.publish(4, "handlers", "aloesToIpsoObject:req", msg);
+    logger(4, "handlers", "aloesToIpsoObject:req", msg);
     const foundIpsoObject = ipsoObjects.find((object) => object.value === msg.ipsoObject);
     if (!foundIpsoObject) return "no IPSO Object found";
     const sensor = {
       devEui: msg.devEui,
-      //  deviceId: device.id,
-      //  accountId: device.accountId,
-      //  protocolVersion: device.protocolVersion,
       protocolName: "aloes",
       //  protocolPattern: protocolPatterns.aloes.pattern,
       name: foundIpsoObject.name,
@@ -25,17 +22,17 @@ const aloesToIpsoObject = async (msg) => {
       nativeType: msg.type,
       frameCounter: 0,
     };
-    logger.publish(4, "handlers", "aloesToIpsoObject:res", sensor);
+    logger(4, "handlers", "aloesToIpsoObject:res", sensor);
     return sensor;
   } catch (error) {
-    logger.publish(2, "handlers", "aloesToIpsoObject:err", error);
+    logger(2, "handlers", "aloesToIpsoObject:err", error);
     throw error;
   }
 };
 
-const aloesToIpsoResources = async (msg) => {
+const aloesToIpsoResources = (msg) => {
   try {
-    logger.publish(2, "handlers", "aloesToIpsoResources:req", msg);
+    logger(2, "handlers", "aloesToIpsoResources:req", msg);
     const aloesResource = ipsoObjects.some((object) => object.value === msg.ipsoObject);
     if (!aloesResource) return "no IPSO Object found";
     const sensor = {};
@@ -49,11 +46,10 @@ const aloesToIpsoResources = async (msg) => {
     sensor.value = msg.value;
     sensor.mainResourceId = msg.resource;
     sensor.lastSignal = msg.timestamp;
-    //  sensor.frameCounter += 1;
-    logger.publish(2, "handlers", "aloesToIpsoResources:res", sensor);
+    logger(4, "handlers", "aloesToIpsoResources:res", sensor);
     return sensor;
   } catch (error) {
-    logger.publish(2, "handlers", "aloesToIpsoResources:err", error);
+    logger(2, "handlers", "aloesToIpsoResources:err", error);
     throw error;
   }
 };
@@ -62,7 +58,7 @@ const aloesDecoder = async (packet, protocol) => {
   const decoded = {};
   let decodedPayload;
   try {
-    logger.publish(4, "handlers", "aloesDecoder:req", protocol);
+    logger(4, "handlers", "aloesDecoder:req", protocol);
     if (protocol.length === 6) {
       decoded.devEui = protocol.devEui;
       const gatewayIdParts = protocol.prefixedDevEui.split("-");
@@ -81,7 +77,7 @@ const aloesDecoder = async (packet, protocol) => {
           decoded.sensorId = protocol.sensorId;
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
-          decodedPayload = await aloesToIpsoObject(decoded);
+          decodedPayload = aloesToIpsoObject(decoded);
           break;
         case 1: // Set
           decoded.inputPath = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
@@ -91,7 +87,7 @@ const aloesDecoder = async (packet, protocol) => {
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
           decoded.value = packet.payload;
-          decodedPayload = await aloesToIpsoResources(decoded);
+          decodedPayload = aloesToIpsoResources(decoded);
           break;
         case 2: // Req
           decoded.ipsoObject = protocol.ipsoObjectId;

@@ -4,7 +4,7 @@
     "instancePattern": "+userId/+collectionName/+method/+modelId",
     "validators": {
       "userId": "string",
-      "collectionName": ["Device", "Sensor", "VirtualObject"],
+      "collectionName": ["Account", "Device", "Sensor", "VirtualObject"],
       "modelId": "string",
       "method": ["POST", "GET", "PUT", "DELETE"]
     }
@@ -16,7 +16,7 @@
       "nodeId": "number",
       "sensorId": "number",
       "subType": "number",
-      "method": ["0", "1", "2", "3", "4"]
+      "method": [0, 1, 2, 3, 4]
     }
   },
   "aloes": {

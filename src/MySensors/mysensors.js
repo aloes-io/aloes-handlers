@@ -1,13 +1,13 @@
 const mqttPattern = require("mqtt-pattern");
-const logger = require("../logger");
+const {logger} = require("../logger");
 const mySensorsApi = require("./mysensors-api.json");
 const ipsoObjects = require("../IPSO/ipso-objects.json");
 const protocolPatterns = require("../protocol-patterns.json");
 
 // device as argument ?
-const mySensorsToIpsoObject = async (msg) => {
+const mySensorsToIpsoObject = (msg) => {
   try {
-    logger.publish(2, "handlers", "mySensorsToIpsoObject:req", msg);
+    logger(2, "handlers", "mySensorsToIpsoObject:req", msg);
     if (msg.sensorId === 255 || msg.ipsoObject === null) {
       return null;
     }
@@ -15,8 +15,6 @@ const mySensorsToIpsoObject = async (msg) => {
     if (!foundIpsoObject) return "no IPSO Object found";
     const sensor = {
       devEui: msg.devEui,
-      //  deviceId: device.id,
-      //  accountId: device.accountId,
       protocolName: "mySensors",
       name: foundIpsoObject.name,
       type: msg.ipsoObject,
@@ -28,24 +26,24 @@ const mySensorsToIpsoObject = async (msg) => {
       nativeSensorId: msg.sensorId,
       frameCounter: 0,
     };
-    logger.publish(2, "handlers", "mySensorsToIpsoObject:res", sensor);
+    logger(2, "handlers", "mySensorsToIpsoObject:res", sensor);
     return sensor;
   } catch (error) {
-    logger.publish(2, "handlers", "mySensorsToIpsoObject:err", error);
+    logger(2, "handlers", "mySensorsToIpsoObject:err", error);
     throw error;
   }
 };
 
 // sensor as argument ?
-const mySensorsToIpsoResources = async (msg) => {
+const mySensorsToIpsoResources = (msg) => {
   try {
-    logger.publish(2, "handlers", "mySensorsToIpsoResources:req", msg);
+    logger(2, "handlers", "mySensorsToIpsoResources:req", msg);
     if (msg.sensorId === 255) {
       return null;
     }
     const mySensorsResource = mySensorsApi.labelsSet.find((label) => label.value === msg.type);
     if (!mySensorsResource) return "no IPSO Object found";
-
+    //  logger(4, "handlers", "mySensorsToIpsoResources:req", mySensorsResource);
     const sensor = {};
     sensor.devEui = msg.devEui;
     sensor.resources = mySensorsResource.ipsoResources;
@@ -54,27 +52,25 @@ const mySensorsToIpsoResources = async (msg) => {
     sensor.nativeSensorId = msg.sensorId;
     sensor.inputPath = msg.inputPath;
     sensor.outputPath = msg.outputPath;
-    //  sensor.frameCounter += 1;
     sensor.value = msg.value;
     sensor.lastSignal = msg.timestamp;
-
     const resourcesKeys = Object.getOwnPropertyNames(mySensorsResource.ipsoResources);
-    if (Object.prototype.hasOwnProperty.call(sensor.resources, resourcesKeys[0])) {
+    if (Object.prototype.hasOwnProperty.call(mySensorsResource.ipsoResources, resourcesKeys[0])) {
       sensor.resources[resourcesKeys[0]] = msg.value;
-      sensor.mainResourceId = msg.resourcesKeys[0];
+      sensor.mainResourceId = resourcesKeys[0];
     }
-    logger.publish(4, "handlers", "mySensorsToIpsoResources:res", sensor);
+    logger(4, "handlers", "mySensorsToIpsoResources:res", sensor);
     return sensor;
   } catch (error) {
-    logger.publish(2, "handlers", "mySensorsToIpsoResources:err", error);
+    logger(2, "handlers", "mySensorsToIpsoResources:err", error);
     throw error;
   }
 };
 
-const mySensorsDecoder = async (packet, protocol) => {
+const mySensorsDecoder = (packet, protocol) => {
   const decoded = {};
   try {
-    logger.publish(4, "handlers", "mySensorsDecoder:req", protocol);
+    logger(4, "handlers", "mySensorsDecoder:req", protocol);
     let decodedPayload;
     const gatewayIdParts = protocol.prefixedDevEui.split("-");
     const inPrefix = "-in";
@@ -93,7 +89,7 @@ const mySensorsDecoder = async (packet, protocol) => {
         decoded.ipsoObject = mySensorsApi.labelsPresentation[Number(protocol.subType)].ipsoObject;
         decoded.type = Number(protocol.subType);
         decoded.value = packet.payload.toString();
-        decodedPayload = await mySensorsToIpsoObject(decoded);
+        decodedPayload = mySensorsToIpsoObject(decoded);
         break;
       case 1: // Set
         decoded.inputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
@@ -104,7 +100,7 @@ const mySensorsDecoder = async (packet, protocol) => {
         decoded.ipsoResources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
         decoded.type = Number(protocol.subType);
         decoded.value = packet.payload.toString();
-        decodedPayload = await mySensorsToIpsoResources(decoded);
+        decodedPayload = mySensorsToIpsoResources(decoded);
         break;
       case 2: // Req
         decoded.nodeId = protocol.nodeId;
