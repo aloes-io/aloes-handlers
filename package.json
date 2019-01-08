@@ -1,6 +1,6 @@
 {
   "name": "aloes-handlers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -39,7 +39,9 @@
     "prettier": "1.14.3"
   },
   "babel": {
-    "presets": ["@babel/preset-env"],
+    "presets": [
+      "@babel/preset-env"
+    ],
     "plugins": [
       "@babel/plugin-syntax-dynamic-import",
       "@babel/plugin-syntax-import-meta",
@@ -63,8 +65,13 @@
       "es6": true,
       "node": true
     },
-    "extends": ["airbnb-base", "prettier"],
-    "plugins": ["babel"],
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "plugins": [
+      "babel"
+    ],
     "parserOptions": {
       "ecmaVersion": 2018,
       "parser": "babel-eslint"
