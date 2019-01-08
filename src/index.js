@@ -7,11 +7,11 @@ import {mySensorsDecoder} from "./MySensors/mysensors";
 import {aloesDecoder} from "./Aloes/aloes";
 import {aloesClientDecoder} from "./Aloes/aloes-client";
 
-const handlers = {};
+//  const handlers = {};
 
-handlers.protocolPatterns = protocolPatterns;
-handlers.mySensorsApi = mySensorsApi;
-handlers.ipsoObjects = ipsoObjects;
+exports.protocolPatterns = () => protocolPatterns;
+exports.mySensorsApi = () => mySensorsApi;
+exports.ipsoObjects = () => ipsoObjects;
 
 const extractProtocol = (pattern, topic) =>
   new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ const extractProtocol = (pattern, topic) =>
     reject(protocol);
   });
 
-handlers.patternDetector = async (packet) => {
+exports.patternDetector = async (packet) => {
   try {
     const pattern = {name: "empty", value: null};
     logger.publish(2, "handlers", "patternDetector:req", packet.topic);
@@ -108,13 +108,13 @@ handlers.patternDetector = async (packet) => {
   }
 };
 
-handlers.mySensorsDecoder = async (packet, protocol) => mySensorsDecoder(packet, protocol);
+exports.mySensorsDecoder = async (packet, protocol) => mySensorsDecoder(packet, protocol);
 
-handlers.aloesDecoder = async (packet, protocol) => aloesDecoder(packet, protocol);
+exports.aloesDecoder = async (packet, protocol) => aloesDecoder(packet, protocol);
 
-handlers.aloesClientDecoder = async (packet, protocol) => aloesClientDecoder(packet, protocol);
+exports.aloesClientDecoder = async (packet, protocol) => aloesClientDecoder(packet, protocol);
 
-handlers.isEmpty = (obj) => {
+const isEmpty = (obj) => {
   const hasOwnProperty = Object.prototype.hasOwnProperty;
   // null and undefined are "empty"
   if (obj == null) return true;
@@ -127,9 +127,9 @@ handlers.isEmpty = (obj) => {
   return true;
 };
 
-handlers.publish = async (options) => {
+exports.publish = async (options) => {
   //  logger.publish(4, "pubsub", "publish:req", options);
-  if (options && !handlers.isEmpty(options)) {
+  if (options && !isEmpty(options)) {
     let topic = null;
     const data = options.data;
     if (options.pattern.toLowerCase() === "mysensors") {
@@ -174,9 +174,9 @@ handlers.publish = async (options) => {
   return new Error("Error: Option must be an object type");
 };
 
-handlers.subscribe = async (socket, options) => {
+exports.subscribe = async (socket, options) => {
   logger.publish(4, "pubsub", "subscribe:req", options);
-  if (options && !handlers.isEmpty(options)) {
+  if (options && !isEmpty(options)) {
     let topic = null;
     if (options.pattern.toLowerCase() === "mysensors") {
       topic = null;
@@ -200,4 +200,4 @@ handlers.subscribe = async (socket, options) => {
   return new Error("Error: Option must be an object type");
 };
 
-export default handlers;
+//  export default handlers;
