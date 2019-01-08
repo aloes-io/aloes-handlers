@@ -1,18 +1,13 @@
-import mqttPattern from "mqtt-pattern";
-import logger from "./logger";
-import protocolPatterns from "./protocol-patterns.json";
-import ipsoObjects from "./IPSO/ipso-objects.json";
-import mySensorsApi from "./MySensors/mysensors-api.json";
-import {mySensorsDecoder} from "./MySensors/mysensors";
-import {aloesDecoder} from "./Aloes/aloes";
-import {aloesClientDecoder} from "./Aloes/aloes-client";
+const mqttPattern = require("mqtt-pattern");
+const logger = require("./logger");
+const protocolPatterns = require("./protocol-patterns.json");
+const ipsoObjects = require("./IPSO/ipso-objects.json");
+const mySensorsApi = require("./MySensors/mysensors-api.json");
+const {mySensorsDecoder} = require("./MySensors/mysensors");
+const {aloesDecoder} = require("./Aloes/aloes");
+const {aloesClientDecoder} = require("./Aloes/aloes-client");
 
 //  const handlers = {};
-
-exports.protocolPatterns = () => protocolPatterns;
-exports.mySensorsApi = () => mySensorsApi;
-exports.ipsoObjects = () => ipsoObjects;
-
 const extractProtocol = (pattern, topic) =>
   new Promise((resolve, reject) => {
     const protocol = mqttPattern.exec(pattern, topic);
@@ -20,7 +15,7 @@ const extractProtocol = (pattern, topic) =>
     reject(protocol);
   });
 
-exports.patternDetector = async (packet) => {
+const patternDetector = async (packet) => {
   try {
     const pattern = {name: "empty", value: null};
     logger.publish(2, "handlers", "patternDetector:req", packet.topic);
@@ -108,12 +103,6 @@ exports.patternDetector = async (packet) => {
   }
 };
 
-exports.mySensorsDecoder = async (packet, protocol) => mySensorsDecoder(packet, protocol);
-
-exports.aloesDecoder = async (packet, protocol) => aloesDecoder(packet, protocol);
-
-exports.aloesClientDecoder = async (packet, protocol) => aloesClientDecoder(packet, protocol);
-
 const isEmpty = (obj) => {
   const hasOwnProperty = Object.prototype.hasOwnProperty;
   // null and undefined are "empty"
@@ -127,7 +116,7 @@ const isEmpty = (obj) => {
   return true;
 };
 
-exports.publish = async (options) => {
+const publish = async (options) => {
   //  logger.publish(4, "pubsub", "publish:req", options);
   if (options && !isEmpty(options)) {
     let topic = null;
@@ -174,7 +163,7 @@ exports.publish = async (options) => {
   return new Error("Error: Option must be an object type");
 };
 
-exports.subscribe = async (socket, options) => {
+const subscribe = async (socket, options) => {
   logger.publish(4, "pubsub", "subscribe:req", options);
   if (options && !isEmpty(options)) {
     let topic = null;
@@ -201,3 +190,14 @@ exports.subscribe = async (socket, options) => {
 };
 
 //  export default handlers;
+module.exports = {
+  protocolPatterns,
+  mySensorsApi,
+  ipsoObjects,
+  patternDetector,
+  mySensorsDecoder,
+  aloesDecoder,
+  aloesClientDecoder,
+  publish,
+  subscribe,
+};

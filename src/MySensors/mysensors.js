@@ -1,11 +1,11 @@
-import mqttPattern from "mqtt-pattern";
-import logger from "../logger";
-import mySensorsApi from "./mysensors-api.json";
-import ipsoObjects from "../IPSO/ipso-objects.json";
-import protocolPatterns from "../protocol-patterns.json";
+const mqttPattern = require("mqtt-pattern");
+const logger = require("../logger");
+const mySensorsApi = require("./mysensors-api.json");
+const ipsoObjects = require("../IPSO/ipso-objects.json");
+const protocolPatterns = require("../protocol-patterns.json");
 
 // device as argument ?
-export const mySensorsToIpsoObject = async (msg) => {
+const mySensorsToIpsoObject = async (msg) => {
   try {
     logger.publish(2, "handlers", "mySensorsToIpsoObject:req", msg);
     if (msg.sensorId === 255 || msg.ipsoObject === null) {
@@ -37,7 +37,7 @@ export const mySensorsToIpsoObject = async (msg) => {
 };
 
 // sensor as argument ?
-export const mySensorsToIpsoResources = async (msg) => {
+const mySensorsToIpsoResources = async (msg) => {
   try {
     logger.publish(2, "handlers", "mySensorsToIpsoResources:req", msg);
     if (msg.sensorId === 255) {
@@ -71,7 +71,7 @@ export const mySensorsToIpsoResources = async (msg) => {
   }
 };
 
-export const mySensorsDecoder = async (packet, protocol) => {
+const mySensorsDecoder = async (packet, protocol) => {
   const decoded = {};
   try {
     logger.publish(4, "handlers", "mySensorsDecoder:req", protocol);
@@ -130,4 +130,10 @@ export const mySensorsDecoder = async (packet, protocol) => {
   } catch (error) {
     throw error;
   }
+};
+
+module.exports = {
+  mySensorsToIpsoObject,
+  mySensorsToIpsoResources,
+  mySensorsDecoder,
 };

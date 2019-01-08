@@ -1,9 +1,9 @@
-import mqttPattern from "mqtt-pattern";
-import logger from "../logger";
-import ipsoObjects from "../IPSO/ipso-objects.json";
-import protocolPatterns from "../protocol-patterns.json";
+const mqttPattern = require("mqtt-pattern");
+const logger = require("../logger");
+const ipsoObjects = require("../IPSO/ipso-objects.json");
+const protocolPatterns = require("../protocol-patterns.json");
 
-export const aloesToIpsoObject = async (msg) => {
+const aloesToIpsoObject = async (msg) => {
   try {
     logger.publish(4, "handlers", "aloesToIpsoObject:req", msg);
     const foundIpsoObject = ipsoObjects.find((object) => object.value === msg.ipsoObject);
@@ -33,7 +33,7 @@ export const aloesToIpsoObject = async (msg) => {
   }
 };
 
-export const aloesToIpsoResources = async (msg) => {
+const aloesToIpsoResources = async (msg) => {
   try {
     logger.publish(2, "handlers", "aloesToIpsoResources:req", msg);
     const aloesResource = ipsoObjects.some((object) => object.value === msg.ipsoObject);
@@ -58,7 +58,7 @@ export const aloesToIpsoResources = async (msg) => {
   }
 };
 
-export const aloesDecoder = async (packet, protocol) => {
+const aloesDecoder = async (packet, protocol) => {
   const decoded = {};
   let decodedPayload;
   try {
@@ -107,8 +107,14 @@ export const aloesDecoder = async (packet, protocol) => {
           break;
       }
     }
-    return decodedPayload
+    return decodedPayload;
   } catch (error) {
     throw error;
   }
+};
+
+module.exports = {
+  aloesToIpsoObject,
+  aloesToIpsoResources,
+  aloesDecoder,
 };

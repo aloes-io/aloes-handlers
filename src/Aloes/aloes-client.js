@@ -1,8 +1,8 @@
-import mqttPattern from "mqtt-pattern";
-import logger from "../logger";
-import protocolPatterns from "../protocol-patterns.json";
+const mqttPattern = require("mqtt-pattern");
+const logger = require("../logger");
+const protocolPatterns = require("../protocol-patterns.json");
 
-export const clientToAloesIoT = async (instance, protocol) => {
+const clientToAloesIoT = async (instance, protocol) => {
   // "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
   let params;
   let payload = null;
@@ -32,7 +32,7 @@ export const clientToAloesIoT = async (instance, protocol) => {
   return {topic, payload};
 };
 
-export const clientToMySensors = async (instance, protocol) => {
+const clientToMySensors = async (instance, protocol) => {
   //  "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType",
   let params;
   let payload = null;
@@ -64,7 +64,7 @@ export const clientToMySensors = async (instance, protocol) => {
   return {topic, payload: instance.value};
 };
 
-export const aloesClientDecoder = async (packet, protocol) => {
+const aloesClientDecoder = async (packet, protocol) => {
   try {
     logger.publish(4, "handlers", "aloesClientDecoder:req", protocol);
     const instance = JSON.parse(packet.payload);
@@ -88,4 +88,10 @@ export const aloesClientDecoder = async (packet, protocol) => {
     logger.publish(4, "handlers", "aloesClientDecoder:err", error);
     throw error;
   }
+};
+
+module.exports = {
+  clientToAloesIoT,
+  clientToMySensors,
+  aloesClientDecoder,
 };

@@ -19,4 +19,7 @@ logger.publish = (priority, collectionName, command, content) => {
     throw new Error("INVALID_LOG", "Missing argument in logger");
 };
 
-export default logger;
+module.exports = {
+    logger,
+};
+//  export default logger;
