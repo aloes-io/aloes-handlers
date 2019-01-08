@@ -1,0 +1,32 @@
+{
+  "aloesClient": {
+    "collectionPattern": "+userId/+collectionName/+method",
+    "instancePattern": "+userId/+collectionName/+method/+modelId",
+    "validators": {
+      "userId": "string",
+      "collectionName": ["Device", "Sensor", "VirtualObject"],
+      "modelId": "string",
+      "method": ["POST", "GET", "PUT", "DELETE"]
+    }
+  },
+  "mySensors": {
+    "pattern": "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType",
+    "validators": {
+      "userId": "string",
+      "nodeId": "number",
+      "sensorId": "number",
+      "subType": "number",
+      "method": ["0", "1", "2", "3", "4"]
+    }
+  },
+  "aloes": {
+    "pattern": "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
+    "validators": {
+      "prefixedDevEui": "string",
+      "nodeId": "number",
+      "sensorId": "number",
+      "subType": "number",
+      "method": ["POST", "GET", "PUT", "STREAM", "DELETE"]
+    }
+  }
+}
