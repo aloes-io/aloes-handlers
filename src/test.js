@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 //	const test = require("tape");
 const aloesHandlers = require("./");
 
@@ -13,6 +14,8 @@ console.log("-------- MySensors - test1 ---------");
 let packet = {topic: "MySensors-out/0/2/1/0/4", payload: "test"};
 let pattern = aloesHandlers.patternDetector(packet);
 console.log("MySensors - test1 - patternDetector", pattern);
+let decoded = aloesHandlers.mySensorsDecoder(packet, pattern.value);
+console.log("MySensors - test1 - mySensorsDecoder", decoded);
 let options = {
 	pattern: pattern.name,
 	method: "POST",
@@ -26,8 +29,6 @@ let options = {
 		value: packet.payload,
 	},
 };
-let decoded = aloesHandlers.mySensorsDecoder(packet, pattern.value);
-console.log("MySensors - test1 - mySensorsDecoder", decoded);
 let result = aloesHandlers.publish(options);
 console.log("MySensors - test1 - publish", result);
 
@@ -50,8 +51,6 @@ options = {
 		value: packet.payload,
 	},
 };
-decoded = aloesHandlers.mySensorsDecoder(packet, pattern.value);
-console.log("MySensors - test2 - mySensorsDecoder", decoded);
 result = aloesHandlers.publish(options);
 console.log("MySensors - test2 - publish", result);
 

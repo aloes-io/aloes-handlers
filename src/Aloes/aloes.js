@@ -54,7 +54,7 @@ const aloesToIpsoResources = (msg) => {
   }
 };
 
-const aloesDecoder = async (packet, protocol) => {
+const aloesDecoder = (packet, protocol) => {
   const decoded = {};
   let decodedPayload;
   try {
@@ -73,29 +73,34 @@ const aloesDecoder = async (packet, protocol) => {
       decoded.timestamp = new Date();
 
       switch (Number(protocol.method)) {
-        case 0: // Presentation
+        case 0: // HEAD
           decoded.sensorId = protocol.sensorId;
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
+          decoded.value = packet.payload.toString();
           decodedPayload = aloesToIpsoObject(decoded);
           break;
-        case 1: // Set
+        case 1: // POST
           decoded.inputPath = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
           params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
           decoded.outputPath = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
           decoded.sensorId = protocol.sensorId;
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
-          decoded.value = packet.payload;
+          //  decoded.value = packet.payload;
+          decoded.value = packet.payload.toString();
           decodedPayload = aloesToIpsoResources(decoded);
           break;
-        case 2: // Req
+        case 2: // GET
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.sensorId = protocol.sensorId;
           decoded.resource = protocol.ipsoResourcesId;
-          decoded.value = packet.payload;
           break;
         case 3: // Internal
+          decoded.sensorId = protocol.sensorId;
+          decoded.value = packet.payload.toString();
+          break;
+        case 4: // STREAM
           decoded.sensorId = protocol.sensorId;
           decoded.value = packet.payload;
           break;

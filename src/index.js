@@ -7,13 +7,12 @@ const {mySensorsDecoder} = require("./MySensors/mysensors");
 const {aloesDecoder} = require("./Aloes/aloes");
 const {aloesClientDecoder} = require("./Aloes/aloes-client");
 
-//  const handlers = {};
-const extractProtocol = (pattern, topic) =>
-  new Promise((resolve, reject) => {
-    const protocol = mqttPattern.exec(pattern, topic);
-    if (protocol !== null) resolve(protocol);
-    reject(protocol);
-  });
+// const extractProtocol = (pattern, topic) =>
+//   new Promise((resolve, reject) => {
+//     const protocol = mqttPattern.exec(pattern, topic);
+//     if (protocol !== null) resolve(protocol);
+//     else reject(protocol);
+//   });
 
 const patternDetector = (packet) => {
   try {
@@ -25,12 +24,10 @@ const patternDetector = (packet) => {
       //  const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.collectionPattern, packet.topic);
       const aloesClientProtocol = mqttPattern.exec(protocolPatterns.aloesClient.collectionPattern, packet.topic);
       logger(2, "handlers", "patternDetector:res", aloesClientProtocol);
-      //  if (aloesClientProtocol === null) return null;
-
       const collectionExists = protocolPatterns.aloesClient.validators.collectionName.some(
         (collection) => collection === aloesClientProtocol.collectionName,
       );
-      const methodExists = protocolPatterns.aloesClient.validators.method.some(
+      const methodExists = protocolPatterns.aloesClient.validators.methods.some(
         (meth) => meth === aloesClientProtocol.method,
       );
       if (methodExists && collectionExists && aloesClientProtocol.collectionName === "Account") {
@@ -51,7 +48,7 @@ const patternDetector = (packet) => {
       const aloesClientProtocol = mqttPattern.exec(protocolPatterns.aloesClient.instancePattern, packet.topic);
       logger(4, "handlers", "patternDetector:res", aloesClientProtocol);
       //  if (aloesClientProtocol === null) return null;
-      const methodExists = protocolPatterns.aloesClient.validators.method.some(
+      const methodExists = protocolPatterns.aloesClient.validators.methods.some(
         (meth) => meth === aloesClientProtocol.method,
       );
       const collectionExists = protocolPatterns.aloesClient.validators.collectionName.some(
@@ -75,7 +72,7 @@ const patternDetector = (packet) => {
       const mysensorsProtocol = mqttPattern.exec(protocolPatterns.mySensors.pattern, packet.topic);
       logger(4, "handlers", "patternDetector:res", mysensorsProtocol);
       let typeExists = false;
-      const methodExists = protocolPatterns.mySensors.validators.method.some(
+      const methodExists = protocolPatterns.mySensors.validators.methods.some(
         (meth) => meth === Number(mysensorsProtocol.method),
       );
       if (Number(mysensorsProtocol.method) === 0) {
@@ -95,7 +92,9 @@ const patternDetector = (packet) => {
       //  const aloesProtocol = await extractProtocol(protocolPatterns.aloes.pattern, packet.topic);
       const aloesProtocol = mqttPattern.exec(protocolPatterns.aloes.pattern, packet.topic);
       logger(4, "handlers", "patternDetector:res", aloesProtocol);
-      const methodExists = protocolPatterns.aloes.validators.method.some((meth) => meth === aloesProtocol.method);
+      const methodExists = protocolPatterns.aloes.validators.methods.some(
+        (meth) => meth === Number(aloesProtocol.method),
+      );
       const ipsoObjectIdExists = ipsoObjects.some((object) => object.value === Number(aloesProtocol.ipsoObjectId));
       logger(4, "handlers", "patternDetector:res", {methodExists, ipsoObjectIdExists});
       if (methodExists && ipsoObjectIdExists) {
@@ -173,7 +172,7 @@ const publish = (options) => {
   return new Error("Error: Option must be an object type");
 };
 
-const subscribe = async (socket, options) => {
+const subscribe = (socket, options) => {
   logger(4, "handlers", "subscribe:req", options);
   if (options && !isEmpty(options)) {
     let topic = null;
@@ -199,7 +198,6 @@ const subscribe = async (socket, options) => {
   return new Error("Error: Option must be an object type");
 };
 
-//  export default handlers;
 module.exports = {
   protocolPatterns,
   mySensorsApi,

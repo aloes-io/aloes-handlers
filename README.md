@@ -14,11 +14,11 @@ WIP :
 ## Installation
 
 ```bash
-	$ npm install
+$ npm install aloes-handlers --save
 ```
 
 ## Linting
 
 ```bash
-	$ npm run lint
+$ npm run lint
 ```

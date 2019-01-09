@@ -6,7 +6,7 @@
       "userId": "string",
       "collectionName": ["Account", "Device", "Sensor", "VirtualObject"],
       "modelId": "string",
-      "method": ["POST", "GET", "PUT", "DELETE"]
+      "methods": ["POST", "GET", "PUT", "DELETE"]
     }
   },
   "mySensors": {
@@ -16,7 +16,7 @@
       "nodeId": "number",
       "sensorId": "number",
       "subType": "number",
-      "method": [0, 1, 2, 3, 4]
+      "methods": [0, 1, 2, 3, 4]
     }
   },
   "aloes": {
@@ -26,7 +26,7 @@
       "nodeId": "number",
       "sensorId": "number",
       "subType": "number",
-      "method": ["POST", "GET", "PUT", "STREAM", "DELETE"]
+      "methods": [0, 1, 2, 3, 4]
     }
   }
 }

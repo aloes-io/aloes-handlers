@@ -7,7 +7,8 @@
     "lint": "npx eslint --ext js .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "getlarge",
+  "keywords": ["IoT", "MQTT", "Interoperability"],
   "license": "ISC",
   "dependencies": {
     "mqtt-pattern": "^1.2.0"
@@ -39,9 +40,7 @@
     "tape": "^4.9.2"
   },
   "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
+    "presets": ["@babel/preset-env"],
     "plugins": [
       "@babel/plugin-syntax-dynamic-import",
       "@babel/plugin-syntax-import-meta",
@@ -65,13 +64,8 @@
       "es6": true,
       "node": true
     },
-    "extends": [
-      "airbnb-base",
-      "prettier"
-    ],
-    "plugins": [
-      "babel"
-    ],
+    "extends": ["airbnb-base", "prettier"],
+    "plugins": ["babel"],
     "parserOptions": {
       "ecmaVersion": 2018,
       "parser": "babel-eslint"
