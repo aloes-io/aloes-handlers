@@ -6,6 +6,10 @@ const clientToAloesIoT = (instance, protocol) => {
   // "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
   let params;
   let payload = null;
+  let method = 0;
+  if (protocol.method === "HEAD") method = 0;
+  else if (protocol.method === "POST" || protocol.method === "PUT") method = 1;
+  else if (protocol.method === "GET") method = 2;
   if (protocol.collectionName === "Sensor") {
     const resourcesKeys = Object.getOwnPropertyNames(instance.resources);
     params = {
@@ -13,9 +17,11 @@ const clientToAloesIoT = (instance, protocol) => {
       method: 1,
       ipsoObjectId: instance.type,
       sensorId: instance.nativeSensorId,
-      ipsoResourcesId: resourcesKeys[0],
+      //  ipsoResourcesId: resourcesKeys[0],
+      ipsoResourcesId: instance.mainResourceId,
     };
-    payload = instance.resources[resourcesKeys[0]];
+    //  payload = instance.resources[resourcesKeys[0]];
+    payload = instance.resources[instance.mainResourceId];
   } else if (protocol.collectionName === "Device") {
     params = {
       prefixedDevEui: `${instance.devEui}-in`,
@@ -36,21 +42,26 @@ const clientToMySensors = (instance, protocol) => {
   //  "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType",
   let params;
   let payload = null;
-  if (protocol.collectionName === "Sensor") {
+  let method = 0;
+  if (protocol.method === "HEAD") method = 0;
+  else if (protocol.method === "POST" || protocol.method === "PUT") method = 1;
+  else if (protocol.method === "GET") method = 2;
+
+  if (protocol.collectionName.toLowerCase() === "sensor") {
     const resourcesKeys = Object.getOwnPropertyNames(instance.resources);
     params = {
       prefixedDevEui: `${instance.devEui}-in`,
-      method: 1,
+      method,
       ack: 0,
       nodeId: instance.nativeNodeId,
       sensorId: instance.nativeSensorId,
       subType: instance.nativeResource,
     };
     payload = instance.resources[resourcesKeys[0]];
-  } else if (protocol.collectionName === "Device") {
+  } else if (protocol.collectionName.toLowerCase() === "device") {
     params = {
       prefixedDevEui: `${instance.devEui}-in`,
-      method: 1,
+      method,
       ack: 0,
       nodeId: 0,
       sensorId: 200,
@@ -68,22 +79,27 @@ const aloesClientDecoder = (packet, protocol) => {
   try {
     logger(4, "handlers", "aloesClientDecoder:req", protocol);
     const instance = JSON.parse(packet.payload);
-    let decodedPayload;
-    logger(4, "handlers", "aloesClientDecoder:req", instance);
-    switch (instance.protocolName) {
-      case "aloes":
-        decodedPayload = clientToAloesIoT(instance, protocol);
-        break;
-      case "mySensors":
-        decodedPayload = clientToMySensors(instance, protocol);
-        break;
-      case "nodeWebcam": // Req
-        //  await clientToMySensors(app, newPayload);
-        break;
-      default:
-        break;
+    const protocolKeys = Object.getOwnPropertyNames(protocol);
+    logger(4, "handlers", "aloesDecoder:req", protocolKeys.length);
+    if (protocolKeys.length === 4) {
+      let decodedPayload;
+      logger(4, "handlers", "aloesClientDecoder:req", instance);
+      switch (instance.protocolName) {
+        case "aloes":
+          decodedPayload = clientToAloesIoT(instance, protocol);
+          break;
+        case "mySensors":
+          decodedPayload = clientToMySensors(instance, protocol);
+          break;
+        case "nodeWebcam": // Req
+          //  await clientToMySensors(app, newPayload);
+          break;
+        default:
+          break;
+      }
+      return decodedPayload;
     }
-    return decodedPayload;
+    return "topic doesn't match";
   } catch (error) {
     logger(4, "handlers", "aloesClientDecoder:err", error);
     throw error;

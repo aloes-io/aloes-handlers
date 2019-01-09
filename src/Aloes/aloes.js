@@ -6,7 +6,7 @@ const protocolPatterns = require("../protocol-patterns.json");
 const aloesToIpsoObject = (msg) => {
   try {
     logger(4, "handlers", "aloesToIpsoObject:req", msg);
-    const foundIpsoObject = ipsoObjects.find((object) => object.value === msg.ipsoObject);
+    const foundIpsoObject = ipsoObjects.find((object) => object.value === Number(msg.ipsoObject));
     if (!foundIpsoObject) return "no IPSO Object found";
     const sensor = {
       devEui: msg.devEui,
@@ -32,8 +32,8 @@ const aloesToIpsoObject = (msg) => {
 
 const aloesToIpsoResources = (msg) => {
   try {
-    logger(2, "handlers", "aloesToIpsoResources:req", msg);
-    const aloesResource = ipsoObjects.some((object) => object.value === msg.ipsoObject);
+    logger(4, "handlers", "aloesToIpsoResources:req", msg);
+    const aloesResource = ipsoObjects.find((object) => object.value === Number(msg.ipsoObject));
     if (!aloesResource) return "no IPSO Object found";
     const sensor = {};
     sensor.devEui = msg.devEui;
@@ -55,11 +55,12 @@ const aloesToIpsoResources = (msg) => {
 };
 
 const aloesDecoder = (packet, protocol) => {
-  const decoded = {};
-  let decodedPayload;
   try {
     logger(4, "handlers", "aloesDecoder:req", protocol);
-    if (protocol.length === 6) {
+    const protocolKeys = Object.getOwnPropertyNames(protocol);
+    if (protocolKeys.length === 5) {
+      const decoded = {};
+      let decodedPayload;
       decoded.devEui = protocol.devEui;
       const gatewayIdParts = protocol.prefixedDevEui.split("-");
       const inPrefix = "-in";
@@ -107,8 +108,9 @@ const aloesDecoder = (packet, protocol) => {
         default:
           break;
       }
+      return decodedPayload;
     }
-    return decodedPayload;
+    return "topic doesn't match";
   } catch (error) {
     throw error;
   }

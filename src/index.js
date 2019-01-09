@@ -132,21 +132,39 @@ const publish = (options) => {
     const data = options.data;
     if (options.pattern.toLowerCase() === "mysensors") {
       const params = {
-        prefixedDevEui: `${data.nativeGwId}${data.inPrefix}`,
+        prefixedDevEui: `${data.devEui}${data.inPrefix}`,
         nodeId: data.nativeNodeId,
         sensorId: data.nativeSensorId,
         subType: data.nativeResource,
       };
       logger(4, "handlers", "publish", params);
       if (options.method === "POST") {
+        params.method = 2;
         params.ack = 0;
-        params.method = 1;
         topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
         return {topic, payload: data.value};
       } else if (options.method === "GET") {
-        params.ack = 0;
         params.method = 2;
+        params.ack = 0;
         topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
+        return {topic, payload: data.value};
+      }
+      return "Method not supported yet";
+    } else if (options.pattern.toLowerCase() === "aloes") {
+      const params = {
+        prefixedDevEui: `${data.devEui}${data.inPrefix}`,
+        ipsoObjectId: data.type,
+        sensorId: data.nativeSensorId,
+        ipsoResourcesId: data.mainResourceId,
+      };
+      logger(4, "handlers", "publish", params);
+      if (options.method === "POST") {
+        params.method = 1;
+        topic = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
+        return {topic, payload: data.value};
+      } else if (options.method === "GET") {
+        params.method = 2;
+        topic = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
         return {topic, payload: data.value};
       }
       return "Method not supported yet";
