@@ -2,6 +2,7 @@ const mqttPattern = require("mqtt-pattern");
 const {logger} = require("./logger");
 const protocolPatterns = require("./protocol-patterns.json");
 const ipsoObjects = require("./IPSO/ipso-objects.json");
+const ipsoResources = require("./IPSO/ipso-resources.json");
 const mySensorsApi = require("./MySensors/mysensors-api.json");
 const {mySensorsDecoder} = require("./MySensors/mysensors");
 const {aloesDecoder} = require("./Aloes/aloes");
@@ -30,14 +31,14 @@ const patternDetector = (packet) => {
       const methodExists = protocolPatterns.aloesClient.validators.methods.some(
         (meth) => meth === aloesClientProtocol.method,
       );
-      if (methodExists && collectionExists && aloesClientProtocol.collectionName === "Account") {
+      if (methodExists && collectionExists && aloesClientProtocol.collectionName.toLowerCase() === "sensor") {
         pattern.name = "aloesClient";
-        pattern.subType = "web";
+        pattern.subType = "iot";
         pattern.value = aloesClientProtocol;
         return pattern;
       } else if (methodExists && collectionExists) {
         pattern.name = "aloesClient";
-        pattern.subType = "iot";
+        pattern.subType = "web";
         pattern.value = aloesClientProtocol;
         return pattern;
       }
@@ -54,14 +55,15 @@ const patternDetector = (packet) => {
       const collectionExists = protocolPatterns.aloesClient.validators.collectionName.some(
         (collection) => collection === aloesClientProtocol.collectionName,
       );
-      if (methodExists && collectionExists && aloesClientProtocol.collectionName === "Account") {
+      // add amethod  to differentiate subtype
+      if (methodExists && collectionExists && aloesClientProtocol.collectionName.toLowerCase() === "sensor") {
         pattern.name = "aloesClient";
-        pattern.subType = "web";
+        pattern.subType = "iot";
         pattern.value = aloesClientProtocol;
         return pattern;
       } else if (methodExists && collectionExists) {
         pattern.name = "aloesClient";
-        pattern.subType = "iot";
+        pattern.subType = "web";
         pattern.value = aloesClientProtocol;
         return pattern;
       }
@@ -220,6 +222,7 @@ module.exports = {
   protocolPatterns,
   mySensorsApi,
   ipsoObjects,
+  ipsoResources,
   patternDetector,
   mySensorsDecoder,
   aloesDecoder,

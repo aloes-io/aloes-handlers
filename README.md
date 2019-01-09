@@ -9,6 +9,10 @@ WIP :
 -   Compatibility with MySensors
 -   Compatibility with CayenneLPP
 
+Next : 
+-	Octoprint HTTP / MQTT Connector
+
+
 ---
 
 ## Installation

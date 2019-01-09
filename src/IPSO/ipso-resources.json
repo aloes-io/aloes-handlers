@@ -4,24 +4,21 @@
     "description": "The current state of a digital input.",
     "value": 5500,
     "operations": "R",
-    "type": "Boolean",
-    "mySensorsType": 22
+    "type": "Boolean"
   },
   {
     "resource": "Digital Input Counter",
     "description": "The cumulative value of active state detected.",
     "value": 5501,
     "operations": "R",
-    "type": "Integer",
-    "mySensorsType": 248
+    "type": "Integer"
   },
   {
     "resource": "Digital Input Polarity",
     "description": "The polarity of the digital input as a Boolean (0 = Normal, 1= Reversed).",
     "value": 5502,
     "operations": "R,W",
-    "type": "Boolean",
-    "mySensorsType": 216
+    "type": "Boolean"
   },
   {
     "resource": "Digital Input Debounce",
@@ -29,8 +26,7 @@
     "value": 5503,
     "operations": "R,W",
     "type": "Integer",
-    "Unit": "ms",
-    "mySensorsType": 248
+    "Unit": "ms"
   },
   {
     "resource": "Digital Input Edge Selection",
@@ -38,16 +34,14 @@
     "value": 5504,
     "operations": "R,W",
     "type": "Integer",
-    "Range": [1, 3],
-    "mySensorsType": null
+    "Range": [1, 3]
   },
   {
     "resource": "Digital Input Counter Reset",
     "description": "Reset the Counter value.",
     "value": 5505,
     "operations": "E",
-    "type": null,
-    "mySensorsType": null
+    "type": null
   },
   {
     "resource": "Current Time",
@@ -56,8 +50,7 @@
     "operations": "R,W",
     "type": "Time",
     "Unit": "s",
-    "Range": [0, 1],
-    "mySensorsType": 31
+    "Range": [0, 1]
   },
   {
     "resource": "Fractional Time",
@@ -66,112 +59,98 @@
     "operations": "R,W",
     "type": "Float",
     "Unit": "seconds",
-    "Range": [0, 1],
-    "mySensorsType": null
+    "Range": [0, 1]
   },
   {
     "resource": "Min X Value",
     "description": "The minimum measured value along the X axis.",
     "value": 5508,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 213
+    "type": "Float"
   },
   {
     "resource": "Max X Value",
     "description": "The maximum measured value along the X axis.",
     "value": 5509,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 213
+    "type": "Float"
   },
   {
     "resource": "Min Y Value",
     "description": "The minimum measured value along the Y axis.",
     "value": 5510,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 213
+    "type": "Float"
   },
   {
     "resource": "Max Y Value",
     "description": "The maximum measured value along the Y axis.",
     "value": 5511,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 213
+    "type": "Float"
   },
   {
     "resource": "Min Z Value",
     "description": "The minimum measured value along the Z axis.",
     "value": 5512,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 213
+    "type": "Float"
   },
   {
     "resource": "Max Z Value",
     "description": "The maximum measured value along the Z axis.",
     "value": 5513,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 213
+    "type": "Float"
   },
   {
     "resource": "Latitude",
     "description": "The decimal notation of latitude, e.g. -43.5723 (World Geodetic System 1984).",
     "value": 5514,
     "operations": "R",
-    "type": "String",
-    "mySensorsType": 249
+    "type": "String"
   },
   {
     "resource": "Longitude",
     "description": "The decimal notation of longitude, e.g. 153.21760 (World Geodetic System 1984).",
     "value": 5515,
     "operations": "R",
-    "type": "String",
-    "mySensorsType": 249
+    "type": "String"
   },
   {
     "resource": "Uncertainty",
     "description": "The accuracy of the position in meters.",
     "value": 5516,
     "operations": "R",
-    "type": "String",
-    "mySensorsType": 213
+    "type": "String"
   },
   {
     "resource": "Velocity",
     "description": "The velocity of the device as defined in 3GPP 23.032 GAD specification. This set of values may not be available if the device is static.",
     "value": 5517,
     "operations": "R",
-    "type": "Opaque",
-    "mySensorsType": null
+    "type": "Opaque"
   },
   {
     "resource": "Timestamp",
     "description": "The timestamp of when the location measurement was performed.",
     "value": 5518,
     "operations": "R",
-    "type": "Time",
-    "mySensorsType": 31
+    "type": "Time"
   },
   {
     "resource": "Min Limit",
     "description": "The minimum value that can be measured by the sensor.",
     "value": 5519,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 248
+    "type": "Float"
   },
   {
     "resource": "Max Limit",
     "description": "The maximum value that can be measured by the sensor.",
     "value": 5520,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 248
+    "type": "Float"
   },
   {
     "resource": "Delay Duration",
@@ -179,24 +158,21 @@
     "value": 5521,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s",
-    "mySensorsType": 248
+    "Unit": "s"
   },
   {
     "resource": "Clip",
     "description": "Audio Clip that is playable (i.e. short audio recording indicating the floor in an elevator).",
     "value": 5522,
     "operations": "R,W",
-    "type": "Opaque",
-    "mySensorsType": 4
+    "type": "Opaque"
   },
   {
     "resource": "Trigger",
     "description": "Trigger initiating actuation.",
     "value": 5523,
     "operations": "E",
-    "type": null,
-    "mySensorsType": 215
+    "type": null
   },
   {
     "resource": "Duration",
@@ -204,8 +180,7 @@
     "value": 5524,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s",
-    "mySensorsType": 213
+    "Unit": "s"
   },
   {
     "resource": "Minimum Off-time",
@@ -213,8 +188,7 @@
     "value": 5525,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s",
-    "mySensorsType": 248
+    "Unit": "s"
   },
   {
     "resource": "Mode",
@@ -222,40 +196,35 @@
     "value": 5526,
     "operations": "R,W",
     "type": "Integer",
-    "Range": [0, 4],
-    "mySensorsType": null
+    "Range": [0, 4]
   },
   {
     "resource": "Text",
     "description": "A string of text.",
     "value": 5527,
     "operations": "R,W",
-    "type": "String",
-    "mySensorsType": 247
+    "type": "String"
   },
   {
     "resource": "X Coordinate",
     "description": "X Coordinate.",
     "value": 5528,
     "operations": "R,W",
-    "type": "Integer",
-    "mySensorsType": 248
+    "type": "Integer"
   },
   {
     "resource": "Y Coordinate",
     "description": "Y Coordinate.",
     "value": 5529,
     "operations": "R,W",
-    "type": "Integer",
-    "mySensorsType": 248
+    "type": "Integer"
   },
   {
     "resource": "Clear Display",
     "description": "Command to clear the display.",
     "value": 5530,
     "operations": "E",
-    "type": null,
-    "mySensorsType": null
+    "type": null
   },
   {
     "resource": "Contrast",
@@ -264,32 +233,28 @@
     "operations": "R,W",
     "type": "Float",
     "Unit": "%",
-    "Range": [0, 100],
-    "mySensorsType": 23
+    "Range": [0, 100]
   },
   {
     "resource": "Increase Input State",
     "description": "Indicates an increase control action.",
     "value": 5532,
     "operations": "R",
-    "type": "Boolean",
-    "mySensorsType": null
+    "type": "Boolean"
   },
   {
     "resource": "Decrease Input State",
     "description": "Indicates an decrease control action.",
     "value": 5533,
     "operations": "R",
-    "type": "Boolean",
-    "mySensorsType": null
+    "type": "Boolean"
   },
   {
     "resource": "Counter",
     "description": "Counts the number of times the timer output transitions from 0 to 1.",
     "value": 5534,
     "operations": "R,W",
-    "type": "Integer",
-    "mySensorsType": null
+    "type": "Integer"
   },
   {
     "resource": "Current Position",
@@ -298,8 +263,7 @@
     "operations": "R,W",
     "type": "Float",
     "Unit": "%",
-    "Range": [0, 100],
-    "mySensorsType": 23
+    "Range": [0, 100]
   },
   {
     "resource": "Transition Time",
@@ -307,8 +271,7 @@
     "value": 5537,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s",
-    "mySensorsType": null
+    "Unit": "s"
   },
   {
     "resource": "Remaining Time",
@@ -316,64 +279,56 @@
     "value": 5538,
     "operations": "R",
     "type": "Float",
-    "Unit": "s",
-    "mySensorsType": null
+    "Unit": "s"
   },
   {
     "resource": "Up Counter",
     "description": "Counts the number of times the increase control has been operated. Writing a 0 resets the counter.",
     "value": 5541,
     "operations": "R,W",
-    "type": "Integer",
-    "mySensorsType": null
+    "type": "Integer"
   },
   {
     "resource": "Down Counter",
     "description": "Counts the times the decrease control has been operated. Writing a 0 resets the counter",
     "value": 5542,
     "operations": "R,W",
-    "type": "Integer",
-    "mySensorsType": null
+    "type": "Integer"
   },
   {
     "resource": "Digital State",
     "description": "The current state of the timer output.",
     "value": 5543,
     "operations": "R",
-    "type": "Boolean",
-    "mySensorsType": 22
+    "type": "Boolean"
   },
   {
     "resource": "Cumulative Time",
     "description": "The total time in seconds that the timer input is true. Writing a 0 resets the time.",
     "value": 5544,
     "operations": "R,W",
-    "type": "Float",
-    "mySensorsType": null
+    "type": "Float"
   },
   {
     "resource": "Max X Coordinate",
     "description": "The highest X coordinate the display supports before wrapping to the next line.",
     "value": 5545,
     "operations": "R",
-    "type": "Integer",
-    "mySensorsType": 248
+    "type": "Integer"
   },
   {
     "resource": "Max Y Coordinate",
     "description": "The highest Y coordinate the display supports before wrapping to the next line.",
     "value": 5546,
     "operations": "R",
-    "type": "Integer",
-    "mySensorsType": 248
+    "type": "Integer"
   },
   {
     "resource": "Multi-state Input",
     "description": "The current state of a Multi-state input or selector.",
     "value": 5547,
     "operations": "R",
-    "type": "Integer",
-    "mySensorsType": 22
+    "type": "Integer"
   },
   {
     "resource": "Level",
@@ -382,104 +337,91 @@
     "operations": "R,W",
     "type": "Float",
     "Unit": "%",
-    "Range": [0, 100],
-    "mySensorsType": 23
+    "Range": [0, 100]
   },
   {
     "resource": "Digital Output State",
     "description": "The current state of a digital output,  0=OFF, 1=ON..",
     "value": 5550,
     "operations": "R,W",
-    "type": "Boolean",
-    "mySensorsType": 22
+    "type": "Boolean"
   },
   {
     "resource": "Digital Output Polarity",
     "description": "The polarity of a digital ouput as a Boolean (0 = Normal, 1= Reversed).",
     "value": 5551,
     "operations": "R,W",
-    "type": "Boolean",
-    "mySensorsType": 22
+    "type": "Boolean"
   },
   {
     "resource": "Analog Input State",
     "description": "The current value of the analog input.",
     "value": 5600,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 248
+    "type": "Float"
   },
   {
     "resource": "Min Measured Value",
     "description": "The minimum value that can be measured by the sensor",
     "value": 5601,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": null
+    "type": "Float"
   },
   {
     "resource": "Max Measured Value",
     "description": "The maximum value that can be measured by the sensor.",
     "value": 5602,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": null
+    "type": "Float"
   },
   {
     "resource": "Min Range Value",
     "description": "The minimum value that can be measured by the sensor.",
     "value": 5603,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": null
+    "type": "Float"
   },
   {
     "resource": "Max Range Value",
     "description": "The maximum value that can be measured by the sensor.",
     "value": 5604,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": null
+    "type": "Float"
   },
   {
     "resource": "Reset Min and Max Measured Values",
     "description": "Reset the Min and Max Measured Values to Current Value.",
     "value": 5605,
     "operations": "E",
-    "type": null,
-    "mySensorsType": null
+    "type": null
   },
   {
     "resource": "Analog Output Current Value",
     "description": "The current state of the analogue output.",
     "value": 5650,
     "operations": "R,W",
-    "type": "Float",
-    "mySensorsType": 248
+    "type": "Float"
   },
   {
     "resource": "Sensor Value",
     "description": "Last or Current Measured Value from the Sensor.",
     "value": 5700,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": null
+    "type": "Float"
   },
   {
     "resource": "Sensor Units",
     "description": "If present, the type of sensor defined as the UCUM Unit Definition e.g. “Cel” for Temperature in Celcius.",
     "value": 5701,
     "operations": "R",
-    "type": "String",
-    "mySensorsType": 22
+    "type": "String"
   },
   {
     "resource": "X Value",
     "description": "The measured value along the X axis.",
     "value": 5702,
     "operations": "R",
-    "type": "Float",
-    "mySensorsType": 22
+    "type": "Float"
   },
   {
     "resource": "Y Value",
