@@ -1,6 +1,6 @@
 {
   "name": "aloes-handlers",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -8,7 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "getlarge",
-  "keywords": ["IoT", "MQTT", "Interoperability"],
+  "keywords": [
+    "IoT",
+    "MQTT",
+    "Interoperability"
+  ],
   "license": "ISC",
   "dependencies": {
     "mqtt-pattern": "^1.2.0"
@@ -40,7 +44,9 @@
     "tape": "^4.9.2"
   },
   "babel": {
-    "presets": ["@babel/preset-env"],
+    "presets": [
+      "@babel/preset-env"
+    ],
     "plugins": [
       "@babel/plugin-syntax-dynamic-import",
       "@babel/plugin-syntax-import-meta",
@@ -64,8 +70,13 @@
       "es6": true,
       "node": true
     },
-    "extends": ["airbnb-base", "prettier"],
-    "plugins": ["babel"],
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "plugins": [
+      "babel"
+    ],
     "parserOptions": {
       "ecmaVersion": 2018,
       "parser": "babel-eslint"
