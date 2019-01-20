@@ -1,5 +1,47 @@
 [
   {
+    "resource": "Device Name",
+    "description": "Human-readable name of the device ",
+    "value": 0,
+    "operations": "R",
+    "type": "String"
+  },
+  {
+    "resource": "Tool Version",
+    "description": "The tool version that the device supports - used to determine the logging object/resource version to be used for parsing ",
+    "value": 1,
+    "operations": "R",
+    "type": "String"
+  },
+  {
+    "resource": "IMEI",
+    "description": "IMEI of device",
+    "value": 2,
+    "operations": "R",
+    "type": "String"
+  },
+  {
+    "resource": "IMSI",
+    "description": "IMSI of device",
+    "value": 3,
+    "operations": "R",
+    "type": "String"
+  },
+  {
+    "resource": "MSISDN",
+    "description": "MSISDN of device",
+    "value": 4,
+    "operations": "R",
+    "type": "String"
+  },
+  {
+    "resource": "Digital Input State",
+    "description": "The current state of a digital input.",
+    "value": 5500,
+    "operations": "R",
+    "type": "Boolean"
+  },
+  {
     "resource": "Digital Input State",
     "description": "The current state of a digital input.",
     "value": 5500,
@@ -733,5 +775,69 @@
     "value": 5913,
     "operations": "R,W",
     "type": "String"
+  },
+  {
+    "resource": "plmnID",
+    "description": "PLMN - mcc/mnc",
+    "value": 6030,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "BandIndicator",
+    "description": "Band indicator",
+    "value": 6031,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "dlEarfcn",
+    "description": "EARFCN - frequency",
+    "value": 6032,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "CellID",
+    "description": "Cell Identity",
+    "value": 6033,
+    "operations": "R",
+    "type": "Integer"
+  },
+
+  {
+    "resource": "pci",
+    "description": "PCI (0..504)",
+    "value": 6034,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "rsrp",
+    "description": "RSRP Value in dBm (-180..-30)",
+    "value": 6035,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "rsrq",
+    "description": "RSRQ Value in dB (-30..10)",
+    "value": 6036,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "sysFrameNumber",
+    "description": "System Frame Number",
+    "value": 6037,
+    "operations": "R",
+    "type": "Integer"
+  },
+  {
+    "resource": "subFrameNumber",
+    "description": "Sub Frame Number",
+    "value": 6038,
+    "operations": "R",
+    "type": "Integer"
   }
 ]

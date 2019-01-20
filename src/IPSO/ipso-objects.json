@@ -877,5 +877,94 @@
     "resources": {"5501": 0, "5544": 0, "5850": 1, "5750": "app-name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "powerupLog",
+    "description": "An ascending timer that counts how long time has passed since the timer was started after reset.",
+    "value": 3351,
+    "ressourcesName": "0, 1, 2, 3, 4",
+    "resources": {"0": "deviceName", "1": "toolVersion", "2": "IMEI", "3": "IMSI", "4": "MSISDN"},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "plmnSearchEvent",
+    "description": "List of all PLMNs found during the initial search/scan",
+    "value": 3352,
+    "ressourcesName": "0, 6030, 6031, 6032",
+    "resources": {"0": "timeScanStart", "6030": 0, "6031": 0, "6032": 0},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "scellID",
+    "description": "serving cell information that the RRC decides to camp on",
+    "value": 3353,
+    "ressourcesName": "2, 6030, 6031, 6033",
+    "resources": {"2": "TrackingAreaCode", "6030": 0, "6031": 0, "6033": 0},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "cellReselectionEvent",
+    "description": "cell reselection event information",
+    "value": 3354,
+    "ressourcesName": "2, 3, 6032, 6033",
+    "resources": {"2": "timeReselectionStart", "3": "failureType", "6032": 0, "6033": 0},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "handoverEvent",
+    "description": "handover event information",
+    "value": 3355,
+    "ressourcesName": "2, 3, 4, 5, 6, 6032, 6033",
+    "resources": {
+      "0": "timeHandoverStart",
+      "3": "handoverResult",
+      "4": "TargetEarfcn",
+      "5": "TargetPhysicalCellID",
+      "6": "targetCellRsrp",
+      "6032": 0,
+      "6033": 0
+    },
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "radioLinkFailureEvent",
+    "description": "Radio Link Failure Event",
+    "value": 3356,
+    "ressourcesName": "0, 1",
+    "resources": {"0": "timeRLF", "1": "rlfCause"},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "rrcStateChangeEvent",
+    "description": "Current RRC state change information, including the event that triggered the state change",
+    "value": 3357,
+    "ressourcesName": "0, 1",
+    "resources": {"0": "rrcState", "1": "rrcStateChangeCause"},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "rrcTimerExpiryEvent",
+    "description": "RRC timer expiry event information",
+    "value": 3358,
+    "ressourcesName": "0",
+    "resources": {"0": "RrcTimerExpiryEvent"},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+  },
+  {
+    "name": "cellBlacklistEvent",
+    "description": "Cell blacklist information",
+    "value": 3359,
+    "ressourcesName": "6032, 6033",
+    "resources": {"6032": 0, "6033": 0},
+    "colors": ["#000", "#adadad"],
+    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
   }
 ]

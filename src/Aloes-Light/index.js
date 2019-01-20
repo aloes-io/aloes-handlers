@@ -3,14 +3,14 @@ const {logger} = require("../logger");
 const ipsoObjects = require("../IPSO/ipso-objects.json");
 const protocolPatterns = require("../protocol-patterns.json");
 
-const aloesToIpsoObject = (msg) => {
+const aloesLightToIpsoObject = (msg) => {
   try {
-    logger(4, "handlers", "aloesToIpsoObject:req", msg);
+    logger(4, "handlers", "aloesLightToIpsoObject:req", msg);
     const foundIpsoObject = ipsoObjects.find((object) => object.value === Number(msg.ipsoObject));
     if (!foundIpsoObject) return "no IPSO Object found";
     const sensor = {
       devEui: msg.devEui,
-      protocolName: "aloes",
+      protocolName: "aloesLight",
       //  protocolPattern: protocolPatterns.aloes.pattern,
       name: foundIpsoObject.name,
       type: msg.ipsoObject,
@@ -19,20 +19,20 @@ const aloesToIpsoObject = (msg) => {
       colors: foundIpsoObject.colors,
       nativeSensorId: msg.sensorId,
       nativeResource: msg.resource,
-      nativeType: msg.type,
+      nativeType: msg.ipsoObject,
       frameCounter: 0,
     };
-    logger(4, "handlers", "aloesToIpsoObject:res", sensor);
+    logger(4, "handlers", "aloesLightToIpsoObject:res", sensor);
     return sensor;
   } catch (error) {
-    logger(2, "handlers", "aloesToIpsoObject:err", error);
+    logger(2, "handlers", "aloesLightToIpsoObject:err", error);
     throw error;
   }
 };
 
-const aloesToIpsoResources = (msg) => {
+const aloesLightToIpsoResources = (msg) => {
   try {
-    logger(4, "handlers", "aloesToIpsoResources:req", msg);
+    logger(4, "handlers", "aloesLightToIpsoResources:req", msg);
     const aloesResource = ipsoObjects.find((object) => object.value === Number(msg.ipsoObject));
     if (!aloesResource) return "no IPSO Object found";
     const sensor = {};
@@ -46,17 +46,17 @@ const aloesToIpsoResources = (msg) => {
     sensor.value = msg.value;
     sensor.mainResourceId = msg.resource;
     sensor.lastSignal = msg.timestamp;
-    logger(4, "handlers", "aloesToIpsoResources:res", sensor);
+    logger(4, "handlers", "aloesLightToIpsoResources:res", sensor);
     return sensor;
   } catch (error) {
-    logger(2, "handlers", "aloesToIpsoResources:err", error);
+    logger(2, "handlers", "aloesLightToIpsoResources:err", error);
     throw error;
   }
 };
 
-const aloesDecoder = (packet, protocol) => {
+const aloesLightDecoder = (packet, protocol) => {
   try {
-    logger(4, "handlers", "aloesDecoder:req", protocol);
+    logger(4, "handlers", "aloesLightDecoder:req", protocol);
     const protocolKeys = Object.getOwnPropertyNames(protocol);
     if (protocolKeys.length === 5) {
       const decoded = {};
@@ -79,18 +79,21 @@ const aloesDecoder = (packet, protocol) => {
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
           decoded.value = packet.payload.toString();
-          decodedPayload = aloesToIpsoObject(decoded);
+          decoded.inputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
+          params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
+          decoded.outputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
+          decodedPayload = aloesLightToIpsoObject(decoded);
           break;
         case 1: // POST
-          decoded.inputPath = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
+          decoded.inputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
           params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
-          decoded.outputPath = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
+          decoded.outputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
           decoded.sensorId = protocol.sensorId;
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
           //  decoded.value = packet.payload;
           decoded.value = packet.payload.toString();
-          decodedPayload = aloesToIpsoResources(decoded);
+          decodedPayload = aloesLightToIpsoResources(decoded);
           break;
         case 2: // GET
           decoded.ipsoObject = protocol.ipsoObjectId;
@@ -117,7 +120,7 @@ const aloesDecoder = (packet, protocol) => {
 };
 
 module.exports = {
-  aloesToIpsoObject,
-  aloesToIpsoResources,
-  aloesDecoder,
+  aloesLightToIpsoObject,
+  aloesLightToIpsoResources,
+  aloesLightDecoder,
 };

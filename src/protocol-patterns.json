@@ -4,9 +4,9 @@
     "instancePattern": "+userId/+collectionName/+method/+modelId",
     "validators": {
       "userId": "string",
-      "collectionName": ["Account", "Device", "Sensor", "VirtualObject"],
+      "collectionName": ["Account", "Device", "Sensor", "VirtualObject", "IoTAgent"],
       "modelId": "string",
-      "methods": ["POST", "GET", "PUT", "DELETE"]
+      "methods": ["HEAD", "POST", "GET", "PUT", "DELETE"]
     }
   },
   "mySensors": {
@@ -19,7 +19,7 @@
       "methods": [0, 1, 2, 3, 4]
     }
   },
-  "aloes": {
+  "aloesLight": {
     "pattern": "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
     "validators": {
       "prefixedDevEui": "string",
