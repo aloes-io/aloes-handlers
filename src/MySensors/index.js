@@ -24,6 +24,8 @@ const mySensorsToIpsoObject = (msg) => {
       nativeType: msg.type,
       nativeNodeId: msg.nodeId,
       nativeSensorId: msg.sensorId,
+      inPrefix: msg.inPrefix,
+      outPrefix: msg.outPrefix,
       frameCounter: 0,
     };
     logger(2, "handlers", "mySensorsToIpsoObject:res", sensor);
@@ -52,6 +54,8 @@ const mySensorsToIpsoResources = (msg) => {
     sensor.nativeSensorId = msg.sensorId;
     sensor.inputPath = msg.inputPath;
     sensor.outputPath = msg.outputPath;
+    sensor.inPrefix = msg.inPrefix;
+    sensor.outPrefix = msg.outPrefix;
     sensor.value = msg.value;
     sensor.lastSignal = msg.timestamp;
     const resourcesKeys = Object.getOwnPropertyNames(mySensorsResource.ipsoResources);
@@ -81,6 +85,8 @@ const mySensorsDecoder = (packet, protocol) => {
         ...protocol,
         prefixedDevEui: `${gatewayIdParts[0]}${inPrefix}`,
       };
+      decoded.inPrefix = inPrefix;
+      decoded.outPrefix = outPrefix;
       decoded.devEui = gatewayIdParts[0];
       decoded.timestamp = new Date();
 

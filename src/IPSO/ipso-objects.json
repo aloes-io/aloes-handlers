@@ -664,7 +664,7 @@
     "name": "GPS Location",
     "description": "represents GPS coordinates. This object is compatible with the LWM2M management object for location, but uses reusable resources.",
     "value": 3336,
-    "ressourcesName": "5514, 5515, 55151, 5516, 5517, 5518, 5705",
+    "ressourcesName": "5514, 5515, 5516, 5517, 5518, 5705",
     "resources": {
       "5514": "#fff",
       "5515": "hex",

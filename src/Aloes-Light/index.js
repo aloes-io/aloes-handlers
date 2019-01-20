@@ -20,6 +20,8 @@ const aloesLightToIpsoObject = (msg) => {
       nativeSensorId: msg.sensorId,
       nativeResource: msg.resource,
       nativeType: msg.ipsoObject,
+      inPrefix: msg.inPrefix,
+      outPrefix: msg.outPrefix,
       frameCounter: 0,
     };
     logger(4, "handlers", "aloesLightToIpsoObject:res", sensor);
@@ -43,6 +45,8 @@ const aloesLightToIpsoResources = (msg) => {
     sensor.colors = aloesResource.colors;
     sensor.inputPath = msg.inputPath;
     sensor.outputPath = msg.outputPath;
+    sensor.inPrefix = msg.inPrefix;
+    sensor.outPrefix = msg.outPrefix;
     sensor.value = msg.value;
     sensor.mainResourceId = msg.resource;
     sensor.lastSignal = msg.timestamp;
@@ -69,6 +73,8 @@ const aloesLightDecoder = (packet, protocol) => {
         ...protocol,
         prefixedDevEui: `${gatewayIdParts[0]}${inPrefix}`,
       };
+      decoded.inPrefix = inPrefix;
+      decoded.outPrefix = outPrefix;
       decoded.devEui = gatewayIdParts[0];
       decoded.prefix = gatewayIdParts[1];
       decoded.timestamp = new Date();
