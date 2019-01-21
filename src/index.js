@@ -182,7 +182,7 @@ const publish = (options) => {
       } else {
         topic = mqttPattern.fill(protocolPatterns.aloesClient.instancePattern, params);
       }
-      return {topic, payload: JSON.stringify(data)};
+      return {topic, payload: data};
     }
     return "Protocol not supported yet";
   }

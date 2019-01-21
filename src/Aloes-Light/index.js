@@ -48,6 +48,9 @@ const aloesLightToIpsoResources = (msg) => {
     sensor.inPrefix = msg.inPrefix;
     sensor.outPrefix = msg.outPrefix;
     sensor.value = msg.value;
+    sensor.type = msg.ipsoObject;
+    sensor.nativeType = msg.ipsoObject;
+    sensor.nativeSensorId = msg.sensorId;
     sensor.mainResourceId = msg.resource;
     sensor.lastSignal = msg.timestamp;
     logger(4, "handlers", "aloesLightToIpsoResources:res", sensor);
@@ -97,8 +100,9 @@ const aloesLightDecoder = (packet, protocol) => {
           decoded.sensorId = protocol.sensorId;
           decoded.ipsoObject = protocol.ipsoObjectId;
           decoded.resource = protocol.ipsoResourcesId;
-          //  decoded.value = packet.payload;
-          decoded.value = packet.payload.toString();
+          // todo : format payload base on type ?
+          decoded.value = packet.payload;
+          //  decoded.value = packet.payload.toString();
           decodedPayload = aloesLightToIpsoResources(decoded);
           break;
         case 2: // GET
