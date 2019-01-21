@@ -265,6 +265,618 @@ const publishToNative = (options) => {
   return new Error("Error: Option must be an object type");
 };
 
+let uploadedFiles = [];
+let counter = 0;
+function parseStream(payload, bufferSize) {
+  console.log("parseStream.........", payload);
+  if (payload.length === bufferSize) {
+    //console.log(this.counter);
+    if (counter === 1) {
+      return (uploadedFiles = new Blob([payload], {
+        type: "image/jpeg",
+      }));
+    } else {
+      return (uploadedFiles = new Blob([uploadedFiles, payload], {
+        type: "image/jpeg",
+      }));
+    }
+  } else if (payload.length <= 4) {
+    //console.log("last", this.counter);
+    const blob = new Blob([this.uploadedFiles, payload], {
+      type: "image/jpeg",
+    });
+    uploadedFiles = [];
+    counter = 0;
+  }
+}
+
+const updateAloesSensors = (sensor, resource, value) => {
+  switch (sensor.type) {
+    case 3200: // digital input
+      if (resource === 5500) {
+        sensor.resources[resource] = Boolean(value);
+        sensor.value = Number(sensor.resources[resource]);
+        if (value) sensor.resources["5501"] = sensor.resources["5501"] + 1;
+        else sensor.resources["5501"] = 0;
+      } else if (resource === 5502) {
+        sensor.resources[resource] = Boolean(value); // polarity
+      } else if (resource === 5503) {
+        sensor.resources[resource] = Number(value); // debounce
+      } else if (resource === 5504) {
+        sensor.resources[resource] = Number(value); // edge selection ( 1 falling, 2 rising, 3 both )
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5500;
+      break;
+    case 3201: // digital output
+      if (resource === 5550) {
+        sensor.resources[resource] = Boolean(value);
+        sensor.value = Number(sensor.resources[resource]);
+      } else if (resource === 5551) {
+        sensor.resources[resource] = Boolean(value); // polarity
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.mainResourceId = 5550;
+      break;
+    case 3202: // analog input
+      if (resource === 5600) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5600;
+      break;
+    case 3203: // analog output
+      if (resource === 5650) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.mainResourceId = 5650;
+      break;
+    case 3300: // generic sensor
+      if (resource === 5700) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // units
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5700;
+      break;
+    case 3301: // illuminance sensor
+      if (resource === 5700) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // units
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5700;
+      break;
+
+    case 3302: // presence sensor
+      if (resource === 5500) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+        if (value) sensor.resources["5501"] = sensor.resources["5501"] + 1;
+        else sensor.resources["5501"] = 0;
+      } else if (resource === 5903 || resource === 5904) {
+        sensor.resources[resource] = Number(value); // busy to clear delay || clear to busy dealy
+      } else if (resource === 5505) {
+        sensor.resources[resource] = value; //reset counter event
+      } else if (resource === 5751) {
+        sensor.resources[resource] = value; // sensor type
+      }
+      sensor.mainResourceId = 5500;
+      break;
+    case 3303: // temperature sensor
+      if (resource === 5700) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // units
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5700;
+      break;
+    case 3304: // humidity sensor
+      if (resource === 5700) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // units
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5700;
+      break;
+    case 3306: // actuation
+      if (resource === 5851) {
+        sensor.resources[resource] = Number(value); // dimmer
+        sensor.value = sensor.resources[resource];
+        if (sensor.resources["5851"] === 0) {
+          sensor.resources["5850"] = 0;
+        }
+      } else if (resource === 5850) {
+        sensor.resources[resource] = Boolean(value); // switch
+        sensor.value = Number(sensor.resources[resource]);
+        if (value) {
+          if (sensor.resources["5852"] === 0) {
+            sensor.resources["5852"] = new Date();
+          } else {
+            sensor.resources["5852"] = sensor.resources["5852"] - new Date();
+          }
+        } else {
+          sensor.resources["5852"] = 0;
+        }
+      } else if (resource === 5853) {
+        sensor.resources[resource] = value; // multi state output
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      break;
+    case 3308: // set point
+      if (resource === 5900) {
+        sensor.resources[resource] = Number(value); // set point value
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      } else if (resource === 5706) {
+        sensor.resources[resource] = value; // color
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.mainResourceId = 5900;
+      break;
+    case 3310:
+      sensor.resources["5824"] = Date();
+      sensor.resources["5826"] = "event";
+      //  sensor.value = sensor.resources["5550"];
+      //  sensor.mainResourceId = 5550;
+      break;
+    case 3311:
+      if (resource === 5851) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+        if (sensor.resources["5851"] === 0) {
+          sensor.resources["5850"] = 0;
+        }
+      } else if (resource === 5850) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+        if (value) {
+          if (sensor.resources["5852"] === 0) {
+            sensor.resources["5852"] = new Date();
+          } else {
+            sensor.resources["5852"] = sensor.resources["5852"] - new Date();
+          }
+        } else {
+          sensor.resources["5852"] = 0;
+        }
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      break;
+    case 3312:
+      if (resource === 5851) {
+        sensor.resources[resource] = Number(value);
+        if (sensor.resources["5851"] === 0) {
+          sensor.resources["5850"] = 0;
+        }
+      } else if (resource === 5850) {
+        sensor.resources[resource] = Number(value);
+        if (value) {
+          if (sensor.resources["5852"] === 0) {
+            sensor.resources["5852"] = new Date();
+          } else {
+            sensor.resources["5852"] = sensor.resources["5852"] - new Date();
+          }
+        } else {
+          sensor.resources["5852"] = 0;
+        }
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      } else if (resource === 5706) {
+        sensor.resources[resource] = value; // color
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      break;
+    case 3313: // accelerometer
+      if (resource === 5702 || resource === 5703 || resource === 5704) {
+        sensor.resources[resource] = Number(value); // X || Y || Z
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min / max range
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      }
+      sensor.mainResourceId = resource;
+      break;
+    case 3314: // magnetometer
+      if (resource === 5702 || resource === 5703 || resource === 5704) {
+        sensor.resources[resource] = Number(value); // X || Y || Z
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5705) {
+        sensor.resources[resource] = value; // compass direction
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      }
+      sensor.mainResourceId = resource;
+      break;
+    case 3315: // barometer
+      if (resource === 5700) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // units
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      }
+      sensor.mainResourceId = 5700;
+      break;
+    case 3331: // energy
+      if (resource === 5700) {
+        sensor.resources[resource] = value; // value
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5822) {
+        sensor.resources[resource] = value; // reset cumulative enery
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      break;
+    case 3332: // direction
+      if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured value
+      } else if (resource === 5705) {
+        sensor.resources[resource] = value; // compass direction
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; // reset min/max event
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = "5705";
+      break;
+    case 3333: // time
+      if (resource === 5506) {
+        if (value) {
+          sensor.resources[resource] = value; // current time
+        } else if (!value) {
+          sensor.resources[resource] = new Date(); // current time
+        }
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5507) {
+        sensor.resources[resource] = Number(value); // fraactionnal time s
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      break;
+    case 3334: // gyrometer
+      if (resource === 5702 || resource === 5703 || resource === 5704) {
+        sensor.resources[resource] = Number(value); // X || Y || Z value
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5537 || resource === 5538) {
+        sensor.resources[resource] = Number(value); // transition / remaining time in s
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; // reset min/max event
+      } else if (
+        resource === 5508 ||
+        resource === 5509 ||
+        resource === 5510 ||
+        resource === 5511 ||
+        resource === 5512 ||
+        resource === 5512
+      ) {
+        sensor.resources[resource] = Number(value); // min || max - X || Y || Z
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = 5702;
+      break;
+    case 3335: // color sensor
+      if (resource === 5706) {
+        sensor.resources[resource] = value; // color
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // unit
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.value = sensor.resources["5706"];
+      sensor.mainResourceId = 5706;
+      break;
+    case 3336: // location
+      if (resource === 5514 || resources === 5515) {
+        sensor.resources[resource] = value; // lat || lng
+      } else if (resource === 5516) {
+        sensor.resources[resource] = value; // uncertainity in meters
+      } else if (resource === 5705) {
+        sensor.resources[resource] = Number(value); // compass direction 0  -360°
+      } else if (resource === 5518) {
+        sensor.resources[resource] = new Date(); // timestamp
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.value = [sensor.resources["5514"], sensor.resources["5515"]];
+      break;
+    case 3337: // positioner
+      if (resource === 5536) {
+        sensor.resources[resource] = Number(value); // current position 0-100 %
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5537 || resource === 5538) {
+        sensor.resources[resource] = Number(value); // transition / remaining time in s
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured value
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; // reset min/max event
+      } else if (resource === 5519 || resource === 5520) {
+        sensor.resources[resource] = Number(value); // min || max measuring limit
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = 5536;
+      break;
+    case 3339: // audio clip
+      if (resource === 5522) {
+        sensor.resources[resource] = Buffer.from(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5523) {
+        sensor.resources[resource] = value; // Trigger
+      } else if (resource === 5548) {
+        sensor.resources[resource] = Number(value); // volume %
+      } else if (resource === 5524) {
+        sensor.resources[resource] = Number(value); // duration s
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.mainResourceId = 5522;
+      break;
+    case 3340: // timer
+      if (resource === 5826) {
+        sensor.resources[resource] = Number(value); // timer mode 0-4
+      } else if (resource === 5521 || resource === 5525) {
+        sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds
+      } else if (resource === 5523) {
+        sensor.resources[resource] = value; // event trigger
+      } else if (resource === 5534) {
+        sensor.resources[resource] = Number(value); // timer counter
+      } else if (resource === 5850) {
+        sensor.resources[resource] = Number(value);
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      // if (sensor.resources["5826"] > 0) {
+      //   sensor.resources["5521"] = "15"; // delay duration seconds
+      // } // timer mode
+      // if (sensor.resources["5826"] > 1) {
+      //   sensor.resources["5525"] = "15"; //  miniumum offtime seconds
+      // }
+      sensor.mainResourceId = 5850;
+      break;
+    case 3341: // text display
+      if (resource === 5527) {
+        sensor.resources[resource] = value;
+      } else if (resource === 5528) {
+        sensor.resources[resource] = Number(value); // X
+      } else if (resource === 5529) {
+        sensor.resources[resource] = Number(value); // Y
+      } else if (resource === 5545) {
+        sensor.resources[resource] = Number(value); //  Max X
+      } else if (resource === 5546) {
+        sensor.resources[resource] = Number(value); // Max Y
+      } else if (resource === 5530) {
+        sensor.resources[resource] = value; // clear display event
+      } else if (resource === 5548 || resources === 5531) {
+        sensor.resources[resource] = Number(value); // brightness || contrast level
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.value = sensor.resources[resource];
+      sensor.mainResourceId = 5527;
+      break;
+    case 3342: // switch
+      if (resource === 5500) {
+        if (value) {
+          sensor.resources["5501"] = sensor.resources["5501"] + 1; // counter
+          if (sensor.resources["5852"] === 0) {
+            sensor.resources["5852"] = new Date();
+          } else {
+            sensor.resources["5852"] = sensor.resources["5852"] - new Date();
+          }
+        } else {
+          sensor.resources["5501"] = 0;
+          if (sensor.resources["5854"] === 0) {
+            sensor.resources["5854"] = new Date();
+          } else {
+            sensor.resources["5854"] = sensor.resources["5854"] - new Date();
+          }
+        }
+        sensor.resources["5500"] = Boolean(value);
+        sensor.value = Number(sensor.resources["5500"]);
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      sensor.mainResourceId = 5500;
+      break;
+    case 3343: // dimmer
+      if (resource === 5548) {
+        sensor.resources["5548"] = value;
+        if (sensor.resources["5548"] > 0) {
+          if (sensor.resources["5852"] === 0) {
+            sensor.resources["5852"] = new Date();
+          } else {
+            sensor.resources["5852"] = sensor.resources["5852"] - new Date();
+          }
+        } else if (sensor.resources["5548"] === 0) {
+          if (sensor.resources["5854"] === 0) sensor.resources["5854"] = new Date();
+          else sensor.resources["5854"] = sensor.resources["5854"] - new Date();
+        }
+        sensor.value = sensor.resources["5548"];
+      }
+      sensor.mainResourceId = 5548;
+      break;
+    case 3344: // up/down control
+      if (resource === 5532) {
+        //todo check resource type
+        sensor.resources["5542"] = 0;
+        sensor.resources["5541"] = sensor.resources["5541"] + 1;
+        sensor.mainResourceId = 5541;
+        sensor.value = sensor.resources["5541"];
+      } else if (resource === 5533) {
+        sensor.resources["5541"] = 0;
+        sensor.resources["5542"] = sensor.resources["5542"] + 1;
+        sensor.value = -sensor.resources["5542"];
+        //  sensor.mainResourceId = 5542;
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app_name
+      }
+      break;
+    case 3345: // joystick
+      if (resource === 5702 || resource === 5703 || resource === 5704) {
+        sensor.resources[resource] = Number(value); // X || Y || Z
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5500) {
+        sensor.resources[resource] = Boolean(value); // input state
+        if (value) {
+          sensor.resources["5501"] = sensor.resources["5501"] + 1; // counter
+        } else {
+          sensor.resources["5501"] = 0; // counter
+        }
+      } else if (resource === 5501) {
+        sensor.resources[resource] = Number(value); // counter
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = resource;
+      break;
+    case 3347: // push button
+      if (resource === 5500) {
+        sensor.resources["5500"] = Boolean(value); // input value
+        if (value) {
+          sensor.resources["5501"] = sensor.resources["5501"] + 1; // counter
+        } else {
+          sensor.resources["5501"] = 0;
+        }
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = 5500;
+      break;
+    case 3349: // bitmap
+      if (resource === 5911) {
+        sensor.resources[resource] = value; // bitmap input reset
+      } else if (resource === 5912) {
+        sensor.resources[resource] = value; // element description
+      } else if (resource === 5910) {
+        counter += 1;
+        if (!value.length) {
+          return false;
+        }
+        console.log("arraytobuffer", Buffer.from(sensor.value));
+        sensor.resources[resource] = value; // buffer input
+        sensor.value = Uint8Array.from(value).buffer;
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = 5910;
+      break;
+    case 3350: // stopwatch
+      if (resource === 5544) {
+        sensor.resources[resource] = Number(value); // cumulative time in s- 0  = reset
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5850) {
+        sensor.resources[resource] = Boolean(value);
+        if (value) {
+          sensor.resources["5501"] = sensor.resources["5501"] + 1;
+        } else {
+          sensor.resources["5501"] = 0;
+        }
+      } else if (resource === 5750) {
+        sensor.resources[resource] = value; // app name
+      }
+      sensor.mainResourceId = 5544;
+      break;
+    default:
+      // CATCH 3301 until 3305 - 3315 - 3316 until 3330 - 3346
+      if (resource === 5700) {
+        sensor.resources[resource] = Number(value);
+        sensor.value = sensor.resources[resource];
+      } else if (resource === 5701) {
+        sensor.resources[resource] = value; // units
+      } else if (resource === 5601 || resource === 5602) {
+        sensor.resources[resource] = Number(value); // min || max measured range
+      } else if (resource === 5603 || resource === 5604) {
+        sensor.resources[resource] = Number(value); // min || max range
+      } else if (resource === 5605) {
+        sensor.resources[resource] = value; //reset min/max event
+      } else if (resource === 5821) {
+        sensor.resources[resource] = Number(value); // current calibration
+      } else if (resource === 5750 || resource === 5751) {
+        sensor.resources[resource] = value; // app_name || sensor type
+      } else {
+        console.log("READ ONLY");
+        //  sensor.value = sensor.resources["5700"];
+        // sensor.resources[resource] = value;
+        // sensor.mainResourceId = resource;
+      }
+  }
+  return sensor;
+};
+
 module.exports = {
   protocolPatterns,
   mySensorsApi,
@@ -277,4 +889,5 @@ module.exports = {
   publish,
   subscribe,
   publishToNative,
+  updateAloesSensors,
 };

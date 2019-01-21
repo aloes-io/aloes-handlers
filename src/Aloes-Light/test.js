@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 //  const test = require("tape");
+const fs = require("fs");
+const path = require("path");
 const aloesHandlers = require("../");
 
 // Aloes IoT tests
@@ -15,7 +17,8 @@ let options = {
   method: "HEAD",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: pattern.params.ipsoObjectId,
+    type: Number(pattern.params.ipsoObjectId),
+    resources: {"5700": null, "5750": "awesome"},
     nativeSensorId: pattern.params.sensorId,
     mainResourceId: pattern.params.ipsoResourcesId,
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
@@ -43,7 +46,8 @@ options = {
   method: "HEAD",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: pattern.params.ipsoObjectId,
+    type: Number(pattern.params.ipsoObjectId),
+    resources: {"5700": null, "5750": "awesome"},
     nativeSensorId: pattern.params.sensorId,
     mainResourceId: pattern.params.ipsoResourcesId,
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
@@ -71,7 +75,8 @@ options = {
   method: "POST",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: pattern.params.ipsoObjectId,
+    type: Number(pattern.params.ipsoObjectId),
+    resources: {"5910": null, "5911": 0},
     nativeSensorId: pattern.params.sensorId,
     mainResourceId: pattern.params.ipsoResourcesId,
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
@@ -89,7 +94,7 @@ result = aloesHandlers.publish(options);
 console.log("Aloes Light - test3 - publish", result);
 
 console.log("-------- Aloes Light - test4 ---------");
-packet = {topic: "Aloes123-out/1/3300/4/5700", payload: "test"};
+packet = {topic: "Aloes123-out/1/3349/4/5910", payload: Buffer.from("looognognogonbbuffferrr")};
 pattern = aloesHandlers.patternDetector(packet);
 console.log("Aloes Light - test4 - patternDetector", pattern);
 decoded = aloesHandlers.aloesLightDecoder(packet, pattern.params);
@@ -99,9 +104,10 @@ options = {
   method: "POST",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: pattern.params.ipsoObjectId,
+    type: Number(pattern.params.ipsoObjectId),
     nativeSensorId: pattern.params.sensorId,
     mainResourceId: pattern.params.ipsoResourcesId,
+    resources: {"5910": null, "5911": 0},
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
       pattern.params.ipsoObjectId
     }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
@@ -115,3 +121,10 @@ options = {
 };
 result = aloesHandlers.publish(options);
 console.log("Aloes Light - test4 - publish", result);
+// console.log(". = %s", path.resolve("."));
+// console.log("__dirname = %s", path.resolve(__dirname));
+fs.readFile(`${path.resolve(".")}/src/assets/feuer.png`, (err, data) => {
+  if (err) throw err;
+  let updatedSensor = aloesHandlers.updateAloesSensors(options.data, 5910, data);
+  console.log("Aloes Light - test4 - updateSensor", updatedSensor);
+});

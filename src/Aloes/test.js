@@ -43,6 +43,8 @@ let options = {
 };
 let result = aloesHandlers.publish(options);
 console.log("Aloes Client - test1 - publish", result);
+let updatedSensor = aloesHandlers.updateAloesSensors(JSON.parse(packet.payload), 5700, 23);
+console.log("Aloes Client - test1 - updateSensor", updatedSensor);
 // let native = aloesHandlers.publishToNative(options);
 // console.log("Aloes Client - test1 - publishToNative", native);
 
@@ -54,12 +56,12 @@ packet = {
 			id: 1,
 			protocolName: "aloesLight",
 			devEui: "3322321",
-			type: 3300,
+			type: 3306,
 			nativeSensorId: 4,
-			mainResourceId: 5700,
-			resources: {"5700": 1},
-			inputPath: `3322321-in/1/3300/4/5700`,
-			outputPath: `3322321-out/1/3300/4/5700`,
+			mainResourceId: 5850,
+			resources: {"5850": 1},
+			inputPath: `3322321-in/1/3306/4/5850`,
+			outputPath: `3322321-out/1/3306/4/5850`,
 			inPrefix: "-in",
 			outPrefix: "-out",
 			value: 5,
@@ -80,9 +82,10 @@ options = {
 };
 result = aloesHandlers.publish(options);
 console.log("Aloes Client - test2 - publish", result);
+updatedSensor = aloesHandlers.updateAloesSensors(JSON.parse(packet.payload), 5850, 0);
+console.log("Aloes Client - test2 - updateSensor", updatedSensor);
 // native = aloesHandlers.publishToNative(options);
 // console.log("Aloes Client - test2 - publishToNative", native);
-
 console.log("-------- Aloes Client - test3 ---------");
 packet = {
 	topic: "1/Sensor/PUT/1",
@@ -119,6 +122,8 @@ options = {
 };
 result = aloesHandlers.publish(options);
 console.log("Aloes Client - test3 - publish", result);
+updatedSensor = aloesHandlers.updateAloesSensors(JSON.parse(packet.payload), 5750, "awesome");
+console.log("Aloes Client - test3 - updateSensor", updatedSensor);
 // native = aloesHandlers.publishToNative(options);
 // console.log("Aloes Client - test3 - publishToNative", native);
 
@@ -127,14 +132,14 @@ packet = {
 	topic: "1/IoTAgent/PUT/2",
 	payload: Buffer.from(
 		JSON.stringify({
-			protocolName: "aloesLight",
+			protocolName: "mySensors",
 			devEui: "3322321",
-			type: 3300,
+			type: 3306,
 			nativeSensorId: 4,
-			mainResourceId: 5700,
-			resources: {"5700": 1},
-			inputPath: `3322321-in/1/3300/4/5700`,
-			outputPath: `3322321-out/1/3300/4/5700`,
+			mainResourceId: 5850,
+			resources: {"5850": 1},
+			inputPath: `3322321-in/1/3306/4/5850`,
+			outputPath: `3322321-out/1/3306/4/5850`,
 			inPrefix: "-in",
 			outPrefix: "-out",
 			value: 5,
@@ -155,5 +160,7 @@ options = {
 };
 result = aloesHandlers.publish(options);
 console.log("Aloes Client - test4 - publish", result);
+updatedSensor = aloesHandlers.updateAloesSensors(JSON.parse(packet.payload), 5850, 1);
+console.log("Aloes Client - test4 - updateSensor", updatedSensor);
 // native = aloesHandlers.publishToNative(options);
 // console.log("Aloes Client - test4 - publishToNative", native);

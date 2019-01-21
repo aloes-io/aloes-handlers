@@ -8,28 +8,22 @@ const protocolPatterns = require("../protocol-patterns.json");
 const mySensorsToIpsoObject = (msg) => {
   try {
     logger(2, "handlers", "mySensorsToIpsoObject:req", msg);
-    if (msg.sensorId === 255 || msg.ipsoObject === null) {
+    if (msg.sensorId === 255 || msg.type === null) {
       return null;
     }
-    const foundIpsoObject = ipsoObjects.find((object) => object.value === msg.ipsoObject);
+    const foundIpsoObject = ipsoObjects.find((object) => object.value === msg.type);
     if (!foundIpsoObject) return "no IPSO Object found";
-    const sensor = {
-      devEui: msg.devEui,
+    const decoded = {
+      ...msg,
       protocolName: "mySensors",
+      nativeResources: foundIpsoObject.resources,
       name: foundIpsoObject.name,
-      type: msg.ipsoObject,
-      resources: foundIpsoObject.resources,
       icons: foundIpsoObject.icons,
       colors: foundIpsoObject.colors,
-      nativeType: msg.type,
-      nativeNodeId: msg.nodeId,
-      nativeSensorId: msg.sensorId,
-      inPrefix: msg.inPrefix,
-      outPrefix: msg.outPrefix,
       frameCounter: 0,
     };
-    logger(2, "handlers", "mySensorsToIpsoObject:res", sensor);
-    return sensor;
+    logger(2, "handlers", "mySensorsToIpsoObject:res", decoded);
+    return decoded;
   } catch (error) {
     logger(2, "handlers", "mySensorsToIpsoObject:err", error);
     throw error;
@@ -40,31 +34,20 @@ const mySensorsToIpsoObject = (msg) => {
 const mySensorsToIpsoResources = (msg) => {
   try {
     logger(2, "handlers", "mySensorsToIpsoResources:req", msg);
-    if (msg.sensorId === 255) {
+    if (msg.sensorId === 255 || !msg.resources) {
       return null;
     }
-    const mySensorsResource = mySensorsApi.labelsSet.find((label) => label.value === msg.type);
-    if (!mySensorsResource) return "no IPSO Object found";
-    //  logger(4, "handlers", "mySensorsToIpsoResources:req", mySensorsResource);
-    const sensor = {};
-    sensor.devEui = msg.devEui;
-    sensor.resources = mySensorsResource.ipsoResources;
-    sensor.nativeResource = msg.type;
-    sensor.nativeNodeId = msg.nodeId;
-    sensor.nativeSensorId = msg.sensorId;
-    sensor.inputPath = msg.inputPath;
-    sensor.outputPath = msg.outputPath;
-    sensor.inPrefix = msg.inPrefix;
-    sensor.outPrefix = msg.outPrefix;
-    sensor.value = msg.value;
-    sensor.lastSignal = msg.timestamp;
-    const resourcesKeys = Object.getOwnPropertyNames(mySensorsResource.ipsoResources);
-    if (Object.prototype.hasOwnProperty.call(mySensorsResource.ipsoResources, resourcesKeys[0])) {
-      sensor.resources[resourcesKeys[0]] = msg.value;
-      sensor.mainResourceId = resourcesKeys[0];
+    const resourcesKeys = Object.getOwnPropertyNames(msg.resources);
+    if (Object.prototype.hasOwnProperty.call(msg.resources, resourcesKeys[0])) {
+      //  msg.resources[resourcesKeys[0]] = msg.value;
+      msg.resource = resourcesKeys[0];
+      //  msg.mainResourceId = resourcesKeys[0];
     }
-    logger(4, "handlers", "mySensorsToIpsoResources:res", sensor);
-    return sensor;
+    const decoded = {
+      ...msg,
+    };
+    logger(4, "handlers", "mySensorsToIpsoResources:res", decoded);
+    return decoded;
   } catch (error) {
     logger(2, "handlers", "mySensorsToIpsoResources:err", error);
     throw error;
@@ -87,44 +70,53 @@ const mySensorsDecoder = (packet, protocol) => {
       };
       decoded.inPrefix = inPrefix;
       decoded.outPrefix = outPrefix;
+      decoded.prefix = gatewayIdParts[1];
       decoded.devEui = gatewayIdParts[0];
-      decoded.timestamp = new Date();
+      decoded.lastSignal = new Date();
 
       switch (Number(protocol.method)) {
         case 0: // Presentation
-          decoded.nodeId = protocol.nodeId;
-          decoded.sensorId = protocol.sensorId;
-          decoded.ipsoObject = mySensorsApi.labelsPresentation[Number(protocol.subType)].ipsoObject;
-          decoded.type = Number(protocol.subType);
+          decoded.nativeNodeId = protocol.nodeId;
+          decoded.nativeSensorId = protocol.sensorId;
+          decoded.type = mySensorsApi.labelsPresentation[Number(protocol.subType)].ipsoObject;
+          decoded.nativeType = Number(protocol.subType);
           decoded.value = packet.payload.toString();
+          decoded.method = "HEAD";
           decodedPayload = mySensorsToIpsoObject(decoded);
           break;
         case 1: // Set
           decoded.inputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
           params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
           decoded.outputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
-          decoded.nodeId = protocol.nodeId;
-          decoded.sensorId = protocol.sensorId;
-          decoded.ipsoResources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
-          decoded.type = Number(protocol.subType);
+          decoded.nativeNodeId = protocol.nodeId;
+          decoded.nativeSensorId = protocol.sensorId;
+          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
+          decoded.nativeResource = Number(protocol.subType);
           decoded.value = packet.payload.toString();
+          decoded.method = "POST";
           decodedPayload = mySensorsToIpsoResources(decoded);
           break;
         case 2: // Req
-          decoded.nodeId = protocol.nodeId;
-          decoded.sensorId = protocol.sensorId;
-          decoded.ipsoResources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
-          decoded.type = Number(protocol.subType);
+          decoded.nativeNodeId = protocol.nodeId;
+          decoded.nativeSensorId = protocol.sensorId;
+          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
+          decoded.nativeResource = Number(protocol.subType);
+          decoded.method = "GET";
+          decodedPayload = decoded;
           break;
         case 3: // Internal
-          decoded.nodeId = protocol.nodeId;
-          decoded.sensorId = protocol.sensorId;
+          decoded.nativeNodeId = protocol.nodeId;
+          decoded.nativeSensorId = protocol.sensorId;
           decoded.type = Number(protocol.subType);
           decoded.value = packet.payload.toString();
           break;
         case 4: // Stream - OTA firmware update
-          decoded.nodeId = protocol.nodeId;
-          decoded.method = "stream";
+          decoded.nativeNodeId = protocol.nodeId;
+          decoded.nativeSensorId = protocol.sensorId;
+          decoded.nativeResource = Number(protocol.subType);
+          decoded.value = packet.payload;
+          decoded.method = "STREAM";
+          decodedPayload = decoded;
           break;
         default:
           break;
