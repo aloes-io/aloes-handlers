@@ -1,11 +1,9 @@
-# Aloes-handlers
+# Aloes - Handlers
 
-Encode / decode MQTT stream.
-
-Use IPSO standards as main target / source protocol.
+Encode / decode MQTT stream from Iot device to browsers.
+Use [Open Mobile Alliance](http://www.openmobilealliance.org/wp/OMNA/LwM2M/LwM2MRegistry.html) standards as main target / source protocol.
 
 WIP :
-
 -   Compatibility with MySensors
 -   Compatibility with CayenneLPP
 

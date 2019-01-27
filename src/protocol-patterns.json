@@ -20,7 +20,7 @@
     }
   },
   "aloesLight": {
-    "pattern": "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
+    "pattern": "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId",
     "validators": {
       "prefixedDevEui": "string",
       "nodeId": "number",

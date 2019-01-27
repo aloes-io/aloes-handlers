@@ -1,35 +1,35 @@
 const mqttPattern = require("mqtt-pattern");
 const {logger} = require("../logger");
-const ipsoObjects = require("../IPSO/ipso-objects.json");
+const omaObjects = require("../OMA/oma-objects.json");
 const protocolPatterns = require("../protocol-patterns.json");
 
-const aloesLightToIpsoObject = (msg) => {
+const aloesLightToOmaObject = (msg) => {
   try {
-    logger(4, "handlers", "aloesLightToIpsoObject:req", msg);
-    const foundIpsoObject = ipsoObjects.find((object) => object.value === Number(msg.type));
-    if (!foundIpsoObject) return "no IPSO Object found";
+    logger(4, "handlers", "aloesLightToOmaObject:req", msg);
+    const foundOmaObject = omaObjects.find((object) => object.value === Number(msg.type));
+    if (!foundOmaObject) return "no OMA Object found";
     const decoded = {
       ...msg,
       protocolName: "aloesLight",
-      resources: foundIpsoObject.resources,
-      name: foundIpsoObject.name,
-      icons: foundIpsoObject.icons,
-      colors: foundIpsoObject.colors,
+      resources: foundOmaObject.resources,
+      name: foundOmaObject.name,
+      icons: foundOmaObject.icons,
+      colors: foundOmaObject.colors,
       frameCounter: 0,
     };
-    logger(4, "handlers", "aloesLightToIpsoObject:res", decoded);
+    logger(4, "handlers", "aloesLightToOmaObject:res", decoded);
     return decoded;
   } catch (error) {
-    logger(2, "handlers", "aloesLightToIpsoObject:err", error);
+    logger(2, "handlers", "aloesLightToOmaObject:err", error);
     throw error;
   }
 };
 
-const aloesLightToIpsoResources = (msg) => {
+const aloesLightToOmaResources = (msg) => {
   try {
-    logger(4, "handlers", "aloesLightToIpsoResources:req", msg);
-    const aloesResource = ipsoObjects.find((object) => object.value === Number(msg.type));
-    if (!aloesResource) return "no IPSO Object found";
+    logger(4, "handlers", "aloesLightToOmaResources:req", msg);
+    const aloesResource = omaObjects.find((object) => object.value === Number(msg.type));
+    if (!aloesResource) return "no OMA Object found";
     //  msg.resources[msg.resource.toString()] = msg.value;
     const decoded = {
       ...msg,
@@ -37,10 +37,10 @@ const aloesLightToIpsoResources = (msg) => {
       colors: aloesResource.colors,
     };
     //  sensor.resources = aloesResource.resources;
-    logger(4, "handlers", "aloesLightToIpsoResources:res", decoded);
+    logger(4, "handlers", "aloesLightToOmaResources:res", decoded);
     return decoded;
   } catch (error) {
-    logger(2, "handlers", "aloesLightToIpsoResources:err", error);
+    logger(2, "handlers", "aloesLightToOmaResources:err", error);
     throw error;
   }
 };
@@ -69,32 +69,34 @@ const aloesLightDecoder = (packet, protocol) => {
       switch (Number(protocol.method)) {
         case 0: // HEAD
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.type = Number(protocol.ipsoObjectId);
-          decoded.resource = Number(protocol.ipsoResourcesId);
+          decoded.type = Number(protocol.omaObjectId);
+          decoded.nativeType = Number(protocol.omaObjectId);
+          decoded.resource = Number(protocol.omaResourceId);
           decoded.value = packet.payload.toString();
           decoded.inputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
           params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
           decoded.outputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
           decoded.method = "HEAD";
-          decodedPayload = aloesLightToIpsoObject(decoded);
+          decodedPayload = aloesLightToOmaObject(decoded);
           break;
         case 1: // POST
           decoded.inputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
           params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
           decoded.outputPath = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.type = Number(protocol.ipsoObjectId);
-          decoded.resource = Number(protocol.ipsoResourcesId);
+          decoded.type = Number(protocol.omaObjectId);
+          decoded.nativeType = Number(protocol.omaObjectId);
+          decoded.resource = Number(protocol.omaResourceId);
           // todo : format payload base on type ?
           //  decoded.value = packet.payload;
           decoded.value = packet.payload.toString();
           decoded.method = "POST";
-          decodedPayload = aloesLightToIpsoResources(decoded);
+          decodedPayload = aloesLightToOmaResources(decoded);
           break;
         case 2: // GET
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.type = Number(protocol.ipsoObjectId);
-          decoded.resource = Number(protocol.ipsoResourcesId);
+          decoded.type = Number(protocol.omaObjectId);
+          decoded.resource = Number(protocol.omaResourceId);
           decoded.method = "GET";
           decodedPayload = decoded;
           break;
@@ -104,8 +106,8 @@ const aloesLightDecoder = (packet, protocol) => {
           break;
         case 4: // STREAM
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.type = Number(protocol.ipsoObjectId);
-          decoded.resource = Number(protocol.ipsoResourcesId);
+          decoded.type = Number(protocol.omaObjectId);
+          decoded.resource = Number(protocol.omaResourceId);
           decoded.value = packet.payload;
           decoded.method = "STREAM";
           decodedPayload = decoded;
@@ -122,7 +124,7 @@ const aloesLightDecoder = (packet, protocol) => {
 };
 
 module.exports = {
-  aloesLightToIpsoObject,
-  aloesLightToIpsoResources,
+  aloesLightToOmaObject,
+  aloesLightToOmaResources,
   aloesLightDecoder,
 };

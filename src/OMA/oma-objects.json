@@ -120,7 +120,10 @@
       "5701": "°C"
     },
     "colors": ["#5ae2e2", "#ff3535"],
-    "icons": ["/icons/aloes/temperature.png", "/icons/aloes/temperature-white.png"]
+    "icons": [
+      "/icons/aloes/temperature.png",
+      "/icons/aloes/temperature-white.png"
+    ]
   },
   {
     "name": "Humidity Sensor",
@@ -276,7 +279,10 @@
       "5604": -10
     },
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/accelerometer.png", "/icons/aloes/accelerometer-white.png"]
+    "icons": [
+      "/icons/aloes/accelerometer.png",
+      "/icons/aloes/accelerometer-white.png"
+    ]
   },
   {
     "name": "Magnetometer",
@@ -397,7 +403,10 @@
       "5750": "app_name"
     },
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/percentage.png", "/icons/aloes/percentage-white.png"]
+    "icons": [
+      "/icons/aloes/percentage.png",
+      "/icons/aloes/percentage-white.png"
+    ]
   },
   {
     "name": "Altitude",
@@ -492,7 +501,10 @@
       "5750": "app_name"
     },
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/petri-dish.png", "/icons/aloes/petri-dish-white.png"]
+    "icons": [
+      "/icons/aloes/petri-dish.png",
+      "/icons/aloes/petri-dish-white.png"
+    ]
   },
   {
     "name": "Acidity",
@@ -649,7 +661,10 @@
       "5750": "app_name"
     },
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/accelerometer.png", "/icons/aloes/accelerometer-white.png"]
+    "icons": [
+      "/icons/aloes/accelerometer.png",
+      "/icons/aloes/accelerometer-white.png"
+    ]
   },
   {
     "name": "Color",
@@ -666,13 +681,12 @@
     "value": 3336,
     "ressourcesName": "5514, 5515, 5516, 5517, 5518, 5705",
     "resources": {
-      "5514": "#fff",
-      "5515": "hex",
-      "55151": "app_name",
+      "5514": "0.0",
+      "5515": "0.0",
       "5516": "",
       "5517": "",
       "5518": "time",
-      "5705": 0
+      "5705": "app_name"
     },
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/location.png", "/icons/aloes/location-white.png"]
@@ -694,7 +708,10 @@
       "5750": "app_name"
     },
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/level-control.png", "/icons/aloes/level-control-white.png"]
+    "icons": [
+      "/icons/aloes/level-control.png",
+      "/icons/aloes/level-control-white.png"
+    ]
   },
   {
     "name": "Buzzer",
@@ -736,7 +753,7 @@
       "5521": 0,
       "5523": null,
       "5525": 0,
-      "5526": 100,
+      "5526": 0,
       "5534": 0,
       "5538": 0,
       "5543": 1,
@@ -789,19 +806,22 @@
     "ressourcesName": "5548, 5852, 5854, 5750",
     "resources": {"5548": 1, "5852": 1, "5854": 0, "5750": "app_name"},
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/level-control.png", "/icons/aloes/level-control-white.png"]
+    "icons": [
+      "/icons/aloes/level-control.png",
+      "/icons/aloes/level-control-white.png"
+    ]
   },
   {
     "name": "Up/Down Control",
     "description": "used to report the state of an up/down control element like a pair of push buttons or a rotary encoder. Counters for increase and decrease operations are provided for counting pulses from a quadrature encoder",
     "value": 3344,
 
-    "ressourcesName": "5532, 5533, 5841, 5842, 5750",
+    "ressourcesName": "5532, 5533, 5541, 5542, 5750",
     "resources": {
       "5532": 1,
-      "5833": 1,
-      "5841": 0,
-      "5842": 0,
+      "5533": 1,
+      "5541": 0,
+      "5542": 0,
       "5750": "app_name"
     },
     "colors": ["#000", "#adadad"],
@@ -849,7 +869,10 @@
     "ressourcesName": "5500, 5501, 5750",
     "resources": {"5500": 0, "5501": 0, "5750": "app-name"},
     "colors": ["#000", "#adadad"],
-    "icons": ["/icons/aloes/push-button.png", "/icons/aloes/push-button-white.png"]
+    "icons": [
+      "/icons/aloes/push-button.png",
+      "/icons/aloes/push-button-white.png"
+    ]
   },
   {
     "name": "Multistate Selector",
@@ -882,8 +905,14 @@
     "name": "powerupLog",
     "description": "An ascending timer that counts how long time has passed since the timer was started after reset.",
     "value": 3351,
-    "ressourcesName": "0, 1, 2, 3, 4",
-    "resources": {"0": "deviceName", "1": "toolVersion", "2": "IMEI", "3": "IMSI", "4": "MSISDN"},
+    "ressourcesName": "10, 1, 2, 3, 4",
+    "resources": {
+      "10": "deviceName",
+      "1": "toolVersion",
+      "2": "IMEI",
+      "3": "IMSI",
+      "4": "MSISDN"
+    },
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
   },
@@ -910,7 +939,12 @@
     "description": "cell reselection event information",
     "value": 3354,
     "ressourcesName": "2, 3, 6032, 6033",
-    "resources": {"2": "timeReselectionStart", "3": "failureType", "6032": 0, "6033": 0},
+    "resources": {
+      "2": "timeReselectionStart",
+      "3": "failureType",
+      "6032": 0,
+      "6033": 0
+    },
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
   },

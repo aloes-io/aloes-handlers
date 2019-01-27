@@ -3,13 +3,13 @@ const {logger} = require("../logger");
 const protocolPatterns = require("../protocol-patterns.json");
 
 const clientToAloesLight = (instance, protocol) => {
-  // "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId",
+  // "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId",
   let topic = null;
   const params = {
     prefixedDevEui: `${instance.devEui}${instance.inPrefix}`,
-    ipsoObjectId: instance.type,
+    omaObjectId: instance.type,
     sensorId: instance.nativeSensorId,
-    ipsoResourcesId: instance.mainResourceId,
+    omaResourceId: instance.resource,
   };
   logger(4, "handlers", "clientToAloesLight", params);
   if (protocol.method === "POST" || protocol.method === "PUT") {

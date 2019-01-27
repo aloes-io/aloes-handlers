@@ -1,12 +1,5 @@
 [
   {
-    "resource": "Device Name",
-    "description": "Human-readable name of the device ",
-    "value": 0,
-    "operations": "R",
-    "type": "String"
-  },
-  {
     "resource": "Tool Version",
     "description": "The tool version that the device supports - used to determine the logging object/resource version to be used for parsing ",
     "value": 1,
@@ -35,11 +28,11 @@
     "type": "String"
   },
   {
-    "resource": "Digital Input State",
-    "description": "The current state of a digital input.",
-    "value": 5500,
+    "resource": "Device Name",
+    "description": "Human-readable name of the device ",
+    "value": 10,
     "operations": "R",
-    "type": "Boolean"
+    "type": "String"
   },
   {
     "resource": "Digital Input State",
@@ -68,7 +61,7 @@
     "value": 5503,
     "operations": "R,W",
     "type": "Integer",
-    "Unit": "ms"
+    "unit": "ms"
   },
   {
     "resource": "Digital Input Edge Selection",
@@ -76,7 +69,7 @@
     "value": 5504,
     "operations": "R,W",
     "type": "Integer",
-    "Range": [1, 3]
+    "range": [1, 3]
   },
   {
     "resource": "Digital Input Counter Reset",
@@ -91,8 +84,8 @@
     "value": 5506,
     "operations": "R,W",
     "type": "Time",
-    "Unit": "s",
-    "Range": [0, 1]
+    "unit": "s",
+    "range": [0, 1]
   },
   {
     "resource": "Fractional Time",
@@ -100,8 +93,8 @@
     "value": 5507,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "seconds",
-    "Range": [0, 1]
+    "unit": "seconds",
+    "range": [0, 1]
   },
   {
     "resource": "Min X Value",
@@ -200,7 +193,7 @@
     "value": 5521,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s"
+    "unit": "s"
   },
   {
     "resource": "Clip",
@@ -222,7 +215,7 @@
     "value": 5524,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s"
+    "unit": "s"
   },
   {
     "resource": "Minimum Off-time",
@@ -230,7 +223,7 @@
     "value": 5525,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s"
+    "unit": "s"
   },
   {
     "resource": "Mode",
@@ -238,7 +231,7 @@
     "value": 5526,
     "operations": "R,W",
     "type": "Integer",
-    "Range": [0, 4]
+    "range": [0, 4]
   },
   {
     "resource": "Text",
@@ -274,8 +267,8 @@
     "value": 5531,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "%",
-    "Range": [0, 100]
+    "unit": "%",
+    "range": [0, 100]
   },
   {
     "resource": "Increase Input State",
@@ -304,8 +297,8 @@
     "value": 5536,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "%",
-    "Range": [0, 100]
+    "unit": "%",
+    "range": [0, 100]
   },
   {
     "resource": "Transition Time",
@@ -313,7 +306,7 @@
     "value": 5537,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "s"
+    "unit": "s"
   },
   {
     "resource": "Remaining Time",
@@ -321,7 +314,7 @@
     "value": 5538,
     "operations": "R",
     "type": "Float",
-    "Unit": "s"
+    "unit": "s"
   },
   {
     "resource": "Up Counter",
@@ -378,8 +371,8 @@
     "value": 5548,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "%",
-    "Range": [0, 100]
+    "unit": "%",
+    "range": [0, 100]
   },
   {
     "resource": "Digital Output State",
@@ -485,8 +478,8 @@
     "value": 5705,
     "operations": "R",
     "type": "Float",
-    "Unit": "deg",
-    "Range": [0, 360]
+    "unit": "deg",
+    "range": [0, 360]
   },
   {
     "resource": "Colour",
@@ -515,7 +508,7 @@
     "value": 5800,
     "operations": "R",
     "type": "Float",
-    "Unit": "W"
+    "unit": "W"
   },
   {
     "resource": "Min Measured active power",
@@ -523,7 +516,7 @@
     "value": 5801,
     "operations": "R",
     "type": "Float",
-    "Unit": "W"
+    "unit": "W"
   },
   {
     "resource": "Max Measured active power",
@@ -538,7 +531,7 @@
     "value": 5803,
     "operations": "R",
     "type": "Float",
-    "Unit": "W"
+    "unit": "W"
   },
   {
     "resource": "Max Range active power",
@@ -546,7 +539,7 @@
     "value": 5804,
     "operations": "R",
     "type": "Float",
-    "Unit": "W"
+    "unit": "W"
   },
   {
     "resource": "Cumulative active power",
@@ -554,7 +547,7 @@
     "value": 5805,
     "operations": "R",
     "type": "Float",
-    "Unit": "Wh"
+    "unit": "Wh"
   },
   {
     "resource": "Active Power Calibration",
@@ -562,7 +555,7 @@
     "value": 5806,
     "operations": "W",
     "type": "Float",
-    "Unit": "W"
+    "unit": "W"
   },
   {
     "resource": "Instantaneous reactive power",
@@ -570,7 +563,7 @@
     "value": 5810,
     "operations": "R",
     "type": "Float",
-    "Unit": "VAR"
+    "unit": "VAR"
   },
   {
     "resource": "Min Measured reactive power",
@@ -578,7 +571,7 @@
     "value": 5811,
     "operations": "R",
     "type": "Float",
-    "Unit": "VAR"
+    "unit": "VAR"
   },
   {
     "resource": "Max Measured reactive power",
@@ -586,7 +579,7 @@
     "value": 5812,
     "operations": "R",
     "type": "Float",
-    "Unit": "VAR"
+    "unit": "VAR"
   },
   {
     "resource": "Min Range reactive power",
@@ -594,7 +587,7 @@
     "value": 5813,
     "operations": "R",
     "type": "Float",
-    "Unit": "VAR"
+    "unit": "VAR"
   },
   {
     "resource": "Max Range reactive power",
@@ -602,7 +595,7 @@
     "value": 5814,
     "operations": "R",
     "type": "Float",
-    "Unit": "VAR"
+    "unit": "VAR"
   },
   {
     "resource": "Cumulative reactive power",
@@ -610,7 +603,7 @@
     "value": 5815,
     "operations": "R",
     "type": "Float",
-    "Unit": "VARh"
+    "unit": "VARh"
   },
   {
     "resource": "Reactive Power Calibration",
@@ -618,7 +611,7 @@
     "value": 5816,
     "operations": "W",
     "type": "Float",
-    "Unit": "VAR"
+    "unit": "VAR"
   },
   {
     "resource": "Power Factor",
@@ -661,7 +654,7 @@
     "value": 5825,
     "operations": "R,W",
     "type": "Float",
-    "Unit": "min"
+    "unit": "min"
   },
   {
     "resource": "Criticality Level",
@@ -676,8 +669,8 @@
     "value": 5827,
     "operations": "R,W",
     "type": "String",
-    "Unit": "%",
-    "Range": [0, 100]
+    "unit": "%",
+    "range": [0, 100]
   },
   {
     "resource": "Duty Cycle",
@@ -685,8 +678,8 @@
     "value": 5828,
     "operations": "R,W",
     "type": "Integer",
-    "Unit": "%",
-    "Range": [0, 100]
+    "unit": "%",
+    "range": [0, 100]
   },
   {
     "resource": "On/Off",
@@ -702,7 +695,7 @@
     "operations": "R,W",
     "type": "Integer",
     "Units": "%",
-    "Range": [0, 100]
+    "range": [0, 100]
   },
   {
     "resource": "On Time",

@@ -5,7 +5,7 @@ const path = require("path");
 const aloesHandlers = require("../");
 
 // Aloes IoT tests
-//  const aloesPattern = "+prefixedDevEui/+method/+ipsoObjectId/+sensorId/+ipsoResourcesId";
+//  const aloesPattern = "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId";
 console.log("-------- Aloes Light - test1 ---------");
 let packet = {topic: "Aloes123-out/0/3349/3/5910", payload: "test"};
 let pattern = aloesHandlers.patternDetector(packet);
@@ -17,16 +17,16 @@ let options = {
   method: "HEAD",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: Number(pattern.params.ipsoObjectId),
+    type: Number(pattern.params.omaObjectId),
     resources: {"5700": null, "5750": "awesome"},
     nativeSensorId: pattern.params.sensorId,
-    mainResourceId: pattern.params.ipsoResourcesId,
+    resource: pattern.params.omaResourceId,
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     outputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-out/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     inPrefix: "-in",
     outPrefix: "-out",
     value: packet.payload,
@@ -46,16 +46,16 @@ options = {
   method: "HEAD",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: Number(pattern.params.ipsoObjectId),
+    type: Number(pattern.params.omaObjectId),
     resources: {"5700": null, "5750": "awesome"},
     nativeSensorId: pattern.params.sensorId,
-    mainResourceId: pattern.params.ipsoResourcesId,
+    resource: pattern.params.omaResourceId,
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     outputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-out/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     inPrefix: "-in",
     outPrefix: "-out",
     value: packet.payload,
@@ -75,16 +75,16 @@ options = {
   method: "POST",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: Number(pattern.params.ipsoObjectId),
+    type: Number(pattern.params.omaObjectId),
     resources: {"5910": null, "5911": 0},
     nativeSensorId: pattern.params.sensorId,
-    mainResourceId: pattern.params.ipsoResourcesId,
+    resource: pattern.params.omaResourceId,
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     outputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-out/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     inPrefix: "-in",
     outPrefix: "-out",
     value: packet.payload,
@@ -104,16 +104,16 @@ options = {
   method: "POST",
   data: {
     devEui: pattern.params.prefixedDevEui.split("-")[0],
-    type: Number(pattern.params.ipsoObjectId),
+    type: Number(pattern.params.omaObjectId),
     nativeSensorId: pattern.params.sensorId,
-    mainResourceId: pattern.params.ipsoResourcesId,
+    resource: pattern.params.omaResourceId,
     resources: {"5910": null, "5911": 0},
     inputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-in/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     outputPath: `${pattern.params.prefixedDevEui.split("-")[0]}-out/${pattern.params.method}/${
-      pattern.params.ipsoObjectId
-    }/${pattern.params.sensorId}/${pattern.params.ipsoResourcesId}`,
+      pattern.params.omaObjectId
+    }/${pattern.params.sensorId}/${pattern.params.omaResourceId}`,
     inPrefix: "-in",
     outPrefix: "-out",
     value: packet.payload,

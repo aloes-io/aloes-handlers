@@ -1,39 +1,39 @@
 const mqttPattern = require("mqtt-pattern");
 const {logger} = require("../logger");
 const mySensorsApi = require("./mysensors-api.json");
-const ipsoObjects = require("../IPSO/ipso-objects.json");
+const omaObjects = require("../OMA/oma-objects.json");
 const protocolPatterns = require("../protocol-patterns.json");
 
 // device as argument ?
-const mySensorsToIpsoObject = (msg) => {
+const mySensorsToOmaObject = (msg) => {
   try {
-    logger(2, "handlers", "mySensorsToIpsoObject:req", msg);
+    logger(2, "handlers", "mySensorsToOmaObject:req", msg);
     if (msg.sensorId === 255 || msg.type === null) {
       return null;
     }
-    const foundIpsoObject = ipsoObjects.find((object) => object.value === msg.type);
-    if (!foundIpsoObject) return "no IPSO Object found";
+    const foundOmaObject = omaObjects.find((object) => object.value === msg.type);
+    if (!foundOmaObject) return "no OMA Object found";
     const decoded = {
       ...msg,
       protocolName: "mySensors",
-      nativeResources: foundIpsoObject.resources,
-      name: foundIpsoObject.name,
-      icons: foundIpsoObject.icons,
-      colors: foundIpsoObject.colors,
+      nativeResources: foundOmaObject.resources,
+      name: foundOmaObject.name,
+      icons: foundOmaObject.icons,
+      colors: foundOmaObject.colors,
       frameCounter: 0,
     };
-    logger(2, "handlers", "mySensorsToIpsoObject:res", decoded);
+    logger(2, "handlers", "mySensorsToOmaObject:res", decoded);
     return decoded;
   } catch (error) {
-    logger(2, "handlers", "mySensorsToIpsoObject:err", error);
+    logger(2, "handlers", "mySensorsToOmaObject:err", error);
     throw error;
   }
 };
 
 // sensor as argument ?
-const mySensorsToIpsoResources = (msg) => {
+const mySensorsToOmaResources = (msg) => {
   try {
-    logger(2, "handlers", "mySensorsToIpsoResources:req", msg);
+    logger(2, "handlers", "mySensorsToOmaResources:req", msg);
     if (msg.sensorId === 255 || !msg.resources) {
       return null;
     }
@@ -46,10 +46,10 @@ const mySensorsToIpsoResources = (msg) => {
     const decoded = {
       ...msg,
     };
-    logger(4, "handlers", "mySensorsToIpsoResources:res", decoded);
+    logger(4, "handlers", "mySensorsToOmaResources:res", decoded);
     return decoded;
   } catch (error) {
-    logger(2, "handlers", "mySensorsToIpsoResources:err", error);
+    logger(2, "handlers", "mySensorsToOmaResources:err", error);
     throw error;
   }
 };
@@ -78,11 +78,11 @@ const mySensorsDecoder = (packet, protocol) => {
         case 0: // Presentation
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.type = mySensorsApi.labelsPresentation[Number(protocol.subType)].ipsoObject;
+          decoded.type = mySensorsApi.labelsPresentation[Number(protocol.subType)].omaObject;
           decoded.nativeType = Number(protocol.subType);
           decoded.value = packet.payload.toString();
           decoded.method = "HEAD";
-          decodedPayload = mySensorsToIpsoObject(decoded);
+          decodedPayload = mySensorsToOmaObject(decoded);
           break;
         case 1: // Set
           decoded.inputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
@@ -90,16 +90,16 @@ const mySensorsDecoder = (packet, protocol) => {
           decoded.outputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
+          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
           decoded.nativeResource = Number(protocol.subType);
           decoded.value = packet.payload.toString();
           decoded.method = "POST";
-          decodedPayload = mySensorsToIpsoResources(decoded);
+          decodedPayload = mySensorsToOmaResources(decoded);
           break;
         case 2: // Req
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].ipsoResources;
+          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
           decoded.nativeResource = Number(protocol.subType);
           decoded.method = "GET";
           decodedPayload = decoded;
@@ -130,7 +130,7 @@ const mySensorsDecoder = (packet, protocol) => {
 };
 
 module.exports = {
-  mySensorsToIpsoObject,
-  mySensorsToIpsoResources,
+  mySensorsToOmaObject,
+  mySensorsToOmaResources,
   mySensorsDecoder,
 };

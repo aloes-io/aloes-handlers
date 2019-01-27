@@ -40,7 +40,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "identity-obj-proxy": "^3.0.0",
     "nodemon": "^1.18.8",
-    "prettier": "1.14.3",
+    "prettier": "1.16.1",
     "tape": "^4.9.2"
   },
   "babel": {
@@ -63,6 +63,12 @@
       "@babel/plugin-proposal-numeric-separator",
       "@babel/plugin-proposal-throw-expressions"
     ]
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "printWidth": 80,
+    "trailingComma": "all"
   },
   "eslintConfig": {
     "root": true,
