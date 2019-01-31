@@ -12,7 +12,11 @@
       "5750": "#000",
       "5751": "#000"
     },
-    "icons": ["/icons/aloes/digital.png", "/icons/aloes/digital-white.png"]
+    "icons": [
+      "/icons/aloes/digital.svg",
+      "/icons/aloes/digital.png",
+      "/icons/aloes/digital-white.png"
+    ]
   },
   {
     "name": "Digital Output",
@@ -33,7 +37,11 @@
       "5751": "#000",
       "5605": "#000"
     },
-    "icons": ["/icons/aloes/analog.png", "/icons/aloes/analog-white.png"]
+    "icons": [
+      "/icons/aloes/analog.svg",
+      "/icons/aloes/analog.png",
+      "/icons/aloes/analog-white.png"
+    ]
   },
   {
     "name": "Analog Output",
@@ -44,7 +52,11 @@
       "5604": "#ff3535",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/analog.png", "/icons/aloes/analog-white.png"]
+    "icons": [
+      "/icons/aloes/analog.svg",
+      "/icons/aloes/analog.png",
+      "/icons/aloes/analog-white.png"
+    ]
   },
   {
     "name": "Generic sensor",
@@ -60,7 +72,11 @@
       "5751": "#000",
       "5605": "#000"
     },
-    "icons": ["/icons/aloes/custom.png", "/icons/aloes/custom-white.png"]
+    "icons": [
+      "/icons/aloes/custom.svg",
+      "/icons/aloes/custom.png",
+      "/icons/aloes/custom-white.png"
+    ]
   },
   {
     "name": "Illuminance sensor",
@@ -75,7 +91,11 @@
       "5605": "#000",
       "5701": "#000"
     },
-    "icons": ["/icons/aloes/light.png", "/icons/aloes/light-white.png"]
+    "icons": [
+      "/icons/aloes/light.svg",
+      "/icons/aloes/light.png",
+      "/icons/aloes/light-white.png"
+    ]
   },
   {
     "name": "Presence sensor",
@@ -88,7 +108,11 @@
       "5903": "#000",
       "5904": "#000"
     },
-    "icons": ["/icons/aloes/presence.png", "/icons/aloes/presence-white.png"]
+    "icons": [
+      "/icons/aloes/presence.svg",
+      "/icons/aloes/presence.png",
+      "/icons/aloes/presence-white.png"
+    ]
   },
   {
     "name": "Temperature Sensor",
@@ -103,6 +127,7 @@
       "5605": "#000"
     },
     "icons": [
+      "/icons/aloes/temperature.svg",
       "/icons/aloes/temperature.png",
       "/icons/aloes/temperature-white.png"
     ]
@@ -119,7 +144,11 @@
       "5604": "#ff3535",
       "5605": "#000"
     },
-    "icons": ["/icons/aloes/humidity.png", "/icons/aloes/humidity-white.png"]
+    "icons": [
+      "/icons/aloes/humidity.svg",
+      "/icons/aloes/humidity.png",
+      "/icons/aloes/humidity-white.png"
+    ]
   },
   {
     "name": "Power Measurment",
@@ -145,6 +174,8 @@
       "5605": "#000"
     },
     "icons": [
+      "/icons/aloes/switch-on.svg",
+      "/icons/aloes/switch-off.svg",
       "/icons/aloes/switch-on.png",
       "/icons/aloes/switch-off.png",
       "/icons/aloes/switch-on-white.png",
@@ -162,6 +193,8 @@
       "5750": "#000"
     },
     "icons": [
+      "/icons/aloes/switch-on.svg",
+      "/icons/aloes/switch-off.svg",
       "/icons/aloes/switch-on.png",
       "/icons/aloes/switch-off.png",
       "/icons/aloes/switch-on-white.png",
@@ -178,6 +211,8 @@
       "5750": "#000"
     },
     "icons": [
+      "/icons/aloes/switch-on.svg",
+      "/icons/aloes/switch-off.svg",
       "/icons/aloes/switch-on.png",
       "/icons/aloes/switch-off.png",
       "/icons/aloes/switch-on-white.png",
@@ -196,7 +231,11 @@
       "5828": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/slider.png", "/icons/aloes/slider-white.png"]
+    "icons": [
+      "/icons/aloes/slider.svg",
+      "/icons/aloes/slider.png",
+      "/icons/aloes/slider-white.png"
+    ]
   },
   {
     "name": "Light control",
@@ -211,7 +250,11 @@
       "5701": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/slider.png", "/icons/aloes/slider-white.png"]
+    "icons": [
+      "/icons/aloes/slider.svg",
+      "/icons/aloes/slider.png",
+      "/icons/aloes/slider-white.png"
+    ]
   },
   {
     "name": "Power control",
@@ -224,7 +267,11 @@
       "5820": "#fea103",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/slider.png", "/icons/aloes/slider-white.png"]
+    "icons": [
+      "/icons/aloes/slider.svg",
+      "/icons/aloes/slider.png",
+      "/icons/aloes/slider-white.png"
+    ]
   },
   {
     "name": "Accelerometer",
@@ -238,6 +285,7 @@
       "5604": "#ff3535"
     },
     "icons": [
+      "/icons/aloes/accelerometer.svg",
       "/icons/aloes/accelerometer.png",
       "/icons/aloes/accelerometer-white.png"
     ]
@@ -252,7 +300,11 @@
       "5704": "#8797ef",
       "5705": "#000"
     },
-    "icons": ["/icons/aloes/magnetism.png", "/icons/aloes/magnetism-white.png"]
+    "icons": [
+      "/icons/aloes/magnetism.svg",
+      "/icons/aloes/magnetism.png",
+      "/icons/aloes/magnetism-white.png"
+    ]
   },
   {
     "name": "Barometer",
@@ -266,7 +318,11 @@
       "5604": "#ff3535",
       "5605": "#000"
     },
-    "icons": ["/icons/aloes/barometer.png", "/icons/aloes/barometer-white.png"]
+    "icons": [
+      "/icons/aloes/barometer.svg",
+      "/icons/aloes/barometer.png",
+      "/icons/aloes/barometer-white.png"
+    ]
   },
   {
     "name": "Voltage",
@@ -282,7 +338,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/voltage.png", "/icons/aloes/voltage-white.png"]
+    "icons": [
+      "/icons/aloes/voltage.svg",
+      "/icons/aloes/voltage.png",
+      "/icons/aloes/voltage-white.png"
+    ]
   },
   {
     "name": "Current",
@@ -298,7 +358,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/voltage.png", "/icons/aloes/voltage-white.png"]
+    "icons": [
+      "/icons/aloes/voltage.svg",
+      "/icons/aloes/voltage.png",
+      "/icons/aloes/voltage-white.png"
+    ]
   },
   {
     "name": "Frequency",
@@ -314,7 +378,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/frequency.png", "/icons/aloes/frequency-white.png"]
+    "icons": [
+      "/icons/aloes/frequency.svg",
+      "/icons/aloes/frequency.png",
+      "/icons/aloes/frequency-white.png"
+    ]
   },
   {
     "name": "Depth",
@@ -330,7 +398,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/depth.png", "/icons/aloes/depth-white.png"]
+    "icons": [
+      "/icons/aloes/depth.svg",
+      "/icons/aloes/depth.png",
+      "/icons/aloes/depth-white.png"
+    ]
   },
   {
     "name": "Percentage",
@@ -347,6 +419,7 @@
       "5750": "#000"
     },
     "icons": [
+      "/icons/aloes/percentage.sv",
       "/icons/aloes/percentage.png",
       "/icons/aloes/percentage-white.png"
     ]
@@ -365,7 +438,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/height.png", "/icons/aloes/height-white.png"]
+    "icons": [
+      "/icons/aloes/height.svg",
+      "/icons/aloes/height.png",
+      "/icons/aloes/height-white.png"
+    ]
   },
   {
     "name": "Load",
@@ -381,7 +458,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/voltage.png", "/icons/aloes/voltage-white.png"]
+    "icons": [
+      "/icons/aloes/voltage.svg",
+      "/icons/aloes/voltage.png",
+      "/icons/aloes/voltage-white.png"
+    ]
   },
   {
     "name": "Pressure",
@@ -397,7 +478,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/pressure.png", "/icons/aloes/pressure-white.png"]
+    "icons": [
+      "/icons/aloes/pressure.svg",
+      "/icons/aloes/pressure.png",
+      "/icons/aloes/pressure-white.png"
+    ]
   },
   {
     "name": "Loudness",
@@ -413,7 +498,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/loudness.png", "/icons/aloes/loudness-white.png"]
+    "icons": [
+      "/icons/aloes/loudness.svg",
+      "/icons/aloes/loudness.png",
+      "/icons/aloes/loudness-white.png"
+    ]
   },
   {
     "name": "Concentration",
@@ -431,6 +520,7 @@
     },
     "colors": ["#000", "#adadad"],
     "icons": [
+      "/icons/aloes/petri-dish.svg",
       "/icons/aloes/petri-dish.png",
       "/icons/aloes/petri-dish-white.png"
     ]
@@ -449,7 +539,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/acid.png", "/icons/aloes/acid-white.png"]
+    "icons": [
+      "/icons/aloes/acid.svg",
+      "/icons/aloes/acid.png",
+      "/icons/aloes/acid-white.png"
+    ]
   },
   {
     "name": "Conductivity",
@@ -465,7 +559,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/electrons.png", "/icons/aloes/electrons-white.png"]
+    "icons": [
+      "/icons/aloes/electrons.svg",
+      "/icons/aloes/electrons.png",
+      "/icons/aloes/electrons-white.png"
+    ]
   },
   {
     "name": "Power",
@@ -481,7 +579,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/power.png", "/icons/aloes/power-white.png"]
+    "icons": [
+      "/icons/aloes/power.svg",
+      "/icons/aloes/power.png",
+      "/icons/aloes/power-white.png"
+    ]
   },
   {
     "name": "Power factor",
@@ -497,7 +599,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/phi.png", "/icons/aloes/phi-white.png"]
+    "icons": [
+      "/icons/aloes/phi.svg",
+      "/icons/aloes/phi.png",
+      "/icons/aloes/phi-white.png"
+    ]
   },
   {
     "name": "Distance",
@@ -513,7 +619,11 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/distance.png", "/icons/aloes/distance-white.png"]
+    "icons": [
+      "/icons/aloes/distance.svg",
+      "/icons/aloes/distance.png",
+      "/icons/aloes/distance-white.png"
+    ]
   },
   {
     "name": "Energy",
@@ -524,7 +634,11 @@
       "5822": "#00FF00",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/energy.png", "/icons/aloes/energy-white.png"]
+    "icons": [
+      "/icons/aloes/energy.svg",
+      "/icons/aloes/energy.png",
+      "/icons/aloes/energy-white.png"
+    ]
   },
   {
     "name": "Direction",
@@ -536,13 +650,21 @@
       "5605": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/direction.png", "/icons/aloes/direction-white.png"]
+    "icons": [
+      "/icons/aloes/direction.svg",
+      "/icons/aloes/direction.png",
+      "/icons/aloes/direction-white.png"
+    ]
   },
   {
     "name": "Time",
     "value": 3333,
     "resources": {"5506": "#434B77", "5507": "#434B77", "5750": "#000"},
-    "icons": ["/icons/aloes/time.png", "/icons/aloes/time-white.png"]
+    "icons": [
+      "/icons/aloes/time.svg",
+      "/icons/aloes/time.png",
+      "/icons/aloes/time-white.png"
+    ]
   },
   {
     "name": "Gyrometer",
@@ -564,6 +686,7 @@
       "5750": "#000"
     },
     "icons": [
+      "/icons/aloes/accelerometer.svg",
       "/icons/aloes/accelerometer.png",
       "/icons/aloes/accelerometer-white.png"
     ]
@@ -572,7 +695,11 @@
     "name": "Color",
     "value": 3335,
     "resources": {"5706": "#b1b1b1", "5701": "#000", "5750": "#000"},
-    "icons": ["/icons/aloes/colors.png", "/icons/aloes/colors-white.png"]
+    "icons": [
+      "/icons/aloes/colors.svg",
+      "/icons/aloes/colors.png",
+      "/icons/aloes/colors-white.png"
+    ]
   },
   {
     "name": "GPS Location",
@@ -585,7 +712,11 @@
       "5518": "#434B77",
       "5705": "#000"
     },
-    "icons": ["/icons/aloes/location.png", "/icons/aloes/location-white.png"]
+    "icons": [
+      "/icons/aloes/location.svg",
+      "/icons/aloes/location.png",
+      "/icons/aloes/location-white.png"
+    ]
   },
   {
     "name": "Positioner",
@@ -602,6 +733,7 @@
       "5750": "#000"
     },
     "icons": [
+      "/icons/aloes/level-control.svg",
       "/icons/aloes/level-control.png",
       "/icons/aloes/level-control-white.png"
     ]
@@ -616,7 +748,11 @@
       "5525": "#434B77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/loudness.png", "/icons/aloes/loudness-white.png"]
+    "icons": [
+      "/icons/aloes/loudness.svg",
+      "/icons/aloes/loudness.png",
+      "/icons/aloes/loudness-white.png"
+    ]
   },
   {
     "name": "Audio clip",
@@ -628,7 +764,11 @@
       "5548": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/loudness.png", "/icons/aloes/loudness-white.png"]
+    "icons": [
+      "/icons/aloes/loudness.svg",
+      "/icons/aloes/loudness.png",
+      "/icons/aloes/loudness-white.png"
+    ]
   },
   {
     "name": "Timer",
@@ -646,7 +786,11 @@
       "5850": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+    "icons": [
+      "/icons/aloes/clock.svg",
+      "/icons/aloes/clock.png",
+      "/icons/aloes/clock-white.png"
+    ]
   },
   {
     "name": "Addressable text display",
@@ -663,7 +807,11 @@
       "5850": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/text.png", "/icons/aloes/text-white.png"]
+    "icons": [
+      "/icons/aloes/text.svg",
+      "/icons/aloes/text.png",
+      "/icons/aloes/text-white.png"
+    ]
   },
   {
     "name": "On/Off Switch",
@@ -675,7 +823,14 @@
       "5854": "#434B77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/switch-on.png", "/icons/aloes/switch-on-white.png"]
+    "icons": [
+      "/icons/aloes/switch-on.svg",
+      "/icons/aloes/switch-off.svg",
+      "/icons/aloes/switch-on.png",
+      "/icons/aloes/switch-off.png",
+      "/icons/aloes/switch-on-white.png",
+      "/icons/aloes/switch-off-white.png"
+    ]
   },
   {
     "name": "Level Control",
@@ -687,6 +842,7 @@
       "5750": "#000"
     },
     "icons": [
+      "/icons/aloes/level-control.svg",
       "/icons/aloes/level-control.png",
       "/icons/aloes/level-control-white.png"
     ]
@@ -701,7 +857,11 @@
       "5542": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/height.png", "/icons/aloes/height-white.png"]
+    "icons": [
+      "/icons/aloes/height.svg",
+      "/icons/aloes/height.png",
+      "/icons/aloes/height-white.png"
+    ]
   },
   {
     "name": "Multiple Axis Joystick",
@@ -714,7 +874,11 @@
       "5704": "#8797ef",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/joystick.png", "/icons/aloes/joystick-white.png"]
+    "icons": [
+      "/icons/aloes/joystick.svg",
+      "/icons/aloes/joystick.png",
+      "/icons/aloes/joystick-white.png"
+    ]
   },
   {
     "name": "Rate",
@@ -730,13 +894,18 @@
       "5821": "#434b77",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/frequency.png", "/icons/aloes/frequency-white.png"]
+    "icons": [
+      "/icons/aloes/frequency.svg",
+      "/icons/aloes/frequency.png",
+      "/icons/aloes/frequency-white.png"
+    ]
   },
   {
     "name": "Push Button",
     "value": 3347,
     "resources": {"5500": "#000", "5501": "#000", "5750": "#000"},
     "icons": [
+      "/icons/aloes/push-button.svg",
       "/icons/aloes/push-button.png",
       "/icons/aloes/push-button-white.png"
     ]
@@ -745,7 +914,11 @@
     "name": "Multistate Selector",
     "value": 3348,
     "resources": {"5547": "#000", "5750": "#000"},
-    "icons": ["/icons/aloes/loudness.png", "/icons/aloes/loudness-white.png"]
+    "icons": [
+      "/icons/aloes/loudness.svg",
+      "/icons/aloes/loudness.png",
+      "/icons/aloes/loudness-white.png"
+    ]
   },
   {
     "name": "Bitmap",
@@ -756,7 +929,11 @@
       "5912": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/dither.png", "/icons/aloes/dither-white.png"]
+    "icons": [
+      "/icons/aloes/dither.svg",
+      "/icons/aloes/dither.png",
+      "/icons/aloes/dither-white.png"
+    ]
   },
   {
     "name": "Stopwatch",
@@ -767,7 +944,11 @@
       "5850": "#000",
       "5750": "#000"
     },
-    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+    "icons": [
+      "/icons/aloes/clock.svg",
+      "/icons/aloes/clock.png",
+      "/icons/aloes/clock-white.png"
+    ]
   },
   {
     "name": "powerupLog",
@@ -779,7 +960,11 @@
       "3": "#000",
       "4": "#000"
     },
-    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+    "icons": [
+      "/icons/aloes/clock.svg",
+      "/icons/aloes/clock.png",
+      "/icons/aloes/clock-white.png"
+    ]
   },
   {
     "name": "plmnSearchEvent",
@@ -791,7 +976,11 @@
     "name": "scellID",
     "value": 3353,
     "resources": {"2": "#000", "6030": "#000", "6031": "#000", "6033": "#000"},
-    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+    "icons": [
+      "/icons/aloes/clock.svg",
+      "/icons/aloes/clock.png",
+      "/icons/aloes/clock-white.png"
+    ]
   },
   {
     "name": "cellReselectionEvent",
@@ -802,7 +991,11 @@
       "6032": "#000",
       "6033": "#000"
     },
-    "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
+    "icons": [
+      "/icons/aloes/clock.svg",
+      "/icons/aloes/clock.png",
+      "/icons/aloes/clock-white.png"
+    ]
   },
   {
     "name": "handoverEvent",

@@ -3,7 +3,7 @@
     "name": "Digital Input",
     "description": "Generic digital input for non-specific sensors",
     "value": 3200,
-    "ressourcesName": "5500, 5501, 5502, 5503, 5504, 5505, 5750, 5751",
+    "resourceIds": "5500, 5501, 5502, 5503, 5504, 5505, 5750, 5751",
     "resources": {
       "5500": 1,
       "5501": 0,
@@ -21,7 +21,7 @@
     "name": "Digital Output",
     "description": "Generic digital output for non-specific actuators",
     "value": 3201,
-    "ressourcesName": "5550, 5551, 5750",
+    "resourceIds": "5550, 5551, 5750",
     "resources": {"5550": 1, "5551": 1, "5750": "app_name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/digital.png", "/icons/aloes/digital-white.png"]
@@ -30,7 +30,7 @@
     "name": "Analog Input",
     "description": "Generic analog input for non-specific sensors",
     "value": 3202,
-    "ressourcesName": "5600, 5601, 5602, 5603, 5604, 5750, 5751, 5605",
+    "resourceIds": "5600, 5601, 5602, 5603, 5604, 5750, 5751, 5605",
     "resources": {
       "5600": 0.0,
       "5601": 0.0,
@@ -48,7 +48,7 @@
     "name": "Analog Output",
     "description": " generic object that can be used with any kind of analog output interface.",
     "value": 3203,
-    "ressourcesName": "5650, 5603, 5604, 5750",
+    "resourceIds": "5650, 5603, 5604, 5750",
     "resources": {"5650": 0.0, "5603": 0, "5604": 1024, "5750": "app"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/analog.png", "/icons/aloes/analog-white.png"]
@@ -57,7 +57,7 @@
     "name": "Generic sensor",
     "description": "It is based on the description of a value and a unit according to the UCUM specification. Thus, any type of value defined within this specification can be reporting using this object. Specific object for a given range of sensors is described later in the document, enabling to identify the type of sensors directly from its Object ID. This object may be used as a generic object if a dedicated one does not exist.",
     "value": 3300,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5750, 5751, 5605",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5750, 5751, 5605",
     "resources": {
       "5700": 0,
       "5701": "custom_unit",
@@ -76,7 +76,7 @@
     "name": "Illuminance sensor",
     "description": "Illuminance sensor, example units = lx",
     "value": 3301,
-    "ressourcesName": "5700, 5601, 5602, 5603, 5604, 5605, 5701",
+    "resourceIds": "5700, 5601, 5602, 5603, 5604, 5605, 5701",
     "resources": {
       "5700": 0.0,
       "5601": 0.0,
@@ -93,7 +93,7 @@
     "name": "Presence sensor",
     "description": "Presence sensor with digital sensing, optional delay parameters",
     "value": 3302,
-    "ressourcesName": "5500, 5501, 5505, 5751, 5903, 5904",
+    "resourceIds": "5500, 5501, 5505, 5751, 5903, 5904",
     "resources": {
       "5500": false,
       "5501": 0,
@@ -109,7 +109,7 @@
     "name": "Temperature Sensor",
     "description": "used with a temperature sensor to report a temperature measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range that can be measured by the temperature sensor. An example measurement unit is degrees Celsius",
     "value": 3303,
-    "ressourcesName": "5700, 5601, 5602, 5603, 5604, 5605, 5701",
+    "resourceIds": "5700, 5601, 5602, 5603, 5604, 5605, 5701",
     "resources": {
       "5700": 0.0,
       "5601": 0.0,
@@ -129,7 +129,7 @@
     "name": "Humidity Sensor",
     "description": "used with a humidity sensor to report a humidity measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range that can be measured by the humidity sensor. An example measurement unit is relative humidity as a percentage ",
     "value": 3304,
-    "ressourcesName": "5700, 5601, 5602, 5603, 5604, 5605, 5701",
+    "resourceIds": "5700, 5601, 5602, 5603, 5604, 5605, 5701",
     "resources": {
       "5700": 0.0,
       "5601": 0.0,
@@ -146,7 +146,7 @@
     "name": "Power Measurment",
     "description": "used over a power measurement sensor to report a remote power measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range for both active and reactive power. Il also provides resources for cumulative energy, calibration, and the power factor.",
     "value": 3305,
-    "ressourcesName": "5800, 5801, 5802, 5803, 5804, 5805, 5806, 5810, 5811, 5812, 5813, 5814, 5815, 5816, 5820, 5821, 5822, 5605",
+    "resourceIds": "5800, 5801, 5802, 5803, 5804, 5805, 5806, 5810, 5811, 5812, 5813, 5814, 5815, 5816, 5820, 5821, 5822, 5605",
     "resources": {
       "5800": 0.0,
       "5801": 0.0,
@@ -179,7 +179,7 @@
     "name": "Actuation",
     "description": "dedicated to remote actuation such as ON/OFF action or dimming. A multi-state output can also be described as a string. This is useful to send pilot wire orders for instance. It also provides a resource to reflect the time that the device has been switched on.",
     "value": 3306,
-    "ressourcesName": "5850, 5851, 5852, 5853, 5750",
+    "resourceIds": "5850, 5851, 5852, 5853, 5750",
     "resources": {
       "5850": false,
       "5851": 0,
@@ -199,7 +199,7 @@
     "name": "Set Point",
     "description": "used to set a desired value to a controller, such as a thermostat. This object enables a setpoint to be expressed units defined in the UCUM specification, to match an associated sensor or measurement value. A special resource is added to set the colour of an object",
     "value": 3308,
-    "ressourcesName": "5900, 5701, 5706, 5750",
+    "resourceIds": "5900, 5701, 5706, 5750",
     "resources": {
       "5900": false,
       "5701": "unit",
@@ -218,7 +218,7 @@
     "name": "Load Control",
     "description": "used for demand-response load control and other load control in automation application (not limited to power)",
     "value": 3310,
-    "ressourcesName": "5823, 5824, 5825, 5826, 5827, 5828, 5750",
+    "resourceIds": "5823, 5824, 5825, 5826, 5827, 5828, 5750",
     "resources": {
       "5823": "event_id",
       "5824": "date_time",
@@ -235,7 +235,7 @@
     "name": "Light control",
     "description": "used to control a light source, such as a LED or other light.  It allows a light to be turned on or off and its dimmer setting to be control as a % between 0 and 100. An optional colour setting enables a string to be used to indicate the desired colour.",
     "value": 3311,
-    "ressourcesName": "5850, 5851, 5852, 5805, 5820, 5706, 5701, 5750",
+    "resourceIds": "5850, 5851, 5852, 5805, 5820, 5706, 5701, 5750",
     "resources": {
       "5850": false,
       "5851": 100,
@@ -253,7 +253,7 @@
     "name": "Power control",
     "description": "used to control a power source, such as a Smart Plug.  It allows a power relay to be turned on or off and its dimmer setting to be control as a % between 0 and 100.",
     "value": 3312,
-    "ressourcesName": "5850, 5851, 5852, 5805, 5820, 5750",
+    "resourceIds": "5850, 5851, 5852, 5805, 5820, 5750",
     "resources": {
       "5850": false,
       "5851": 100,
@@ -269,7 +269,7 @@
     "name": "Accelerometer",
     "description": "can be used to represent a 1-3 axis accelerometer.",
     "value": 3313,
-    "ressourcesName": "5702, 5703, 5704, 5701, 5603, 5604",
+    "resourceIds": "5702, 5703, 5704, 5701, 5603, 5604",
     "resources": {
       "5702": 0,
       "5703": 0,
@@ -288,7 +288,7 @@
     "name": "Magnetometer",
     "description": "used to represent a 1-3 axis magnetometer with optional compass direction.",
     "value": 3314,
-    "ressourcesName": "5701, 5702, 5703, 5704, 5705",
+    "resourceIds": "5701, 5702, 5703, 5704, 5705",
     "resources": {"5701": "G", "5702": 0, "5703": 0, "5704": 1, "5705": 360},
     "colors": ["#8eb3db", "#4673a3"],
     "icons": ["/icons/aloes/magnetism.png", "/icons/aloes/magnetism-white.png"]
@@ -297,7 +297,7 @@
     "name": "Barometer",
     "description": "used with an air pressure sensor to report a barometer measurement.  It also provides resources for minimum/maximum measured values and the minimum/maximum range that can be measured by the barometer sensor. An example measurement unit is kPa (ucum:kPa).",
     "value": 3315,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605",
     "resources": {
       "5700": 0.0,
       "5701": "hPa",
@@ -314,7 +314,7 @@
     "name": "Voltage",
     "description": "used with voltmeter sensor to report measured voltage between two points.  It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is volts",
     "value": 3316,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "V",
@@ -333,7 +333,7 @@
     "name": "Current",
     "description": "used with an ampmeter to report measured electric current in amperes. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is volts ",
     "value": 3317,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "A",
@@ -352,7 +352,7 @@
     "name": "Frequency",
     "description": "used to report frequency measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is volts ",
     "value": 3318,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "Hz",
@@ -371,7 +371,7 @@
     "name": "Depth",
     "description": "used to report depth measurements. It can, for example, be used to describe a generic rain gauge that measures the accumulated rainfall in millimetres (mm) or in fathoms (fth)",
     "value": 3319,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "m",
@@ -390,7 +390,7 @@
     "name": "Percentage",
     "description": "used to report measurements relative to a 0-100% scale. For example it could be used to measure the level of a liquid in a vessel or container in units of %",
     "value": 3320,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "%",
@@ -412,7 +412,7 @@
     "name": "Altitude",
     "description": "used with an altitude sensor to report altitude above sea level in meters. Note that Altitude can be calculated from the measured pressure given the local sea level pressure.  It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is meters",
     "value": 3321,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "m",
@@ -431,7 +431,7 @@
     "name": "Load",
     "description": " used with a load sensor (as in a scale) to report the applied weight or force. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is kilograms ",
     "value": 3322,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "kg",
@@ -450,7 +450,7 @@
     "name": "Pressure",
     "description": "used to report pressure measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is pascals ",
     "value": 3323,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "Pa",
@@ -469,7 +469,7 @@
     "name": "Loudness",
     "description": "used to report loudness or noise level measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is decibels",
     "value": 3324,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "dB",
@@ -488,7 +488,7 @@
     "name": "Concentration",
     "description": "used to the particle concentration measurement of a medium. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is parts per million",
     "value": 3325,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "ppm",
@@ -510,7 +510,7 @@
     "name": "Acidity",
     "description": " used to report an acidity measurement of a liquid. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is pH.",
     "value": 3326,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "ph",
@@ -529,7 +529,7 @@
     "name": "Conductivity",
     "description": "used to report a measurement of the electric conductivity of a medium or sample. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is Siemens ",
     "value": 3327,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "mS",
@@ -548,7 +548,7 @@
     "name": "Power",
     "description": "This IPSO object should be used to report power measurements. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is Watts (ucum: W). This resource may be used for either real power or apparent power (units= ucum:VA) measurements. The Application type can be use for reactive power or active power for example.",
     "value": 3328,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "W",
@@ -567,7 +567,7 @@
     "name": "Power factor",
     "description": "report a measurement or calculation of the power factor of a reactive electrical load. Power Factor is normally the ratio of non-reactive power to total power. This object also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor.",
     "value": 3329,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "",
@@ -586,7 +586,7 @@
     "name": "Distance",
     "description": "report a distance measurement. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor. An example measurement unit is Meters ",
     "value": 3330,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0.0,
       "5701": "cm",
@@ -605,7 +605,7 @@
     "name": "Energy",
     "description": "report energy consumption (Cumulative Power) of an electrical load. An example measurement unit is Watt Hours (ucum:W*h)",
     "value": 3331,
-    "ressourcesName": "5805, 5701, 5822, 5750",
+    "resourceIds": "5805, 5701, 5822, 5750",
     "resources": {
       "5805": 0.0,
       "5701": "Wh",
@@ -619,7 +619,7 @@
     "name": "Direction",
     "description": "report the direction indicated by a compass, wind vane, or other directional indicator. The units of measure is plane angle degrees ",
     "value": 3332,
-    "ressourcesName": "5705, 5601, 5602, 5605, 5750",
+    "resourceIds": "5705, 5601, 5602, 5605, 5750",
     "resources": {
       "5705": 0.0,
       "5601": 0,
@@ -634,7 +634,7 @@
     "name": "Time",
     "description": "report the current time in seconds since January 1, 1970 UTC. There is also a fractional time counter that has a range of less than one second.",
     "value": 3333,
-    "ressourcesName": "5506, 5507, 5750",
+    "resourceIds": "5506, 5507, 5750",
     "resources": {"5506": 0, "5507": 0, "5750": "app_name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/time.png", "/icons/aloes/time-white.png"]
@@ -643,7 +643,7 @@
     "name": "Gyrometer",
     "description": "report the current reading of a gyrometer sensor in 3 axes. It provides tracking of the minimum and maximum angular rate in all 3 axes. An example unit of measure is radians per second (ucum:rad/s)",
     "value": 3334,
-    "ressourcesName": "5702, 5703, 5704, 5701, 5508, 5509, 5510, 5511, 5512, 5513, 5603, 5604, 5605, 5750",
+    "resourceIds": "5702, 5703, 5704, 5701, 5508, 5509, 5510, 5511, 5512, 5513, 5603, 5604, 5605, 5750",
     "resources": {
       "5702": 0,
       "5703": 0,
@@ -670,7 +670,7 @@
     "name": "Color",
     "description": "report the measured value of a colour sensor in some colour space described by the units resource.",
     "value": 3335,
-    "ressourcesName": "5706, 5701, 5750",
+    "resourceIds": "5706, 5701, 5750",
     "resources": {"5706": "#fff", "5701": "hex", "5750": "app_name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/colors.png", "/icons/aloes/colors-white.png"]
@@ -679,7 +679,7 @@
     "name": "GPS Location",
     "description": "represents GPS coordinates. This object is compatible with the LWM2M management object for location, but uses reusable resources.",
     "value": 3336,
-    "ressourcesName": "5514, 5515, 5516, 5517, 5518, 5705",
+    "resourceIds": "5514, 5515, 5516, 5517, 5518, 5705",
     "resources": {
       "5514": "0.0",
       "5515": "0.0",
@@ -695,7 +695,7 @@
     "name": "Positioner",
     "description": "used with a generic position actuator from 0 to 100%. This resource optionally allows setting the transition time for an operation that changes the position of the actuator, and for reading the remaining time of the currently active transition",
     "value": 3337,
-    "ressourcesName": "5536, 5537, 5538, 5601, 5602, 5605, 5519, 5520, 5750",
+    "resourceIds": "5536, 5537, 5538, 5601, 5602, 5605, 5519, 5520, 5750",
     "resources": {
       "5536": 0,
       "5537": 0,
@@ -717,7 +717,7 @@
     "name": "Buzzer",
     "description": "actuate an audible alarm such as a buzzer, beeper, or vibration alarm. There is a dimmer control for setting the relative loudness of the alarm, and an optional duration control to limit the length of time the alarm sounds when turned on. Each time a “1” is written to the On/Off resource, the alarm will sound again for the configured duration. If no duration is programmed or the setting is zero, writing a “1” to the On/Off resource will result in the alarm sounding continuously until a “0” is written to the On/Off resource.",
     "value": 3338,
-    "ressourcesName": "5850, 5548, 5521, 5525, 5750",
+    "resourceIds": "5850, 5548, 5521, 5525, 5750",
     "resources": {
       "5850": 1,
       "5548": 100,
@@ -732,7 +732,7 @@
     "name": "Audio clip",
     "description": "used for a speaker that plays a pre-recorded audio clip or an audio output that is sent elsewhere. For example, an elevator which announces the floor of the building. A resource is provided to store the clip, a dimmer resource controls the relative sound level of the playback, and a duration resource limits the maximum playback time. After the duration time is reached, any remaining samples in the clip are ignored, and the clip player will be ready to play another clip.",
     "value": 3339,
-    "ressourcesName": "5522, 5523, 5524, 5548, 5750",
+    "resourceIds": "5522, 5523, 5524, 5548, 5750",
     "resources": {
       "5522": [],
       "5523": null,
@@ -747,7 +747,7 @@
     "name": "Timer",
     "description": "used to time events and actions, using patterns common to industrial timers. A POST to the trigger resource or On/Off input state change starts the timing operation, and the timer remaining time shows zero when the operation is complete. The patterns supported are One-Shot (mode 1), On-Time or Interval (mode 2), Time delay on pick-up or TDPU (tmode 3), and Time Delay on Drop-Out or TDDO (mode 4). Mode 0 disables the timer, so the output follows the input with no delay. A counter is provided to count occurrences of the timer output changing from 0 to 1. Writing a value of zero resets the counter. The Digital Input State resource reports the state of the timer output",
     "value": 3340,
-    "ressourcesName": "5501, 5521, 5523, 5525, 5526, 5534, 5538, 5543, 5544, 5850, 5750",
+    "resourceIds": "5501, 5521, 5523, 5525, 5526, 5534, 5538, 5543, 5544, 5850, 5750",
     "resources": {
       "5501": 0,
       "5521": 0,
@@ -768,7 +768,7 @@
     "name": "Addressable text display",
     "description": "used to send text to a text-only or text mode graphics display. POSTing a string of text to the text resource causes it to be displayed at the selected X and Y locations on the display. If X or Y are set to a value greater than the size of the display, the position “wraps around” to the modulus of the setting and the display size. Likewise, if the text string overflows the display size, the text “wraps around” and displays on the next line down or, if the last line has been written, wraps around to the top of the display. Brightness and Contrast controls are provided to allow control of various display types including STN and DSTN type LCD character displays. POSTing an empty payload to the Clear Display resource causes the display to be erased.",
     "value": 3341,
-    "ressourcesName": "5527, 5528, 5529, 5530, 5531, 5545, 5546, 5548, 5850, 5750",
+    "resourceIds": "5527, 5528, 5529, 5530, 5531, 5545, 5546, 5548, 5850, 5750",
     "resources": {
       "5527": "some_text",
       "5528": 0,
@@ -788,7 +788,7 @@
     "name": "On/Off Switch",
     "description": "used with an On/Off switch to report the state of the switch.",
     "value": 3342,
-    "ressourcesName": "5500, 5501, 5852, 5854, 5750",
+    "resourceIds": "5500, 5501, 5852, 5854, 5750",
     "resources": {
       "5500": 1,
       "5501": 0,
@@ -803,7 +803,7 @@
     "name": "Level Control",
     "description": "used with a dimmer or level control to report the state of the control.",
     "value": 3343,
-    "ressourcesName": "5548, 5852, 5854, 5750",
+    "resourceIds": "5548, 5852, 5854, 5750",
     "resources": {"5548": 1, "5852": 1, "5854": 0, "5750": "app_name"},
     "colors": ["#000", "#adadad"],
     "icons": [
@@ -816,7 +816,7 @@
     "description": "used to report the state of an up/down control element like a pair of push buttons or a rotary encoder. Counters for increase and decrease operations are provided for counting pulses from a quadrature encoder",
     "value": 3344,
 
-    "ressourcesName": "5532, 5533, 5541, 5542, 5750",
+    "resourceIds": "5532, 5533, 5541, 5542, 5750",
     "resources": {
       "5532": 1,
       "5533": 1,
@@ -831,7 +831,7 @@
     "name": "Multiple Axis Joystick",
     "description": "report the position of a shuttle or joystick control. A digital input is provided to report the state of an associated push button.",
     "value": 3345,
-    "ressourcesName": "5500, 5501, 5702, 5703, 5704, 5750",
+    "resourceIds": "5500, 5501, 5702, 5703, 5704, 5750",
     "resources": {
       "5500": 1,
       "5501": 0,
@@ -847,7 +847,7 @@
     "name": "Rate",
     "description": "report a rate measurement, for example the speed of a vehicle, or the rotational speed of a drive shaft. It also provides resources for minimum and maximum measured values, as well as the minimum and maximum range that can be measured by the sensor.An example measurement unit is Feet per Second (ucum:ft_us/s)",
     "value": 3346,
-    "ressourcesName": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
+    "resourceIds": "5700, 5701, 5601, 5602, 5603, 5604, 5605, 5821, 5750",
     "resources": {
       "5700": 0,
       "5701": "m/s",
@@ -866,7 +866,7 @@
     "name": "Push Button",
     "description": "report the state of a momentary action push button control and to count the number of times the control has been operated since the last observation.",
     "value": 3347,
-    "ressourcesName": "5500, 5501, 5750",
+    "resourceIds": "5500, 5501, 5750",
     "resources": {"5500": 0, "5501": 0, "5750": "app-name"},
     "colors": ["#000", "#adadad"],
     "icons": [
@@ -878,7 +878,7 @@
     "name": "Multistate Selector",
     "description": "represent the state of a Multi-state selector switch with a number of fixed positions.",
     "value": 3348,
-    "ressourcesName": "5547, 5750",
+    "resourceIds": "5547, 5750",
     "resources": {"5547": 0, "5750": "app-name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/loudness.png", "/icons/aloes/loudness-white.png"]
@@ -887,7 +887,7 @@
     "name": "Bitmap",
     "description": "Summarize several digital inputs to one value by mapping each bit to a digital input.",
     "value": 3349,
-    "ressourcesName": "5910, 5911, 5912, 5750",
+    "resourceIds": "5910, 5911, 5912, 5750",
     "resources": {"5910": 0, "5911": null, "5912": "", "5750": "app-name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/dither.png", "/icons/aloes/dither-white.png"]
@@ -896,7 +896,7 @@
     "name": "Stopwatch",
     "description": "An ascending timer that counts how long time has passed since the timer was started after reset.",
     "value": 3350,
-    "ressourcesName": "5501, 5544, 5850, 5750",
+    "resourceIds": "5501, 5544, 5850, 5750",
     "resources": {"5501": 0, "5544": 0, "5850": 1, "5750": "app-name"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
@@ -905,7 +905,7 @@
     "name": "powerupLog",
     "description": "An ascending timer that counts how long time has passed since the timer was started after reset.",
     "value": 3351,
-    "ressourcesName": "10, 1, 2, 3, 4",
+    "resourceIds": "10, 1, 2, 3, 4",
     "resources": {
       "10": "deviceName",
       "1": "toolVersion",
@@ -920,7 +920,7 @@
     "name": "plmnSearchEvent",
     "description": "List of all PLMNs found during the initial search/scan",
     "value": 3352,
-    "ressourcesName": "0, 6030, 6031, 6032",
+    "resourceIds": "0, 6030, 6031, 6032",
     "resources": {"0": "timeScanStart", "6030": 0, "6031": 0, "6032": 0},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
@@ -929,7 +929,7 @@
     "name": "scellID",
     "description": "serving cell information that the RRC decides to camp on",
     "value": 3353,
-    "ressourcesName": "2, 6030, 6031, 6033",
+    "resourceIds": "2, 6030, 6031, 6033",
     "resources": {"2": "TrackingAreaCode", "6030": 0, "6031": 0, "6033": 0},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
@@ -938,7 +938,7 @@
     "name": "cellReselectionEvent",
     "description": "cell reselection event information",
     "value": 3354,
-    "ressourcesName": "2, 3, 6032, 6033",
+    "resourceIds": "2, 3, 6032, 6033",
     "resources": {
       "2": "timeReselectionStart",
       "3": "failureType",
@@ -952,7 +952,7 @@
     "name": "handoverEvent",
     "description": "handover event information",
     "value": 3355,
-    "ressourcesName": "2, 3, 4, 5, 6, 6032, 6033",
+    "resourceIds": "2, 3, 4, 5, 6, 6032, 6033",
     "resources": {
       "0": "timeHandoverStart",
       "3": "handoverResult",
@@ -969,7 +969,7 @@
     "name": "radioLinkFailureEvent",
     "description": "Radio Link Failure Event",
     "value": 3356,
-    "ressourcesName": "0, 1",
+    "resourceIds": "0, 1",
     "resources": {"0": "timeRLF", "1": "rlfCause"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
@@ -978,7 +978,7 @@
     "name": "rrcStateChangeEvent",
     "description": "Current RRC state change information, including the event that triggered the state change",
     "value": 3357,
-    "ressourcesName": "0, 1",
+    "resourceIds": "0, 1",
     "resources": {"0": "rrcState", "1": "rrcStateChangeCause"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
@@ -987,7 +987,7 @@
     "name": "rrcTimerExpiryEvent",
     "description": "RRC timer expiry event information",
     "value": 3358,
-    "ressourcesName": "0",
+    "resourceIds": "0",
     "resources": {"0": "RrcTimerExpiryEvent"},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]
@@ -996,7 +996,7 @@
     "name": "cellBlacklistEvent",
     "description": "Cell blacklist information",
     "value": 3359,
-    "ressourcesName": "6032, 6033",
+    "resourceIds": "6032, 6033",
     "resources": {"6032": 0, "6033": 0},
     "colors": ["#000", "#adadad"],
     "icons": ["/icons/aloes/clock.png", "/icons/aloes/clock-white.png"]

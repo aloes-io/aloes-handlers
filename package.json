@@ -7,6 +7,13 @@
     "lint": "npx eslint --ext js .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js",
+    "*.md"
+  ],
   "author": "getlarge",
   "keywords": [
     "IoT",

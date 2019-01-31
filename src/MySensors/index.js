@@ -1,39 +1,51 @@
-const mqttPattern = require("mqtt-pattern");
-const {logger} = require("../logger");
-const mySensorsApi = require("./mysensors-api.json");
-const omaObjects = require("../OMA/oma-objects.json");
-const protocolPatterns = require("../protocol-patterns.json");
+const mqttPattern = require('mqtt-pattern');
+const {logger} = require('../logger');
+const mySensorsApi = require('./mysensors-api.json');
+const omaObjects = require('../OMA/oma-objects.json');
+const omaResources = require('../OMA/oma-resources.json');
+const omaViews = require('../OMA/oma-views.json');
+const protocolPatterns = require('../protocol-patterns.json');
 
 // device as argument ?
-const mySensorsToOmaObject = (msg) => {
+function merge(a, b, prop) {
+  let reduced = a.filter(
+    aitem => !b.find(bitem => aitem[prop] === bitem[prop]),
+  );
+  return reduced.concat(b);
+}
+
+const mySensorsToOmaObject = msg => {
   try {
-    logger(2, "handlers", "mySensorsToOmaObject:req", msg);
+    logger(2, 'handlers', 'mySensorsToOmaObject:req', msg);
     if (msg.sensorId === 255 || msg.type === null) {
       return null;
     }
-    const foundOmaObject = omaObjects.find((object) => object.value === msg.type);
-    if (!foundOmaObject) return "no OMA Object found";
+    const foundOmaObject = omaObjects.find(object => object.value === msg.type);
+    if (!foundOmaObject) return 'no OMA Object found';
+    const foundOmaViews = omaViews.find(object => object.value === msg.type);
+
     const decoded = {
       ...msg,
-      protocolName: "mySensors",
+      protocolName: 'mySensors',
       nativeResources: foundOmaObject.resources,
       name: foundOmaObject.name,
-      icons: foundOmaObject.icons,
-      colors: foundOmaObject.colors,
+      icons: foundOmaViews.icons,
+      colors: foundOmaViews.resources,
+      resources: foundOmaObject.resources,
       frameCounter: 0,
     };
-    logger(2, "handlers", "mySensorsToOmaObject:res", decoded);
+    logger(4, 'handlers', 'mySensorsToOmaObject:res', decoded);
     return decoded;
   } catch (error) {
-    logger(2, "handlers", "mySensorsToOmaObject:err", error);
+    logger(2, 'handlers', 'mySensorsToOmaObject:err', error);
     throw error;
   }
 };
 
 // sensor as argument ?
-const mySensorsToOmaResources = (msg) => {
+const mySensorsToOmaResources = msg => {
   try {
-    logger(2, "handlers", "mySensorsToOmaResources:req", msg);
+    logger(2, 'handlers', 'mySensorsToOmaResources:req', msg);
     if (msg.sensorId === 255 || !msg.resources) {
       return null;
     }
@@ -46,10 +58,10 @@ const mySensorsToOmaResources = (msg) => {
     const decoded = {
       ...msg,
     };
-    logger(4, "handlers", "mySensorsToOmaResources:res", decoded);
+    logger(4, 'handlers', 'mySensorsToOmaResources:res', decoded);
     return decoded;
   } catch (error) {
-    logger(2, "handlers", "mySensorsToOmaResources:err", error);
+    logger(2, 'handlers', 'mySensorsToOmaResources:err', error);
     throw error;
   }
 };
@@ -57,13 +69,13 @@ const mySensorsToOmaResources = (msg) => {
 const mySensorsDecoder = (packet, protocol) => {
   const decoded = {};
   try {
-    logger(4, "handlers", "mySensorsDecoder:req", protocol);
+    logger(4, 'handlers', 'mySensorsDecoder:req', protocol);
     const protocolKeys = Object.getOwnPropertyNames(protocol);
     if (protocolKeys.length === 6) {
       let decodedPayload;
-      const gatewayIdParts = protocol.prefixedDevEui.split("-");
-      const inPrefix = "-in";
-      const outPrefix = "-out";
+      const gatewayIdParts = protocol.prefixedDevEui.split('-');
+      const inPrefix = '-in';
+      const outPrefix = '-out';
       const params = {
         ...protocol,
         prefixedDevEui: `${gatewayIdParts[0]}${inPrefix}`,
@@ -78,30 +90,39 @@ const mySensorsDecoder = (packet, protocol) => {
         case 0: // Presentation
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.type = mySensorsApi.labelsPresentation[Number(protocol.subType)].omaObject;
+          decoded.type =
+            mySensorsApi.labelsPresentation[Number(protocol.subType)].omaObject;
           decoded.nativeType = Number(protocol.subType);
           decoded.value = packet.payload.toString();
-          decoded.method = "HEAD";
+          decoded.method = 'HEAD';
           decodedPayload = mySensorsToOmaObject(decoded);
           break;
         case 1: // Set
-          decoded.inputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
+          decoded.inputPath = mqttPattern.fill(
+            protocolPatterns.mySensors.pattern,
+            params,
+          );
           params.prefixedDevEui = `${gatewayIdParts[0]}${outPrefix}`;
-          decoded.outputPath = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
+          decoded.outputPath = mqttPattern.fill(
+            protocolPatterns.mySensors.pattern,
+            params,
+          );
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
+          decoded.resources =
+            mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
           decoded.nativeResource = Number(protocol.subType);
           decoded.value = packet.payload.toString();
-          decoded.method = "POST";
+          decoded.method = 'POST';
           decodedPayload = mySensorsToOmaResources(decoded);
           break;
         case 2: // Req
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.resources = mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
+          decoded.resources =
+            mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
           decoded.nativeResource = Number(protocol.subType);
-          decoded.method = "GET";
+          decoded.method = 'GET';
           decodedPayload = decoded;
           break;
         case 3: // Internal
@@ -115,7 +136,7 @@ const mySensorsDecoder = (packet, protocol) => {
           decoded.nativeSensorId = protocol.sensorId;
           decoded.nativeResource = Number(protocol.subType);
           decoded.value = packet.payload;
-          decoded.method = "STREAM";
+          decoded.method = 'STREAM';
           decodedPayload = decoded;
           break;
         default:
