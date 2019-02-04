@@ -787,9 +787,12 @@
       "5750": "#000"
     },
     "icons": [
-      "/icons/aloes/clock.svg",
-      "/icons/aloes/clock.png",
-      "/icons/aloes/clock-white.png"
+      "/icons/aloes/time.svg",
+      "/icons/aloes/agenda.svg",
+      "/icons/aloes/time.png",
+      "/icons/aloes/time-white.png",
+      "/icons/aloes/agenda.png",
+      "/icons/aloes/agenda-white.png"
     ]
   },
   {
@@ -945,9 +948,12 @@
       "5750": "#000"
     },
     "icons": [
-      "/icons/aloes/clock.svg",
-      "/icons/aloes/clock.png",
-      "/icons/aloes/clock-white.png"
+      "/icons/aloes/time.svg",
+      "/icons/aloes/agenda.svg",
+      "/icons/aloes/time.png",
+      "/icons/aloes/time-white.png",
+      "/icons/aloes/agenda.png",
+      "/icons/aloes/agenda-white.png"
     ]
   },
   {

@@ -27,7 +27,7 @@ const mySensorsToOmaObject = msg => {
     const decoded = {
       ...msg,
       protocolName: 'mySensors',
-      nativeResources: foundOmaObject.resources,
+      //  nativeResources: foundOmaObject.resources,
       name: foundOmaObject.name,
       icons: foundOmaViews.icons,
       colors: foundOmaViews.resources,

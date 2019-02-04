@@ -2,14 +2,16 @@
   "name": "aloes-handlers",
   "version": "1.0.14",
   "description": "",
-  "main": "src/index.js",
+  "main": "./dist/aloes-handlers.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
+    "build": "npx babel ./src  --ignore './src/**/test.js' --out-dir ./dist",
+    "build-lib": "npx babel ./src --ignore './src/**/test.js' --presets minify --out-file ./aloes-handlers.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
+    "dist/*",
     "src/*",
-    "public/*",
     "*.json",
     "*.js",
     "*.md"
@@ -39,6 +41,7 @@
     "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-eslint": "^8.2.6",
+    "babel-preset-minify": "^0.5.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^11.3.0",
     "eslint-config-prettier": "^3.1.0",

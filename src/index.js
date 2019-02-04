@@ -241,6 +241,11 @@ const publish = options => {
           protocolPatterns.aloesClient.collectionPattern,
           params,
         );
+      } else if (options.method === 'PUT') {
+        topic = mqttPattern.fill(
+          protocolPatterns.aloesClient.collectionPattern,
+          params,
+        );
       } else {
         topic = mqttPattern.fill(
           protocolPatterns.aloesClient.instancePattern,
@@ -879,10 +884,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (!value.length) {
           return false;
         }
-        sensor.resources[resource] = value; // buffer input
+        sensor.resources[resource] = Buffer.from(value); // buffer input
         sensor.value = Uint8Array.from(value).buffer;
-        sensor.buffer = value;
-        console.log('arraytobuffer', Buffer.from(sensor.value));
+        //  sensor.buffer = value;
       } else if (resource === 5750) {
         sensor.resources[resource] = value; // app name
       }
@@ -925,6 +929,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         // sensor.resources[resource] = value;
       }
   }
+  sensor.resource = resource;
   return sensor;
 };
 
