@@ -2,11 +2,12 @@
   "name": "aloes-handlers",
   "version": "1.0.15",
   "description": "",
-  "main": "./dist/aloes-handlers.js",
+  "main": "./dist/index.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
-    "build": "npx babel ./src  --ignore './src/**/test.js' --out-dir ./dist",
-    "build-lib": "npx babel ./src --ignore './src/**/test.js' --presets minify --out-file ./aloes-handlers.js",
+    "build-old": "npx babel ./src --out-dir ./dist --copy-files --ignore './src/**/test.js'",
+    "build": "npx babel ./src --out-dir ./dist --copy-files",
+    "build-lib": "npx babel ./src --ignore './src/**/test.js' --presets minify --out-file ./aloes-handlers.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
