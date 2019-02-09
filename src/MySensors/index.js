@@ -2,17 +2,17 @@ const mqttPattern = require('mqtt-pattern');
 const {logger} = require('../logger');
 const mySensorsApi = require('./mysensors-api.json');
 const omaObjects = require('../OMA/oma-objects.json');
-const omaResources = require('../OMA/oma-resources.json');
+//  const omaResources = require('../OMA/oma-resources.json');
 const omaViews = require('../OMA/oma-views.json');
 const protocolPatterns = require('../protocol-patterns.json');
 
 // device as argument ?
-function merge(a, b, prop) {
-  let reduced = a.filter(
-    aitem => !b.find(bitem => aitem[prop] === bitem[prop]),
-  );
-  return reduced.concat(b);
-}
+// function merge(a, b, prop) {
+//   let reduced = a.filter(
+//     aitem => !b.find(bitem => aitem[prop] === bitem[prop]),
+//   );
+//   return reduced.concat(b);
+// }
 
 const mySensorsToOmaObject = msg => {
   try {

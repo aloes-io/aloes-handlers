@@ -125,6 +125,6 @@ console.log("Aloes Light - test4 - publish", result);
 // console.log("__dirname = %s", path.resolve(__dirname));
 fs.readFile(`${path.resolve(".")}/src/assets/feuer.png`, (err, data) => {
   if (err) throw err;
-  let updatedSensor = aloesHandlers.updateAloesSensors(options.data, 5910, data);
+  const updatedSensor = aloesHandlers.updateAloesSensors(options.data, 5910, data);
   console.log("Aloes Light - test4 - updateSensor", updatedSensor);
 });

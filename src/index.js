@@ -344,30 +344,30 @@ const publishToNative = options => {
   return new Error('Error: Option must be an object type');
 };
 
-let uploadedFiles = [];
-let counter = 0;
-function parseStream(payload, bufferSize) {
-  console.log('parseStream.........', payload);
-  if (payload.length === bufferSize) {
-    //console.log(this.counter);
-    if (counter === 1) {
-      return (uploadedFiles = new Blob([payload], {
-        type: 'image/jpeg',
-      }));
-    } else {
-      return (uploadedFiles = new Blob([uploadedFiles, payload], {
-        type: 'image/jpeg',
-      }));
-    }
-  } else if (payload.length <= 4) {
-    //console.log("last", this.counter);
-    const blob = new Blob([this.uploadedFiles, payload], {
-      type: 'image/jpeg',
-    });
-    uploadedFiles = [];
-    counter = 0;
-  }
-}
+// let uploadedFiles = [];
+// let counter = 0;
+// function parseStream(payload, bufferSize) {
+//   console.log('parseStream.........', payload);
+//   if (payload.length === bufferSize) {
+//     //console.log(this.counter);
+//     if (counter === 1) {
+//       return (uploadedFiles = new Blob([payload], {
+//         type: 'image/jpeg',
+//       }));
+//     } else {
+//       return (uploadedFiles = new Blob([uploadedFiles, payload], {
+//         type: 'image/jpeg',
+//       }));
+//     }
+//   } else if (payload.length <= 4) {
+//     //console.log("last", this.counter);
+//     const blob = new Blob([this.uploadedFiles, payload], {
+//       type: 'image/jpeg',
+//     });
+//     uploadedFiles = [];
+//     counter = 0;
+//   }
+// }
 
 const updateAloesSensors = (sensor, resource, value) => {
   logger(4, 'handlers', 'updateAloesSensors', {
@@ -380,7 +380,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       if (resource === 5500) {
         sensor.resources[resource] = Boolean(value);
         sensor.value = Number(sensor.resources[resource]);
-        if (value) sensor.resources['5501'] = sensor.resources['5501'] + 1;
+        if (value) sensor.resources['5501'] += 1;
         else sensor.resources['5501'] = 0;
       } else if (resource === 5502) {
         sensor.resources[resource] = Boolean(value); // polarity
@@ -411,7 +411,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       }
@@ -437,7 +437,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       }
@@ -453,7 +453,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       }
@@ -463,12 +463,12 @@ const updateAloesSensors = (sensor, resource, value) => {
       if (resource === 5500) {
         sensor.resources[resource] = Number(value);
         sensor.value = sensor.resources[resource];
-        if (value) sensor.resources['5501'] = sensor.resources['5501'] + 1;
+        if (value) sensor.resources['5501'] += 1;
         else sensor.resources['5501'] = 0;
       } else if (resource === 5903 || resource === 5904) {
         sensor.resources[resource] = Number(value); // busy to clear delay || clear to busy dealy
       } else if (resource === 5505) {
-        sensor.resources[resource] = value; //reset counter event
+        sensor.resources[resource] = value; //  reset counter event
       } else if (resource === 5751) {
         sensor.resources[resource] = value; // sensor type
       }
@@ -484,7 +484,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       }
@@ -500,7 +500,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       }
@@ -519,7 +519,7 @@ const updateAloesSensors = (sensor, resource, value) => {
           if (sensor.resources['5852'] === 0) {
             sensor.resources['5852'] = new Date();
           } else {
-            sensor.resources['5852'] = sensor.resources['5852'] - new Date();
+            sensor.resources['5852'] -= new Date();
           }
         } else {
           sensor.resources['5852'] = 0;
@@ -561,7 +561,7 @@ const updateAloesSensors = (sensor, resource, value) => {
           if (sensor.resources['5852'] === 0) {
             sensor.resources['5852'] = new Date();
           } else {
-            sensor.resources['5852'] = sensor.resources['5852'] - new Date();
+            sensor.resources['5852'] -= new Date();
           }
         } else {
           sensor.resources['5852'] = 0;
@@ -574,6 +574,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       break;
     case 3312: // power control
       if (resource === 5851) {
+        sensor.value = value;
         sensor.resources[resource] = Number(value);
         if (sensor.resources['5851'] === 0) {
           sensor.resources['5850'] = 0;
@@ -581,10 +582,11 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5850) {
         sensor.resources[resource] = Number(value);
         if (value) {
+          sensor.value = value;
           if (sensor.resources['5852'] === 0) {
             sensor.resources['5852'] = new Date();
           } else {
-            sensor.resources['5852'] = sensor.resources['5852'] - new Date();
+            sensor.resources['5852'] -= new Date();
           }
         } else {
           sensor.resources['5852'] = 0;
@@ -628,7 +630,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       }
@@ -707,7 +709,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       sensor.value = sensor.resources['5706'];
       break;
     case 3336: // location
-      if (resource === 5514 || resources === 5515) {
+      if (resource === 5514 || resource === 5515) {
         sensor.resources[resource] = value; // lat || lng
       } else if (resource === 5516) {
         sensor.resources[resource] = value; // uncertainity in meters
@@ -752,6 +754,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       break;
     case 3340: // timer
       if (resource === 5826) {
+        sensor.value = value;
         sensor.resources[resource] = Number(value); // timer mode 0-4
       } else if (resource === 5521 || resource === 5525) {
         sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds
@@ -784,7 +787,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         sensor.resources[resource] = Number(value); // Max Y
       } else if (resource === 5530) {
         sensor.resources[resource] = value; // clear display event
-      } else if (resource === 5548 || resources === 5531) {
+      } else if (resource === 5548 || resource === 5531) {
         sensor.resources[resource] = Number(value); // brightness || contrast level
       } else if (resource === 5750) {
         sensor.resources[resource] = value; // app_name
@@ -794,18 +797,18 @@ const updateAloesSensors = (sensor, resource, value) => {
     case 3342: // switch
       if (resource === 5500) {
         if (value) {
-          sensor.resources['5501'] = sensor.resources['5501'] + 1; // counter
+          sensor.resources['5501'] += 1; // counter
           if (sensor.resources['5852'] === 0) {
             sensor.resources['5852'] = new Date();
           } else {
-            sensor.resources['5852'] = sensor.resources['5852'] - new Date();
+            sensor.resources['5852'] -= new Date();
           }
         } else {
           sensor.resources['5501'] = 0;
           if (sensor.resources['5854'] === 0) {
             sensor.resources['5854'] = new Date();
           } else {
-            sensor.resources['5854'] = sensor.resources['5854'] - new Date();
+            sensor.resources['5854'] -= new Date();
           }
         }
         sensor.resources['5500'] = Boolean(value);
@@ -821,25 +824,25 @@ const updateAloesSensors = (sensor, resource, value) => {
           if (sensor.resources['5852'] === 0) {
             sensor.resources['5852'] = new Date();
           } else {
-            sensor.resources['5852'] = sensor.resources['5852'] - new Date();
+            sensor.resources['5852'] -= new Date();
           }
         } else if (sensor.resources['5548'] === 0) {
           if (sensor.resources['5854'] === 0)
             sensor.resources['5854'] = new Date();
-          else sensor.resources['5854'] = sensor.resources['5854'] - new Date();
+          else sensor.resources['5854'] -= new Date();
         }
         sensor.value = sensor.resources['5548'];
       }
       break;
     case 3344: // up/down control
       if (resource === 5532) {
-        //todo check resource type
+        //  todo check resource type
         sensor.resources['5542'] = 0;
-        sensor.resources['5541'] = sensor.resources['5541'] + 1;
+        sensor.resources['5541'] += 1;
         sensor.value = sensor.resources['5541'];
       } else if (resource === 5533) {
         sensor.resources['5541'] = 0;
-        sensor.resources['5542'] = sensor.resources['5542'] + 1;
+        sensor.resources['5542'] += 1;
         sensor.value = -sensor.resources['5542'];
       } else if (resource === 5750) {
         sensor.resources[resource] = value; // app_name
@@ -852,7 +855,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5500) {
         sensor.resources[resource] = Boolean(value); // input state
         if (value) {
-          sensor.resources['5501'] = sensor.resources['5501'] + 1; // counter
+          sensor.resources['5501'] += 1; // counter
         } else {
           sensor.resources['5501'] = 0; // counter
         }
@@ -864,9 +867,10 @@ const updateAloesSensors = (sensor, resource, value) => {
       break;
     case 3347: // push button
       if (resource === 5500) {
+        sensor.value = value;
         sensor.resources['5500'] = Boolean(value); // input value
         if (value) {
-          sensor.resources['5501'] = sensor.resources['5501'] + 1; // counter
+          sensor.resources['5501'] += 1; // counter
         } else {
           sensor.resources['5501'] = 0;
         }
@@ -876,11 +880,12 @@ const updateAloesSensors = (sensor, resource, value) => {
       break;
     case 3349: // bitmap
       if (resource === 5911) {
+        sensor.value = value;
         sensor.resources[resource] = value; // bitmap input reset
       } else if (resource === 5912) {
+        sensor.value = value;
         sensor.resources[resource] = value; // element description
       } else if (resource === 5910) {
-        counter += 1;
         if (!value.length) {
           return false;
         }
@@ -898,7 +903,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5850) {
         sensor.resources[resource] = Boolean(value);
         if (value) {
-          sensor.resources['5501'] = sensor.resources['5501'] + 1;
+          sensor.resources['5501'] += 1;
         } else {
           sensor.resources['5501'] = 0;
         }
@@ -918,13 +923,13 @@ const updateAloesSensors = (sensor, resource, value) => {
       } else if (resource === 5603 || resource === 5604) {
         sensor.resources[resource] = Number(value); // min || max range
       } else if (resource === 5605) {
-        sensor.resources[resource] = value; //reset min/max event
+        sensor.resources[resource] = value; //  reset min/max event
       } else if (resource === 5821) {
         sensor.resources[resource] = Number(value); // current calibration
       } else if (resource === 5750 || resource === 5751) {
         sensor.resources[resource] = value; // app_name || sensor type
       } else {
-        console.log('READ ONLY');
+        //  console.log('READ ONLY');
         //  sensor.value = sensor.resources["5700"];
         // sensor.resources[resource] = value;
       }

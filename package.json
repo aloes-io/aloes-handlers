@@ -109,6 +109,11 @@
       "require": true
     }
   },
+  "eslintIgnore": [
+    "/dist/",
+    "/node_modules/",
+    "aloes-handlers.min.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://framagit.org/getlarge/aloes-handlers"

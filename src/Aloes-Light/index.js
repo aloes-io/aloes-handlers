@@ -1,7 +1,7 @@
 const mqttPattern = require('mqtt-pattern');
 const {logger} = require('../logger');
 const omaObjects = require('../OMA/oma-objects.json');
-const omaResources = require('../OMA/oma-resources.json');
+//  const omaResources = require('../OMA/oma-resources.json');
 const omaViews = require('../OMA/oma-views.json');
 const protocolPatterns = require('../protocol-patterns.json');
 
