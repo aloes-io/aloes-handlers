@@ -151,7 +151,7 @@ packet = {
 			nativeNodeId: 4,
 			nativeResource: 2,
 			resource: 5850,
-			resources: {'5850': 1},
+			resources: {'5850': 5},
 			inputPath: `3322321-in/4/4/1/0/2`,
 			outputPath: `3322321-out/4/4/1/0/2`,
 			inPrefix: '-in',

@@ -78,7 +78,7 @@ const aloesLightDecoder = (packet, protocol) => {
           decoded.type = Number(protocol.omaObjectId);
           decoded.nativeType = Number(protocol.omaObjectId);
           decoded.resource = Number(protocol.omaResourceId);
-          decoded.value = packet.payload.toString();
+          decoded.value = packet.payload;
           decoded.inputPath = mqttPattern.fill(
             protocolPatterns.aloesLight.pattern,
             params,
@@ -106,8 +106,8 @@ const aloesLightDecoder = (packet, protocol) => {
           decoded.nativeType = Number(protocol.omaObjectId);
           decoded.resource = Number(protocol.omaResourceId);
           // todo : format payload base on type ?
-          //  decoded.value = packet.payload;
-          decoded.value = packet.payload.toString();
+          decoded.value = packet.payload;
+          //  decoded.value = packet.payload.toString();
           decoded.method = 'POST';
           decodedPayload = aloesLightToOmaResources(decoded);
           break;
@@ -125,8 +125,10 @@ const aloesLightDecoder = (packet, protocol) => {
         case 4: // STREAM
           decoded.nativeSensorId = protocol.sensorId;
           decoded.type = Number(protocol.omaObjectId);
+          decoded.nativeType = Number(protocol.omaObjectId);
           decoded.resource = Number(protocol.omaResourceId);
           decoded.value = packet.payload;
+          //  decoded.value = Uint8Array.from(packet.payload).buffer;
           decoded.method = 'STREAM';
           decodedPayload = decoded;
           break;

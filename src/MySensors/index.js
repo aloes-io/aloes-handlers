@@ -27,7 +27,6 @@ const mySensorsToOmaObject = msg => {
     const decoded = {
       ...msg,
       protocolName: 'mySensors',
-      //  nativeResources: foundOmaObject.resources,
       name: foundOmaObject.name,
       icons: foundOmaViews.icons,
       colors: foundOmaViews.resources,
@@ -49,11 +48,11 @@ const mySensorsToOmaResources = msg => {
     if (msg.sensorId === 255 || !msg.resources) {
       return null;
     }
-    const resourcesKeys = Object.getOwnPropertyNames(msg.resources);
+    const resources =
+      mySensorsApi.labelsSet[msg.nativeResource].omaResources;
+    const resourcesKeys = Object.getOwnPropertyNames(resources);
     if (Object.prototype.hasOwnProperty.call(msg.resources, resourcesKeys[0])) {
-      //  msg.resources[resourcesKeys[0]] = msg.value;
       msg.resource = resourcesKeys[0];
-      //  msg.mainResourceId = resourcesKeys[0];
     }
     const decoded = {
       ...msg,
@@ -109,18 +108,14 @@ const mySensorsDecoder = (packet, protocol) => {
           );
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.resources =
-            mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
           decoded.nativeResource = Number(protocol.subType);
-          decoded.value = packet.payload.toString();
+          decoded.value = packet.payload;
           decoded.method = 'POST';
           decodedPayload = mySensorsToOmaResources(decoded);
           break;
         case 2: // Req
           decoded.nativeNodeId = protocol.nodeId;
           decoded.nativeSensorId = protocol.sensorId;
-          decoded.resources =
-            mySensorsApi.labelsSet[Number(protocol.subType)].omaResources;
           decoded.nativeResource = Number(protocol.subType);
           decoded.method = 'GET';
           decodedPayload = decoded;
