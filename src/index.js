@@ -1,373 +1,114 @@
-const mqttPattern = require('mqtt-pattern');
-const {logger} = require('./logger');
-const protocolPatterns = require('./protocol-patterns.json');
-const omaObjects = require('./OMA/oma-objects.json');
-const omaResources = require('./OMA/oma-resources.json');
-const omaViews = require('./OMA/oma-views.json');
-const mySensorsApi = require('./MySensors/mysensors-api.json');
-const {mySensorsDecoder} = require('./MySensors');
-const {aloesLightDecoder} = require('./Aloes-Light');
-const {aloesClientDecoder} = require('./Aloes');
+import {logger} from './logger';
+import {
+  aloesClientDecoder,
+  aloesClientEncoder,
+  aloesClientPatternDetector,
+} from './Aloes';
+import {
+  aloesLightDecoder,
+  aloesLightEncoder,
+  aloesLightPatternDetector,
+} from './Aloes-Light';
+import {
+  mySensorsDecoder,
+  mySensorsEncoder,
+  mySensorsPatternDetector,
+} from './MySensors';
 
-// const extractProtocol = (pattern, topic) =>
-//   new Promise((resolve, reject) => {
-//     const protocol = mqttPattern.exec(pattern, topic);
-//     if (protocol !== null) resolve(protocol);
-//     else reject(protocol);
-//   });
+// const isEmpty = obj => {
+//   const hasOwnProperty = Object.prototype.hasOwnProperty;
+//   // null and undefined are "empty"
+//   if (obj == null) return true;
+//   if (obj.length > 0) return false;
+//   if (obj.length === 0) return true;
+//   for (let i = 0; i <= obj.length; i += 1) {
+//     const key = obj[i];
+//     if (hasOwnProperty.call(obj, key)) return false;
+//   }
+//   return true;
+// };
 
 const patternDetector = packet => {
   try {
-    const pattern = {name: 'empty', params: null};
-    if (packet.topic.split('/')[0] === '$SYS') return null;
-    logger(2, 'handlers', 'patternDetector:req', packet.topic);
-    if (
-      mqttPattern.matches(
-        protocolPatterns.aloesClient.collectionPattern,
-        packet.topic,
-      )
-    ) {
-      logger(
-        2,
-        'handlers',
-        'patternDetector:res',
-        'reading AloesClient collection API...',
-      );
-      //  const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.collectionPattern, packet.topic);
-      const aloesClientProtocol = mqttPattern.exec(
-        protocolPatterns.aloesClient.collectionPattern,
-        packet.topic,
-      );
-      logger(2, 'handlers', 'patternDetector:res', aloesClientProtocol);
-      const collectionExists = protocolPatterns.aloesClient.validators.collectionName.some(
-        collection => collection === aloesClientProtocol.collectionName,
-      );
-      const methodExists = protocolPatterns.aloesClient.validators.methods.some(
-        meth => meth === aloesClientProtocol.method,
-      );
-      // find a signal to check direction ( to app or device ?)
-      // aloesClientProtocol.target && aloesClientProtocol.target === 'iot'
-      if (methodExists && collectionExists) {
-        pattern.name = 'aloesClient';
-        pattern.subType = 'web';
-        pattern.params = aloesClientProtocol;
-        return pattern;
+    if (packet.payload && packet.topic) {
+      let pattern = {name: 'empty', params: {}};
+      if (packet.topic.split('/')[0] === '$SYS') return null;
+      logger(2, 'handlers', 'patternDetector:req', packet.topic);
+      pattern = aloesClientPatternDetector(packet);
+      logger(2, 'handlers', 'patternDetector:res1', pattern);
+
+      if (pattern.name === 'empty') {
+        pattern = mySensorsPatternDetector(packet);
       }
+      logger(2, 'handlers', 'patternDetector:res2', pattern);
+
+      if (pattern.name === 'empty') {
+        pattern = aloesLightPatternDetector(packet);
+      }
+      logger(2, 'handlers', 'patternDetector:res3', pattern);
+
+      if (pattern.name === 'empty') {
+        pattern.params = "topic doesn't match pattern";
+      }
+      logger(2, 'handlers', 'patternDetector:res', pattern);
+      return pattern;
     }
-    if (
-      mqttPattern.matches(
-        protocolPatterns.aloesClient.instancePattern,
-        packet.topic,
-      )
-    ) {
-      logger(
-        2,
-        'handlers',
-        'patternDetector:res',
-        'reading AloesClient instance API ...',
-      );
-      //  const aloesClientProtocol = await extractProtocol(protocolPatterns.aloesClient.instancePattern, packet.topic);
-      const aloesClientProtocol = mqttPattern.exec(
-        protocolPatterns.aloesClient.instancePattern,
-        packet.topic,
-      );
-      logger(4, 'handlers', 'patternDetector:res', aloesClientProtocol);
-      //  if (aloesClientProtocol === null) return null;
-      const methodExists = protocolPatterns.aloesClient.validators.methods.some(
-        meth => meth === aloesClientProtocol.method,
-      );
-      const collectionExists = protocolPatterns.aloesClient.validators.collectionName.some(
-        collection => collection === aloesClientProtocol.collectionName,
-      );
-      // add amethod  to differentiate subtype
-      if (
-        methodExists &&
-        collectionExists &&
-        aloesClientProtocol.collectionName.toLowerCase() === 'iotagent'
-      ) {
-        pattern.name = 'aloesClient';
-        pattern.subType = 'iot';
-        pattern.params = aloesClientProtocol;
-        return pattern;
-      } else if (methodExists && collectionExists) {
-        pattern.name = 'aloesClient';
-        pattern.subType = 'web';
-        pattern.params = aloesClientProtocol;
-        return pattern;
-      }
-    }
-    if (mqttPattern.matches(protocolPatterns.mySensors.pattern, packet.topic)) {
-      logger(2, 'handlers', 'patternDetector:res', 'reading MySensors API ...');
-      //  const mysensorsProtocol = await extractProtocol(protocolPatterns.mySensors.pattern, packet.topic);
-      const mysensorsProtocol = mqttPattern.exec(
-        protocolPatterns.mySensors.pattern,
-        packet.topic,
-      );
-      logger(4, 'handlers', 'patternDetector:res', mysensorsProtocol);
-      let typeExists = false;
-      const methodExists = protocolPatterns.mySensors.validators.methods.some(
-        meth => meth === Number(mysensorsProtocol.method),
-      );
-      if (Number(mysensorsProtocol.method) === 0) {
-        typeExists = mySensorsApi.labelsPresentation.some(
-          label => label.value === Number(mysensorsProtocol.subType),
-        );
-      } else if (
-        Number(mysensorsProtocol.method) > 0 &&
-        Number(mysensorsProtocol.method) < 2
-      ) {
-        typeExists = mySensorsApi.labelsSet.some(
-          label => label.value === Number(mysensorsProtocol.subType),
-        );
-      }
-      logger(4, 'handlers', 'patternDetector:res', {methodExists, typeExists});
-      if (methodExists && typeExists) {
-        pattern.name = 'mySensors';
-        pattern.params = mysensorsProtocol;
-        return pattern;
-      }
-    }
-    if (
-      mqttPattern.matches(protocolPatterns.aloesLight.pattern, packet.topic)
-    ) {
-      logger(
-        2,
-        'handlers',
-        'patternDetector:res',
-        'reading Aloes Light API ...',
-      );
-      //  const aloesProtocol = await extractProtocol(protocolPatterns.aloesLight.pattern, packet.topic);
-      const aloesProtocol = mqttPattern.exec(
-        protocolPatterns.aloesLight.pattern,
-        packet.topic,
-      );
-      logger(4, 'handlers', 'patternDetector:res', aloesProtocol);
-      const methodExists = protocolPatterns.aloesLight.validators.methods.some(
-        meth => meth === Number(aloesProtocol.method),
-      );
-      const omaObjectIdExists = omaObjects.some(
-        object => object.value === Number(aloesProtocol.omaObjectId),
-      );
-      logger(4, 'handlers', 'patternDetector:res', {
-        methodExists,
-        omaObjectIdExists,
-      });
-      if (methodExists && omaObjectIdExists) {
-        pattern.name = 'aloesLight';
-        pattern.params = aloesProtocol;
-        return pattern;
-      }
-    }
-    pattern.params = "topic doesn't match pattern";
-    return pattern;
+    return new Error('Error: Missing payload or topic inside packet');
   } catch (error) {
     logger(2, 'handlers', 'patternDetector:err', error);
     return error;
   }
 };
 
-const isEmpty = obj => {
-  const hasOwnProperty = Object.prototype.hasOwnProperty;
-  // null and undefined are "empty"
-  if (obj == null) return true;
-  if (obj.length > 0) return false;
-  if (obj.length === 0) return true;
-  for (let i = 0; i <= obj.length; i += 1) {
-    const key = obj[i];
-    if (hasOwnProperty.call(obj, key)) return false;
-  }
-  return true;
-};
-
 const publish = options => {
-  //  logger(4, "pubsub", "publish:req", options);
-  //  if (options && !isEmpty(options)) {
+  logger(4, 'handlers', 'publish:req', options);
   if (options && options.data) {
-    let topic = null;
-    const data = options.data;
     if (options.pattern.toLowerCase() === 'mysensors') {
-      const params = {
-        prefixedDevEui: `${data.devEui}${data.inPrefix}`,
-        nodeId: data.nativeNodeId,
-        sensorId: data.nativeSensorId,
-        subType: data.nativeResource,
-      };
-      logger(4, 'handlers', 'publish', params);
-      if (options.method === 'POST') {
-        params.method = 2;
-        params.ack = 0;
-        topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
-        return {topic, payload: data.value};
-      } else if (options.method === 'GET') {
-        params.method = 2;
-        params.ack = 0;
-        topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
-        return {topic, payload: data.value};
-      }
-      return 'Method not supported yet';
+      return mySensorsEncoder(options.data, options);
     } else if (options.pattern.toLowerCase() === 'aloeslight') {
-      const params = {
-        prefixedDevEui: `${data.devEui}${data.inPrefix}`,
-        omaObjectId: data.type,
-        sensorId: data.nativeSensorId,
-        omaResourceId: data.resource,
-      };
-      logger(4, 'handlers', 'publish', params);
-      if (options.method === 'POST') {
-        params.method = 1;
-        topic = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
-        return {topic, payload: data.value};
-      } else if (options.method === 'GET') {
-        params.method = 2;
-        topic = mqttPattern.fill(protocolPatterns.aloesLight.pattern, params);
-        return {topic, payload: data.value};
-      }
-      return 'Method not supported yet';
+      return aloesLightEncoder(options.data, options);
     } else if (options.pattern.toLowerCase() === 'aloesclient') {
-      const params = {
-        userId: options.userId,
-        collectionName: options.collectionName,
-        modelId: options.modelId,
-        method: options.method,
-      };
-      logger(4, 'handlers', 'publish', params);
-      if (options.method === 'POST') {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.collectionPattern,
-          params,
-        );
-      } else if (options.method === 'DELETE') {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.collectionPattern,
-          params,
-        );
-      } else if (options.method === 'PUT') {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.collectionPattern,
-          params,
-        );
-      } else {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.instancePattern,
-          params,
-        );
-      }
-      return {topic, payload: data};
+      return aloesClientEncoder(options);
     }
     return 'Protocol not supported yet';
   }
   return new Error('Error: Option must be an object type');
 };
 
-const subscribe = (socket, options) => {
-  logger(4, 'handlers', 'subscribe:req', options);
-  if (options && !isEmpty(options)) {
-    let topic = null;
-    if (options.pattern.toLowerCase() === 'mysensors') {
-      topic = null;
-    } else if (options.pattern.toLowerCase() === 'aloesclient') {
-      const params = {
-        userId: options.userId,
-        collectionName: options.collectionName,
-        modelId: options.modelId,
-        method: options.method,
-      };
-      if (options.method === 'POST') {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.collectionPattern,
-          params,
-        );
-      } else if (options.method === 'DELETE') {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.collectionPattern,
-          params,
-        );
-      } else {
-        topic = mqttPattern.fill(
-          protocolPatterns.aloesClient.instancePattern,
-          params,
-        );
-      }
-    }
-    return topic;
-  }
-  return new Error('Error: Option must be an object type');
-};
-
-const publishToNative = options => {
-  //  logger(4, "pubsub", "publishToNative:req", options);
-  //  if (options && !isEmpty(options)) {
-  if (options && options.data && options.data.protocolName) {
-    let topic = null;
-    const data = options.data;
-    if (data.protocolName.toLowerCase() === 'mysensors') {
-      const params = {
-        prefixedDevEui: `${data.devEui}${data.inPrefix}`,
-        nodeId: data.nativeNodeId,
-        sensorId: data.nativeSensorId,
-        subType: data.nativeResource,
-      };
-      logger(4, 'handlers', 'publishToNative', params);
-      if (options.method === 'POST' || options.method === 'PUT') {
-        params.method = 2;
-        params.ack = 0;
-        topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
-        return {topic, payload: data.value};
-      } else if (options.method === 'GET') {
-        params.method = 2;
-        params.ack = 0;
-        topic = mqttPattern.fill(protocolPatterns.mySensors.pattern, params);
-        return {topic, payload: data.value};
-      }
-      return 'Method not supported yet';
-    } else if (data.protocolName.toLowerCase() === 'aloeslight') {
-      const params = {
-        prefixedDevEui: `${data.devEui}${data.inPrefix}`,
-        omaObjectId: data.type,
-        sensorId: data.nativeSensorId,
-        omaResourcesId: data.resource,
-      };
-      logger(4, 'handlers', 'publishToNative', params);
-      if (options.method === 'POST' || options.method === 'PUT') {
-        params.method = 1;
-        topic = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
-        return {topic, payload: data.value};
-      } else if (options.method === 'GET') {
-        params.method = 2;
-        topic = mqttPattern.fill(protocolPatterns.aloes.pattern, params);
-        return {topic, payload: data.value};
-      }
-      return 'Method not supported yet';
-    }
-    return 'Protocol not supported yet';
-  }
-  return new Error('Error: Option must be an object type');
-};
-
-// let uploadedFiles = [];
-// let counter = 0;
-// function parseStream(payload, bufferSize) {
-//   console.log('parseStream.........', payload);
-//   if (payload.length === bufferSize) {
-//     //console.log(this.counter);
-//     if (counter === 1) {
-//       return (uploadedFiles = new Blob([payload], {
-//         type: 'image/jpeg',
-//       }));
-//     } else {
-//       return (uploadedFiles = new Blob([uploadedFiles, payload], {
-//         type: 'image/jpeg',
-//       }));
+// const subscribe = (socket, options) => {
+//   logger(4, 'handlers', 'subscribe:req', options);
+//   if (options && !isEmpty(options)) {
+//     let topic = null;
+//     if (options.pattern.toLowerCase() === 'mysensors') {
+//       topic = null;
+//     } else if (options.pattern.toLowerCase() === 'aloesclient') {
+//       const params = {
+//         userId: options.userId,
+//         collectionName: options.collectionName,
+//         modelId: options.modelId,
+//         method: options.method,
+//       };
+//       if (options.method === 'POST') {
+//         topic = mqttPattern.fill(
+//           protocolPatterns.aloesClient.collectionPattern,
+//           params,
+//         );
+//       } else if (options.method === 'DELETE') {
+//         topic = mqttPattern.fill(
+//           protocolPatterns.aloesClient.collectionPattern,
+//           params,
+//         );
+//       } else {
+//         topic = mqttPattern.fill(
+//           protocolPatterns.aloesClient.instancePattern,
+//           params,
+//         );
+//       }
 //     }
-//   } else if (payload.length <= 4) {
-//     //console.log("last", this.counter);
-//     const blob = new Blob([this.uploadedFiles, payload], {
-//       type: 'image/jpeg',
-//     });
-//     uploadedFiles = [];
-//     counter = 0;
+//     return topic;
 //   }
-// }
+//   return new Error('Error: Option must be an object type');
+// };
 
 // const parseValue = value => {
 //   if (typeof value === 'object') {
@@ -397,7 +138,7 @@ const publishToNative = options => {
 //     value = Boolean(value);
 //   }
 //   return value;
-// };
+// };x
 
 const updateAloesSensors = (sensor, resource, value) => {
   logger(4, 'handlers', 'updateAloesSensors:req', {
@@ -1013,21 +754,18 @@ const updateAloesSensors = (sensor, resource, value) => {
       }
   }
   sensor.resource = resource;
+  logger(4, 'handlers', 'updateAloesSensors:res', {
+    sensor,
+  });
   return sensor;
 };
 
 module.exports = {
-  protocolPatterns,
-  mySensorsApi,
-  omaObjects,
-  omaResources,
-  omaViews,
   patternDetector,
   mySensorsDecoder,
   aloesLightDecoder,
   aloesClientDecoder,
   publish,
-  subscribe,
-  publishToNative,
+  //  subscribe,
   updateAloesSensors,
 };

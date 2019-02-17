@@ -11,6 +11,7 @@ WIP :
 Next :
 
 - Octoprint HTTP / MQTT Connector
+- separate each protocol into distinct libraries
 
 ---
 
@@ -36,9 +37,18 @@ With ESLint
 $ npm run lint
 ```
 
+## Test
+
+With Mocha
+
+```bash
+$ npm run test
+```
+
+
 ## Build
 
-With babel-cli
+With Babel
 
 ```bash
 $ npm run build
