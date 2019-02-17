@@ -6,6 +6,7 @@ const protocolRef = {
     sensorId: 'number',
     subType: 'number',
     methods: [0, 1, 2, 3, 4],
+    directions: ['-in', '-out']
   },
 };
 

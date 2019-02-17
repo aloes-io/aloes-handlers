@@ -1,7 +1,9 @@
-import {Encoder} from './lib/encoder';
-import {Decoder} from './lib/decoder';
+import {cayenneEncoder} from './lib/encoder';
+import {cayenneDecoder} from './lib/decoder';
+import {cayennePatternDetector} from './lib/detector';
 
 module.exports = {
-	LPPEncoder: Encoder,
-	LPPDecoder: Decoder,
+	cayenneEncoder,
+	cayenneDecoder,
+	cayennePatternDetector,
 };

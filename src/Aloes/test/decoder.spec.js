@@ -4,6 +4,9 @@ import {assert} from 'chai';
 import {aloesClientDecoder} from '../lib/decoder';
 import {aloesClientPatternDetector} from '../lib/detector';
 
+// collectionPattern: '+userId/+collectionName/+method',
+// instancePattern: '+userId/+collectionName/+method/+modelId',
+
 describe('aloesClientDecoder - test 1', () => {
 	const packet = {
 		topic: '1/Sensor/POST',
@@ -162,8 +165,8 @@ describe('aloesClientDecoder - test 3', () => {
 		assert.strictEqual(5, decoded.payload);
 	});
 
-	it(`decoded topic should be 3322321-in/3/4/2/0/48`, () => {
-		assert.strictEqual('3322321-in/3/4/2/0/48', decoded.topic);
+	it(`decoded topic should be 3322321-in/3/4/1/0/48`, () => {
+		assert.strictEqual('3322321-in/3/4/1/0/48', decoded.topic);
 	});
 });
 

@@ -70,8 +70,8 @@ const aloesLightDecoder = (packet, protocol) => {
       const decoded = {};
       let decodedPayload;
       const gatewayIdParts = protocol.prefixedDevEui.split('-');
-      const inPrefix = '-in';
-      const outPrefix = '-out';
+      const inPrefix = protocolRef.validators.directions[0];
+      const outPrefix = protocolRef.validators.directions[1];
       const params = {
         ...protocol,
         prefixedDevEui: `${gatewayIdParts[0]}${inPrefix}`,
@@ -139,6 +139,7 @@ const aloesLightDecoder = (packet, protocol) => {
     }
     return "topic doesn't match";
   } catch (error) {
+    logger(2, 'handlers', 'aloesLightDecoder:err', error);
     throw error;
   }
 };

@@ -73,8 +73,8 @@ const mySensorsDecoder = (packet, protocol) => {
     if (protocolKeys.length === 6) {
       let decodedPayload;
       const gatewayIdParts = protocol.prefixedDevEui.split('-');
-      const inPrefix = '-in';
-      const outPrefix = '-out';
+      const inPrefix = protocolRef.validators.directions[0];
+      const outPrefix = protocolRef.validators.directions[1];
       const params = {
         ...protocol,
         prefixedDevEui: `${gatewayIdParts[0]}${inPrefix}`,
@@ -136,6 +136,7 @@ const mySensorsDecoder = (packet, protocol) => {
     }
     return "topic doesn't match";
   } catch (error) {
+    logger(2, 'handlers', 'mySensorsDecoder:err', error);
     throw error;
   }
 };

@@ -4,7 +4,7 @@ import {assert} from 'chai';
 import {aloesLightDecoder} from '../lib/decoder';
 import {aloesLightPatternDetector} from '../lib/detector';
 
-//  const aloesPattern = "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId";
+//  const aloesLightPattern = "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId";
 
 describe('aloesLightDecoder - test 1', () => {
 	const packet = {topic: 'Aloes123-out/0/3349/3/5910', payload: 'test'};

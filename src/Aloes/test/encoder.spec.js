@@ -5,6 +5,9 @@ import {updateAloesSensors} from '../..';
 import {aloesClientEncoder} from '../lib/encoder';
 import {aloesClientPatternDetector} from '../lib/detector';
 
+// collectionPattern: '+userId/+collectionName/+method',
+// instancePattern: '+userId/+collectionName/+method/+modelId',
+
 describe('aloesClientEncoder - test 1', () => {
 	const packet = {
 		topic: '1/Sensor/POST',

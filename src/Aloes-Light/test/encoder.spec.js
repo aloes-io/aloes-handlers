@@ -7,7 +7,7 @@ import {updateAloesSensors} from '../..';
 import {aloesLightEncoder} from '../lib/encoder';
 import {aloesLightPatternDetector} from '../lib/detector';
 
-//  const aloesPattern = "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId";
+//  const aloesLightPattern = "+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId";
 
 describe('aloesLightEncoder - test 1', () => {
   const packet = {topic: 'Aloes123-in/0/3349/3/5910', payload: 'test'};
