@@ -1,6 +1,6 @@
 {
   "name": "aloes-handlers",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "",
   "main": "./dist/index.js",
   "mocha.requires": [
