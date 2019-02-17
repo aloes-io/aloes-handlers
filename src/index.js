@@ -10,6 +10,11 @@ import {
   aloesLightPatternDetector,
 } from './Aloes-Light';
 import {
+  cayenneDecoder,
+  cayenneEncoder,
+  cayennePatternDetector,
+} from './CayenneLPP';
+import {
   mySensorsDecoder,
   mySensorsEncoder,
   mySensorsPatternDetector,
@@ -36,19 +41,20 @@ const patternDetector = packet => {
       logger(2, 'handlers', 'patternDetector:req', packet.topic);
       pattern = aloesClientPatternDetector(packet);
       logger(2, 'handlers', 'patternDetector:res1', pattern);
-
       if (pattern.name === 'empty') {
         pattern = mySensorsPatternDetector(packet);
       }
       logger(2, 'handlers', 'patternDetector:res2', pattern);
-
       if (pattern.name === 'empty') {
         pattern = aloesLightPatternDetector(packet);
       }
       logger(2, 'handlers', 'patternDetector:res3', pattern);
-
       if (pattern.name === 'empty') {
-        pattern.params = "topic doesn't match pattern";
+        pattern = aloesLightPatternDetector(packet);
+      }
+      logger(2, 'handlers', 'patternDetector:res4', pattern);
+      if (pattern.name === 'empty') {
+        pattern = cayennePatternDetector(packet);
       }
       logger(2, 'handlers', 'patternDetector:res', pattern);
       return pattern;
@@ -62,13 +68,15 @@ const patternDetector = packet => {
 
 const publish = options => {
   logger(4, 'handlers', 'publish:req', options);
-  if (options && options.data) {
+  if (options && options.data && options.pattern) {
     if (options.pattern.toLowerCase() === 'mysensors') {
       return mySensorsEncoder(options.data, options);
     } else if (options.pattern.toLowerCase() === 'aloeslight') {
       return aloesLightEncoder(options.data, options);
     } else if (options.pattern.toLowerCase() === 'aloesclient') {
       return aloesClientEncoder(options);
+    } else if (options.pattern.toLowerCase() === 'cayennelpp') {
+      return cayenneEncoder(options);
     }
     return 'Protocol not supported yet';
   }
@@ -762,9 +770,14 @@ const updateAloesSensors = (sensor, resource, value) => {
 
 module.exports = {
   patternDetector,
-  mySensorsDecoder,
   aloesLightDecoder,
   aloesClientDecoder,
+  cayenneDecoder,
+  mySensorsDecoder,
+  aloesClientEncoder,
+  aloesLightEncoder,
+  cayenneEncoder,
+  mySensorsEncoder,
   publish,
   //  subscribe,
   updateAloesSensors,
