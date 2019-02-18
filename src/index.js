@@ -11,7 +11,9 @@ import {
 } from './Aloes-Light';
 import {
   cayenneDecoder,
+  cayenneBufferDecoder,
   cayenneEncoder,
+  cayenneBufferEncoder,
   cayennePatternDetector,
 } from './CayenneLPP';
 import {
@@ -773,10 +775,12 @@ module.exports = {
   aloesLightDecoder,
   aloesClientDecoder,
   cayenneDecoder,
+  cayenneBufferDecoder,
   mySensorsDecoder,
   aloesClientEncoder,
   aloesLightEncoder,
   cayenneEncoder,
+  cayenneBufferEncoder,
   mySensorsEncoder,
   publish,
   //  subscribe,

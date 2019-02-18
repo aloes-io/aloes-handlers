@@ -231,6 +231,66 @@ const getPayload = (buffer, cursor) => {
   return buff;
 };
 
+const cayenneBufferEncoder = (buffer, type, channel, value) => {
+  try {
+    let cursor = 0;
+    logger(4, 'handlers', 'cayenneBufferEncoder:req', {
+      buffer,
+      type,
+      channel,
+      value,
+    });
+    switch (Number(type)) {
+      case DIGITAL_INPUT:
+        cursor = addDigitalInput(buffer, cursor, channel, value);
+        break;
+      case ANALOG_INPUT:
+        cursor = addAnalogInput(buffer, cursor, channel, value);
+        break;
+      case LUMINOSITY:
+        cursor = addLuminosity(buffer, cursor, channel, value);
+        break;
+      case PRESENCE:
+        cursor = addPresence(buffer, cursor, channel, value);
+        break;
+      case TEMPERATURE:
+        cursor = addTemperature(buffer, cursor, channel, value);
+        break;
+      case HUMIDITY:
+        cursor = addRelativeHumidity(buffer, cursor, channel, value);
+        break;
+      case ACCELEROMETER:
+        cursor = addAccelerometer(buffer, cursor, channel, value);
+        break;
+      case BAROMETER:
+        cursor = addBarometer(buffer, cursor, channel, value);
+        break;
+      case UNIXTIME:
+        cursor = addUnixTime(buffer, cursor, channel, value);
+        break;
+      case GYROMETER:
+        cursor = addGyrometer(buffer, cursor, channel, value);
+        break;
+      case LOCATION:
+        cursor = addLocation(buffer, cursor, channel, value);
+        break;
+      default:
+        logger(2, 'handlers', 'Unsupported data type', type);
+        break;
+    }
+    const payload = getPayload(buffer, cursor);
+    logger(4, 'handlers', 'cayenneBufferEncoder:res', {
+      cursor,
+      buffer,
+      payload,
+    });
+    return payload;
+  } catch (error) {
+    logger(2, 'handlers', 'cayenneBufferEncoder:err', error);
+    return error;
+  }
+};
+
 const cayenneEncoder = (instance, protocol) => {
   try {
     if (
@@ -240,61 +300,12 @@ const cayenneEncoder = (instance, protocol) => {
       instance.protocolName.toLowerCase() === 'cayennelpp'
     ) {
       logger(4, 'handlers', 'cayenneEncoder:req', instance);
-      let cursor = 0;
       const buffer = Buffer.alloc(maxSize);
       const encoded = {};
       const channel = Number(instance.nativeSensorId);
+      const type = Number(instance.nativeType);
       const value = Number(instance.value);
-      logger(4, 'handlers', 'cayenneEncoder:req', {
-        type: instance.nativeType,
-        channel,
-        value,
-      });
-
-      switch (Number(instance.nativeType)) {
-        case DIGITAL_INPUT:
-          cursor = addDigitalInput(buffer, cursor, channel, value);
-          break;
-        case ANALOG_INPUT:
-          cursor = addAnalogInput(buffer, cursor, channel, value);
-          break;
-        case LUMINOSITY:
-          cursor = addLuminosity(buffer, cursor, channel, value);
-          break;
-        case PRESENCE:
-          cursor = addPresence(buffer, cursor, channel, value);
-          break;
-        case TEMPERATURE:
-          cursor = addTemperature(buffer, cursor, channel, value);
-          break;
-        case HUMIDITY:
-          cursor = addRelativeHumidity(buffer, cursor, channel, value);
-          break;
-        case ACCELEROMETER:
-          cursor = addAccelerometer(buffer, cursor, channel, value);
-          break;
-        case BAROMETER:
-          cursor = addBarometer(buffer, cursor, channel, value);
-          break;
-        case UNIXTIME:
-          cursor = addUnixTime(buffer, cursor, channel, value);
-          break;
-        case GYROMETER:
-          cursor = addGyrometer(buffer, cursor, channel, value);
-          break;
-        case LOCATION:
-          cursor = addLocation(buffer, cursor, channel, value);
-          break;
-        default:
-          logger(2, 'handlers', 'Unsupported data type', instance.nativeType);
-          break;
-      }
-      encoded.payload = getPayload(buffer, cursor);
-      logger(4, 'handlers', 'cayenneEncoder:res1', {
-        cursor,
-        buffer,
-        payload: encoded.payload,
-      });
+      encoded.payload = cayenneBufferEncoder(buffer, type, channel, value);
 
       if (!encoded || !encoded.payload || encoded.payload === null) {
         return 'Type not supported yet';
@@ -337,6 +348,6 @@ const cayenneEncoder = (instance, protocol) => {
 };
 
 module.exports = {
-  // getPayload,
+  cayenneBufferEncoder,
   cayenneEncoder,
 };

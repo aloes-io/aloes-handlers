@@ -124,12 +124,12 @@ const getLocation = (buffer, cursor) => {
   };
 };
 
-const parseBuffer = buffer => {
+const cayenneBufferDecoder = buffer => {
   try {
     const channels = {};
     let cursor = 0;
     let current = null;
-    logger(2, 'handlers', 'parseBuffer:req', {buffer, cursor});
+    logger(2, 'handlers', 'cayenneBufferDecoder:req', {buffer, cursor});
     while (cursor < buffer.length) {
       if (current !== null) {
         // channel part is defined
@@ -183,11 +183,11 @@ const parseBuffer = buffer => {
         }
       }
     }
-    logger(2, 'handlers', 'parseBuffer:res', {channels});
+    logger(2, 'handlers', 'cayenneBufferDecoder:res', {channels});
     if (!channels) return 'Unsupported data type';
     return channels;
   } catch (error) {
-    logger(2, 'handlers', 'parseBuffer:err', error);
+    logger(2, 'handlers', 'cayenneBufferDecoder:err', error);
     return error;
   }
 };
@@ -200,7 +200,7 @@ const cayenneToOmaObject = msg => {
 
     //  const maxsize = 51;
     const buffer = msg.payload;
-    const channels = parseBuffer(buffer);
+    const channels = cayenneBufferDecoder(buffer);
     const nativeTypes = Object.getOwnPropertyNames(channels);
     const decoded = nativeTypes.map((nativeType, index) => {
       const nativeResource = Object.keys(channels[nativeType])[0];
@@ -249,7 +249,7 @@ const cayenneToOmaResources = msg => {
     }
     //  const maxsize = 51;
     const buffer = msg.payload;
-    const channels = parseBuffer(buffer);
+    const channels = cayenneBufferDecoder(buffer);
     const nativeTypes = Object.getOwnPropertyNames(channels);
     const decoded = nativeTypes.map((nativeType, index) => {
       const nativeResource = Object.keys(channels[nativeType])[0];
@@ -322,5 +322,6 @@ const cayenneDecoder = (packet, protocol) => {
 module.exports = {
   // cayenneToOmaObject,
   // cayenneToOmaResources,
+  cayenneBufferDecoder,
   cayenneDecoder,
 };
