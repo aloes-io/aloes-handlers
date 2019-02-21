@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import mosca from 'mosca';
 import EventEmitter from 'events';
 import {

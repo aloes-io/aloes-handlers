@@ -1,4 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable import/no-extraneous-dependencies */
+
 import mqtt from 'async-mqtt';
 import EventEmitter from 'events';
 import {logger} from '../src/logger';
