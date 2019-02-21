@@ -27,22 +27,23 @@ describe('aloesClientPatternDetector - test 1', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const keys = ['userId', 'collectionName', 'method'];
+  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const paramsKeys = ['userId', 'collectionName', 'method'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
   });
 
-  it('pattern should contain params and value properties', () => {
-    assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
+  it(`pattern should contain ${patternKeys.toString()}`, () => {
+    assert.hasAllKeys(pattern, patternKeys);
   });
 
   it(`pattern name should be aloesClient`, () => {
     assert.strictEqual('aloesClient', pattern.name);
   });
 
-  it(`params should contain ${keys.toString()}`, () => {
-    assert.hasAllKeys(params, keys);
+  it(`params should contain ${paramsKeys.toString()}`, () => {
+    assert.hasAllKeys(params, paramsKeys);
   });
 });
 
@@ -68,22 +69,23 @@ describe('aloesClientPatternDetector - test 2', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const keys = ['userId', 'collectionName', 'method', 'modelId'];
+  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const paramsKeys = ['userId', 'collectionName', 'method', 'modelId'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
   });
 
-  it('pattern should contain params and value properties', () => {
-    assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
+  it(`pattern should contain ${patternKeys.toString()}`, () => {
+    assert.hasAllKeys(pattern, patternKeys);
   });
 
   it(`pattern name should be aloesClient`, () => {
     assert.strictEqual('aloesClient', pattern.name);
   });
 
-  it(`params should contain ${keys.toString()}`, () => {
-    assert.hasAllKeys(params, keys);
+  it(`params should contain ${paramsKeys.toString()}`, () => {
+    assert.hasAllKeys(params, paramsKeys);
   });
 });
 
@@ -111,22 +113,23 @@ describe('aloesClientPatternDetector - test 3', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const keys = ['userId', 'collectionName', 'method', 'modelId'];
+  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const paramsKeys = ['userId', 'collectionName', 'method', 'modelId'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
   });
 
-  it('pattern should contain params and value properties', () => {
-    assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
+  it(`pattern should contain ${patternKeys.toString()}`, () => {
+    assert.hasAllKeys(pattern, patternKeys);
   });
 
   it(`pattern name should be aloesClient`, () => {
     assert.strictEqual('aloesClient', pattern.name);
   });
 
-  it(`params should contain ${keys.toString()}`, () => {
-    assert.hasAllKeys(params, keys);
+  it(`params should contain ${paramsKeys.toString()}`, () => {
+    assert.hasAllKeys(params, paramsKeys);
   });
 });
 
@@ -153,21 +156,22 @@ describe('aloesClientPatternDetector - test 4', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const keys = ['userId', 'collectionName', 'method'];
+  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const paramsKeys = ['userId', 'collectionName', 'method'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
   });
 
-  it('pattern should contain params and value properties', () => {
-    assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
+  it(`pattern should contain ${patternKeys.toString()}`, () => {
+    assert.hasAllKeys(pattern, patternKeys);
   });
 
   it(`pattern name should be aloesClient`, () => {
     assert.strictEqual('aloesClient', pattern.name);
   });
 
-  it(`params should contain ${keys.toString()}`, () => {
-    assert.hasAllKeys(params, keys);
+  it(`params should contain ${paramsKeys.toString()}`, () => {
+    assert.hasAllKeys(params, paramsKeys);
   });
 });

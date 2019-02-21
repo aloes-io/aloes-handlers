@@ -1,6 +1,6 @@
 import {logger} from '../../logger';
 import {aloesLightEncoder} from '../../Aloes-Light';
-//  import {LPPEncoder} from '../CayenneLPP';
+import {cayenneEncoder} from '../../CayenneLPP';
 import {mySensorsEncoder} from '../../MySensors';
 
 const aloesClientDecoder = (packet, protocol) => {
@@ -19,9 +19,9 @@ const aloesClientDecoder = (packet, protocol) => {
         case 'mySensors':
           decodedPayload = mySensorsEncoder(instance, protocol);
           break;
-        // case 'cayenneLPP':
-        //   decodedPayload = LPPEncoder(instance, protocol);
-        //   break;
+        case 'cayenneLPP':
+          decodedPayload = cayenneEncoder(instance, protocol);
+          break;
         case 'nodeWebcam': // Req
           //  await clientToMySensors(app, newPayload);
           break;

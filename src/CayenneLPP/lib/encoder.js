@@ -1,6 +1,5 @@
-import mqttPattern from 'mqtt-pattern';
 import floor from 'lodash.floor';
-import protocolRef, {
+import {
   ANALOG_INPUT,
   ANALOG_INPUT_SIZE,
   DIGITAL_INPUT,
@@ -279,7 +278,7 @@ const cayenneBufferEncoder = (buffer, type, channel, value) => {
         break;
     }
     const payload = getPayload(buffer, cursor);
-    logger(4, 'handlers', 'cayenneBufferEncoder:res', {
+    logger(5, 'handlers', 'cayenneBufferEncoder:res', {
       cursor,
       buffer,
       payload,
@@ -291,59 +290,29 @@ const cayenneBufferEncoder = (buffer, type, channel, value) => {
   }
 };
 
-const cayenneEncoder = (instance, protocol) => {
+const cayenneEncoder = instance => {
   try {
     if (
       instance &&
-      instance !== null &&
       instance.protocolName &&
       instance.protocolName.toLowerCase() === 'cayennelpp'
     ) {
       logger(4, 'handlers', 'cayenneEncoder:req', instance);
       const buffer = Buffer.alloc(maxSize);
-      const encoded = {};
       const channel = Number(instance.nativeSensorId);
       const type = Number(instance.nativeType);
       const value = Number(instance.value);
-      encoded.payload = cayenneBufferEncoder(buffer, type, channel, value);
-
-      if (!encoded || !encoded.payload || encoded.payload === null) {
+      const payload = cayenneBufferEncoder(buffer, type, channel, value);
+      logger(4, 'handlers', 'cayenneEncoder:res', payload);
+      if (!payload || payload === null) {
         return 'Type not supported yet';
       }
-      // todo : remove this part, it concerns loraWan servers
-      const params = {
-        appEui: instance.appEui,
-        gatewayId: instance.gatewayId,
-        device: [instance.devEui || instance.devAddr],
-      };
-      logger(4, 'handlers', 'cayenneEncoder:req', params);
-      if (protocol.method === 'HEAD') {
-        params.method = 'Confirmed Data Down';
-        //  params.type = 'PULL_DATA';
-        params.type = 'ENCODED';
-        params.direction = instance.outPrefix;
-        encoded.topic = mqttPattern.fill(protocolRef.pattern, params);
-      } else if (protocol.method === 'POST' || protocol.method === 'PUT') {
-        params.method = 'Unconfirmed Data Down';
-        params.type = 'ENCODED';
-        params.direction = instance.outPrefix;
-        encoded.topic = mqttPattern.fill(protocolRef.pattern, params);
-      } else if (protocol.method === 'GET') {
-        params.method = 'Confirmed Data Down';
-        params.type = 'ENCODED';
-        params.direction = instance.outPrefix;
-        encoded.topic = mqttPattern.fill(protocolRef.pattern, params);
-      }
-      if (!encoded.topic || encoded.topic === null) {
-        return 'Method not supported yet';
-      }
-      logger(4, 'handlers', 'cayenneEncoder:res', encoded.topic);
-      return encoded;
+      return payload;
     }
-    return 'Wrong protocol input';
+    return new Error('Error: Invalid instance');
   } catch (error) {
     logger(4, 'handlers', 'cayenneEncoder:err', error);
-    throw error;
+    return error;
   }
 };
 

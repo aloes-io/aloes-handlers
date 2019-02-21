@@ -1,6 +1,6 @@
 # Aloes - Handlers
 
-Encode / decode MQTT stream from Iot device to browsers.
+Encode / decode MQTT stream from IoT devices to Web browsers.
 Use [Open Mobile Alliance](http://www.openmobilealliance.org/wp/OMNA/LwM2M/LwM2MRegistry.html) standards as main target / source protocol.
 
 WIP :
@@ -12,6 +12,7 @@ Next :
 
 - Octoprint HTTP / MQTT Connector
 - separate each protocol into distinct libraries
+- Snip handler
 
 ---
 
@@ -45,11 +46,50 @@ With Mocha
 $ npm run test
 ```
 
-
 ## Build
 
 With Babel
 
 ```bash
 $ npm run build
+```
+
+## Example
+
+_/ Still buggy /_
+
+Simulating the use case where MQTT broker is communicating with a browser and an example_device ( here a simulated camera ) :
+
+- Browser and Broker native format is AloesClient
+  aloesClient_topic : `+userId/+collectionName/+method/#model`
+  aloesClient_payload : `Object`
+
+- Device native format is AloesLight
+  aloesLight_topic : `+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId`
+  aloesLight_payload : `String`
+
+- verifying which client is connecting and which accesses are granted
+- detecting patterns from packet.topic & packet.payload
+
+if `{aloesLight_topic}` detected ( receiving from example_device ), `{aloesLight_payload}` :
+
+    -> decoding aloesLight
+    -> sending `{aloesClient_payload}` to browser
+
+if `{aloesClient_topic}` detected ( receiving from browser ), `{aloesClient_payload}` :
+
+    -> encoding to aloesLight
+    -> sending `{aloesLight_payload}` to example_device
+
+- Run this example ( with mqtt.js cli or any other mqtt client ) to publish a camera capture request and subscribe to the stream.
+
+```bash
+$ npm run example
+
+$ mqtt sub -t '2894413-out/1/3349/#' -h 'localhost' -p 1883 -u '5c2657ad36bb1052f87cf417' -P 'ACSk0JG16GGBudI1CW4fYIYeVsUGTFOpyXxTckamKdznED1CGEBcYLLm7SrCNo6g'
+
+$ mqtt pub -t '2894413-in/1/3349/2/5911' -h 'localhost' -p 1883 -m "1" -u '5c2657ad36bb1052f87cf417' -P 'ACSk0JG16GGBudI1CW4fYIYeVsUGTFOpyXxTckamKdznED1CGEBcYLLm7SrCNo6g'
+
+$ mqtt pub -t '5c24e1514a603a651d1ddfd5/Sensor/POST' -h 'localhost' -p 1883 -m '{"id": "5c62c4de3c6d59223afdf891","name": "Bitmap", "type": 3349, "devEui": "2894413", "resources": { "5750": "app-name", "5910": null, "5911": true, "5912": "" }, "value": true, "resource": 5911, "frameCounter": 248, "protocolName": "aloesLight", "protocolVersion": "", "nativeSensorId": "2", "nativeNodeId": "", "nativeType": 3349, "nativeResource": 5910, "accountId": "5c24e1514a603a651d1ddfd5", "deviceId": "5c2657ad36bb1052f87cf417", "inPrefix": "-in", "outPrefix": "-out"}' -u '5c24e1514a603a651d1ddfd5' -P 'DregdyAV9eE5WLQtUl82mVh6uzcYSsJjXx0Kf8TcXB7SSYRpysEJ1OfPuWUlNiyZ'
+
 ```

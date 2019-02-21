@@ -31,18 +31,6 @@ describe('aloesClientDecoder - test 1', () => {
 	const params = pattern.params;
 	const decoded = aloesClientDecoder(packet, params);
 
-	it('pattern should exist', () => {
-		assert.typeOf(pattern, 'object');
-	});
-
-	it('pattern should contain params and value properties', () => {
-		assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
-	});
-
-	it(`pattern name should be aloesClient`, () => {
-		assert.strictEqual('aloesClient', pattern.name);
-	});
-
 	it('decoded should exist', () => {
 		assert.typeOf(decoded, 'object');
 	});
@@ -84,18 +72,6 @@ describe('aloesClientDecoder - test 2', () => {
 	const pattern = aloesClientPatternDetector(packet);
 	const params = pattern.params;
 	const decoded = aloesClientDecoder(packet, params);
-
-	it('pattern should exist', () => {
-		assert.typeOf(pattern, 'object');
-	});
-
-	it('pattern should contain params and value properties', () => {
-		assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
-	});
-
-	it(`pattern name should be aloesClient`, () => {
-		assert.strictEqual('aloesClient', pattern.name);
-	});
 
 	it('decoded should exist', () => {
 		assert.typeOf(decoded, 'object');
@@ -141,18 +117,6 @@ describe('aloesClientDecoder - test 3', () => {
 	const params = pattern.params;
 	const decoded = aloesClientDecoder(packet, params);
 
-	it('pattern should exist', () => {
-		assert.typeOf(pattern, 'object');
-	});
-
-	it('pattern should contain params and value properties', () => {
-		assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
-	});
-
-	it(`pattern name should be aloesClient`, () => {
-		assert.strictEqual('aloesClient', pattern.name);
-	});
-
 	it('decoded should exist', () => {
 		assert.typeOf(decoded, 'object');
 	});
@@ -194,18 +158,6 @@ describe('aloesClientDecoder - test 4', () => {
 	const pattern = aloesClientPatternDetector(packet);
 	const params = pattern.params;
 	const decoded = aloesClientDecoder(packet, params);
-
-	it('pattern should exist', () => {
-		assert.typeOf(pattern, 'object');
-	});
-
-	it('pattern should contain params and value properties', () => {
-		assert.hasAllKeys(pattern, ['params', 'name', 'subType']);
-	});
-
-	it(`pattern name should be aloesClient`, () => {
-		assert.strictEqual('aloesClient', pattern.name);
-	});
 
 	it('decoded should exist', () => {
 		assert.typeOf(decoded, 'object');

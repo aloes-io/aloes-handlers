@@ -6,18 +6,15 @@ import {cayennePatternDetector} from '../lib/detector';
 //  const cayennePattern =  "+appEui/+type/+method/+gatewayId/#device";
 
 describe('cayennePatternDetector - test 1', () => {
-  const payload = Buffer.from(
-    '01000002027ed0',
-    'hex',
-  );
+  const payload = Buffer.from('005b7a00d07ed5b370dc0b20000ba30400f432f59ab267', 'hex');
   const packet = {
     topic:
-      '5c635046e1fec60e6050e47b/DECODED/Unconfirmed Data Up/b827ebfffe6cc78d/03ff0001',
+      '5c635046e1fec60e6050e47b/Join Request/b827ebfffe6cc78d/0004a30b001fbb91',
     payload,
   };
-  const pattern = cayennePatternDetector(packet);
+  const pattern = cayennePatternDetector(payload);
   const params = pattern.params;
-  const keys = ['appEui', 'type', 'gatewayId', 'method', 'devAddr'];
+  const keys = ['appEui', 'devNonce', 'method', 'devEui', 'packet'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
@@ -38,17 +35,17 @@ describe('cayennePatternDetector - test 1', () => {
 
 describe('cayennePatternDetector - test 2', () => {
   const payload = Buffer.from(
-    '01000002027ed0',
+    '800100ff0300000001461c02b695ac147a4a9d540334168034a58ac5',
     'hex',
   );
   const packet = {
     topic:
-      '5c635046e1fec60e6050e47b/DECODED/Confirmed Data Up/b827ebfffe6cc78d/0004a30b001fbb91',
+      '5c635046e1fec60e6050e47b/Unconfirmed Data Up/b827ebfffe6cc78d/03ff0001',
     payload,
   };
-  const pattern = cayennePatternDetector(packet);
+  const pattern = cayennePatternDetector(payload);
   const params = pattern.params;
-  const keys = ['appEui', 'type', 'gatewayId', 'method', 'devEui'];
+  const keys = ['frameCounter', 'method', 'devAddr', 'packet'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
@@ -69,17 +66,17 @@ describe('cayennePatternDetector - test 2', () => {
 
 describe('cayennePatternDetector - test 3', () => {
   const payload = Buffer.from(
-    '01000002027ed0',
+    '005b7a00d07ed5b370dc0b20000ba30400eb5be53e82a5',
     'hex',
   );
   const packet = {
     topic:
-      '5c635046e1fec60e6050e47b/DECODED/Join Request/b827ebfffe6cc78d/0004a30b001fbb91',
+      '5c635046e1fec60e6050e47b/Join Request/b827ebfffe6cc78d/0004a30b001fbb91',
     payload,
   };
-  const pattern = cayennePatternDetector(packet);
+  const pattern = cayennePatternDetector(payload);
   const params = pattern.params;
-  const keys = ['appEui', 'type', 'gatewayId', 'method', 'devEui'];
+  const keys = ['appEui', 'devNonce', 'method', 'devEui', 'packet'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');

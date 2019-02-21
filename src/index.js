@@ -42,19 +42,12 @@ const patternDetector = packet => {
       if (packet.topic.split('/')[0] === '$SYS') return null;
       logger(2, 'handlers', 'patternDetector:req', packet.topic);
       pattern = aloesClientPatternDetector(packet);
-      logger(2, 'handlers', 'patternDetector:res1', pattern);
       if (pattern.name === 'empty') {
         pattern = mySensorsPatternDetector(packet);
       }
-      logger(2, 'handlers', 'patternDetector:res2', pattern);
       if (pattern.name === 'empty') {
         pattern = aloesLightPatternDetector(packet);
       }
-      logger(2, 'handlers', 'patternDetector:res3', pattern);
-      if (pattern.name === 'empty') {
-        pattern = aloesLightPatternDetector(packet);
-      }
-      logger(2, 'handlers', 'patternDetector:res4', pattern);
       if (pattern.name === 'empty') {
         pattern = cayennePatternDetector(packet);
       }

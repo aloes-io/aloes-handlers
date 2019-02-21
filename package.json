@@ -3,9 +3,8 @@
   "version": "1.1.2",
   "description": "",
   "main": "./dist/index.js",
-  "mocha.requires": [
-    "@babel/register"
-  ],
+  "unpkg": "aloes-handlers.min.js",
+  "jsdelivr": "aloes-handlers.min.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
     "aloes-detector-test": "mocha --require @babel/register './src/Aloes/test/detector.spec.js'",
@@ -27,13 +26,14 @@
     "test": "npm run aloes-tests; npm run aloes-light-tests; npm run cayenne-tests; npm run mysensors-tests",
     "build": "npx babel src --out-dir dist --ignore './src/**/test/*.spec.js'",
     "build-lib": "npx babel ./src --ignore './src/**/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
-    "prePublish": "npm run lint; npm run test; npm run build"
+    "prePublish": "npm run lint; npm run test; npm run build",
+    "example": "nodemon --exec babel-node ./examples/index.js"
   },
   "files": [
     "dist/*",
-    "*.json",
-    "*.js",
-    "*.md"
+    "package.json",
+    "aloes-handlers.min.js",
+    "README.md"
   ],
   "author": "getlarge",
   "keywords": [
@@ -43,7 +43,10 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "async-mqtt": "^2.0.0",
     "lodash.floor": "^4.0.4",
+    "lora-packet": "^0.7.7",
+    "mosca": "^2.8.3",
     "mqtt-pattern": "^1.2.0",
     "oma-json": "^1.0.5"
   },
@@ -81,6 +84,9 @@
     "mqtt-pattern": "^1.2.0",
     "oma-json": "^1.0.5"
   },
+  "mocha.requires": [
+    "@babel/register"
+  ],
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -139,11 +145,11 @@
   "eslintIgnore": [
     "/dist/",
     "/node_modules/",
-    "/src/**/test/*.js",
+    "/src/**/test/*.spec.js",
     "aloes-handlers.min.js"
   ],
   "repository": {
     "type": "git",
-    "url": "https://framagit.org/getlarge/aloes-handlers"
+    "url": "https://framagit.org/aloes/aloes-handlers"
   }
 }

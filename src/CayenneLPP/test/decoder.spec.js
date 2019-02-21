@@ -14,36 +14,30 @@ describe('cayenneDecoder - test 1', () => {
       '5c635046e1fec60e6050e47b/DECODED/Unconfirmed Data Up/b827ebfffe6cc78d/0004a30b001fbb91',
     payload,
   };
-  const pattern = cayennePatternDetector(packet);
+
+  const pattern = cayennePatternDetector(payload);
   const params = pattern.params;
-  const decoded = cayenneDecoder(packet, params);
+  const decoded = cayenneDecoder(payload, params);
   const keys = [
-    'appEui',
     'type',
-    'method',
-    'gatewayId',
+    'packet',
     'devEui',
+    'devAddr',
     'nativeSensorId',
     'nativeType',
     'nativeResource',
     'resource',
     'resources',
+    'protocolName',
     // 'inputPath',
     // 'outputPath',
-    'inPrefix',
-    'outPrefix',
+    // 'inPrefix',
+    // 'outPrefix',
     'value',
-    'lastSignal',
-    'payload',
+    'colors',
+    'icons',
+    'name',
   ];
-
-  it('pattern should exist', () => {
-    assert.typeOf(pattern, 'object');
-  });
-
-  it(`pattern name should be cayenneLPP`, () => {
-    assert.strictEqual('cayenneLPP', pattern.name);
-  });
 
   it('decoded should contain 3 channels', () => {
     assert.equal(3, decoded.length);
@@ -68,46 +62,34 @@ describe('cayenneDecoder - test 1', () => {
 });
 
 describe('cayenneDecoder - test 2', () => {
-  const payload = Buffer.from('01000002027ed0', 'hex');
+  const payload = Buffer.from(
+    '400100ff03007600019fd88fb95e9dfa8057f42f',
+    'hex',
+  );
   const packet = {
     topic:
-      '5c635046e1fec60e6050e47b/DECODED/Unconfirmed Data Up/b827ebfffe6cc78d/03ff0001',
+      '5c635046e1fec60e6050e47b/Unconfirmed Data Up/b827ebfffe6cc78d/03ff0001',
     payload,
   };
-  const pattern = cayennePatternDetector(packet);
+
+  const pattern = cayennePatternDetector(payload);
   const params = pattern.params;
-  const decoded = cayenneDecoder(packet, params);
+  const decoded = cayenneDecoder(payload, params);
   const keys = [
-    'appEui',
     'type',
-    'method',
-    'gatewayId',
     'devAddr',
+    'devEui',
     'nativeSensorId',
     'nativeType',
     'nativeResource',
     'resource',
     'resources',
     // 'inputPath',
-    // 'outputPath',
-    'inPrefix',
-    'outPrefix',
+    'packet',
+    // 'inPrefix',
+    // 'outPrefix',
     'value',
-    'lastSignal',
-    'payload',
   ];
-
-  it('pattern should exist', () => {
-    assert.typeOf(pattern, 'object');
-  });
-
-  it('pattern should contain params and value properties', () => {
-    assert.hasAllKeys(pattern, ['params', 'name']);
-  });
-
-  it(`pattern name should be cayenneLPP`, () => {
-    assert.strictEqual('cayenneLPP', pattern.name);
-  });
 
   it('decoded should contain 2 channels', () => {
     assert.equal(2, decoded.length);
@@ -122,57 +104,42 @@ describe('cayenneDecoder - test 2', () => {
     assert.hasAllKeys(decoded[0], keys);
   });
 
-  it('value on channel 1 should be 0', () => {
-    assert.strictEqual(0, decoded[0].value);
+  it('value on channel 1 should be 1', () => {
+    assert.strictEqual(1, decoded[0].value);
   });
 });
 
 describe('cayenneDecoder - test 3', () => {
-  const payload = Buffer.from('01000002027ed0', 'hex');
+  const payload = Buffer.from(
+    '400100ff030000000106504df1c4a073f9a16b69',
+    'hex',
+  );
+  //  const payload = Buffer.from('01000002027ed0', 'hex');
   const packet = {
     topic:
-      '5c635046e1fec60e6050e47b/DECODED/Presentation/b827ebfffe6cc78d/03ff0001',
+      '5c635046e1fec60e6050e47b/Unconfirmed Data Up/b827ebfffe6cc78d/03ff0001',
     payload,
   };
-  const pattern = cayennePatternDetector(packet);
+
+  const pattern = cayennePatternDetector(payload);
   const params = pattern.params;
-  const decoded = cayenneDecoder(packet, params);
+  const decoded = cayenneDecoder(payload, params);
   const keys = [
-    'appEui',
     'type',
-    'method',
-    'gatewayId',
     'devAddr',
+    'devEui',
     'nativeSensorId',
     'nativeType',
     'nativeResource',
     'resource',
     'resources',
+    'packet',
     // 'inputPath',
     // 'outputPath',
-    'inPrefix',
-    'outPrefix',
+    // 'inPrefix',
+    // 'outPrefix',
     'value',
-    'lastSignal',
-    'payload',
-    'colors',
-    'frameCounter',
-    'icons',
-    'name',
-    'protocolName',
   ];
-
-  it('pattern should exist', () => {
-    assert.typeOf(pattern, 'object');
-  });
-
-  it('pattern should contain params and value properties', () => {
-    assert.hasAllKeys(pattern, ['params', 'name']);
-  });
-
-  it(`pattern name should be cayenneLPP`, () => {
-    assert.strictEqual('cayenneLPP', pattern.name);
-  });
 
   it('decoded should contain 2 channels', () => {
     assert.equal(2, decoded.length);
@@ -187,7 +154,7 @@ describe('cayenneDecoder - test 3', () => {
     assert.hasAllKeys(decoded[0], keys);
   });
 
-  it('value on channel 1 should be 0', () => {
-    assert.strictEqual(0, decoded[0].value);
+  it('value on channel 1 should be 1', () => {
+    assert.strictEqual(1, decoded[0].value);
   });
 });

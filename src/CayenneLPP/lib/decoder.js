@@ -1,5 +1,5 @@
 import {omaObjects, omaViews} from 'oma-json';
-import protocolRef, {
+import {
   ANALOG_INPUT,
   DIGITAL_INPUT,
   PRESENCE,
@@ -191,23 +191,21 @@ const cayenneBufferDecoder = buffer => {
     return error;
   }
 };
-const cayenneToOmaObject = msg => {
+const cayenneToOmaObject = (packet, protocol) => {
   try {
-    logger(2, 'handlers', 'cayenneToOmaObject:req', msg);
-    if (!msg || msg == null || msg.type === null) {
-      return 'Wrong instance input';
+    if (!packet || packet === null) {
+      return new Error('Wrong instance input');
     }
-
+    logger(4, 'handlers', 'cayenneToOmaObject:req', packet);
     //  const maxsize = 51;
-    const buffer = msg.payload;
-    const channels = cayenneBufferDecoder(buffer);
+    const channels = cayenneBufferDecoder(packet);
     const nativeTypes = Object.getOwnPropertyNames(channels);
     const decoded = nativeTypes.map((nativeType, index) => {
       const nativeResource = Object.keys(channels[nativeType])[0];
       const omaObject = omaObjects.find(
         object => object.value === Number(nativeType) + 3200,
       );
-      if (!omaObject) return {};
+      if (!omaObject) return new Error('Wrong OMA id');
       const omaView = omaViews.find(
         object => object.value === Number(nativeType) + 3200,
       );
@@ -217,7 +215,7 @@ const cayenneToOmaObject = msg => {
       };
 
       return {
-        ...msg,
+        packet: packet.toString('hex'),
         protocolName: 'cayenneLPP',
         name: omaObject.name,
         icons: omaView.icons,
@@ -226,10 +224,12 @@ const cayenneToOmaObject = msg => {
         nativeResource,
         nativeSensorId: index,
         type: Number(nativeType) + 3200,
+        devEui: protocol.devEui,
+        devAddr: protocol.devAddr,
         resources,
         resource: nativeResource,
         value: channels[nativeType][nativeResource],
-        frameCounter: 0,
+        //  frameCounter: 0,
       };
     });
 
@@ -237,36 +237,38 @@ const cayenneToOmaObject = msg => {
     return decoded;
   } catch (error) {
     logger(2, 'handlers', 'cayenneToOmaObject:err', error);
-    throw error;
+    return error;
   }
 };
 
-const cayenneToOmaResources = msg => {
+const cayenneToOmaResources = (packet, protocol) => {
   try {
-    logger(2, 'handlers', 'cayenneToOmaResources:req', msg);
-    if (!msg || msg == null || !msg.payload) {
-      return 'Wrong instance input';
+    if (!packet || packet == null) {
+      return new Error('Wrong instance input');
     }
+    logger(4, 'handlers', 'cayenneToOmaResources:req', packet);
+
     //  const maxsize = 51;
-    const buffer = msg.payload;
-    const channels = cayenneBufferDecoder(buffer);
+    const channels = cayenneBufferDecoder(packet);
     const nativeTypes = Object.getOwnPropertyNames(channels);
     const decoded = nativeTypes.map((nativeType, index) => {
       const nativeResource = Object.keys(channels[nativeType])[0];
       const omaObject = omaObjects.find(
         object => object.value === Number(nativeType) + 3200,
       );
-      if (!omaObject) return {};
+      if (!omaObject) return new Error('Wrong OMA id');
       const resources = {
         ...omaObject.resources,
         ...channels[nativeType],
       };
       return {
-        ...msg,
+        packet: packet.toString('hex'),
         nativeType,
         nativeResource,
         nativeSensorId: index,
         type: Number(nativeType) + 3200,
+        devEui: protocol.devEui,
+        devAddr: protocol.devAddr,
         resources,
         resource: nativeResource,
         value: channels[nativeType][nativeResource],
@@ -277,45 +279,38 @@ const cayenneToOmaResources = msg => {
     return decoded;
   } catch (error) {
     logger(2, 'handlers', 'cayenneToOmaResources:err', error);
-    throw error;
+    return error;
   }
 };
 
 const cayenneDecoder = (packet, protocol) => {
-  let decoded = {};
   try {
-    logger(4, 'handlers', 'cayenneDecoder:req', protocol);
-    const protocolKeys = Object.getOwnPropertyNames(protocol);
-    if (protocolKeys.length === 5 || protocolKeys.length === 6) {
-      decoded = {
-        ...protocol,
-        inPrefix: protocolRef.validators.directions[1],
-        outPrefix: protocolRef.validators.directions[0],
-        payload: packet.payload,
-        lastSignal: new Date(),
-      };
-      if (
-        (decoded.devAddr || decoded.devEui) &&
-        decoded.type.toLowerCase() === 'decoded'
-      ) {
-        if (
-          decoded.method === 'Unconfirmed Data Up' ||
-          decoded.method === 'Confirmed Data Up'
-        ) {
-          return cayenneToOmaResources(decoded);
-        }
-        if (decoded.method === 'Presentation') {
-          // check loraWan fCnt to register object or resources ?
-          return cayenneToOmaObject(decoded);
-        }
-      }
-
-      return decoded;
+    if (!protocol.packet || !protocol.packet.getBuffers()) {
+      return new Error('Error: Missing packet');
     }
-    return "topic doesn't match";
+    logger(4, 'handlers', 'cayenneDecoder:req', protocol.method);
+
+    logger(4, 'handlers', 'cayenneToOmaResources:req', packet);
+
+    if (protocol.method && (protocol.devEui || protocol.devAddr)) {
+      if (
+        protocol.method === 'Unconfirmed Data Up' ||
+        protocol.method === 'Confirmed Data Up'
+      ) {
+        //  if (protocol.packet.getFCnt() > 1) {
+        return cayenneToOmaResources(packet, protocol);
+        //  }
+        //  return cayenneToOmaObject(protocol.packet);
+      }
+      if (protocol.method === 'Join Request') {
+        return cayenneToOmaObject(packet, protocol);
+      }
+      return new Error('Error: Invalid method');
+    }
+    return new Error('Error: Invalid params');
   } catch (error) {
     logger(2, 'handlers', 'cayenneDecoder:err', error);
-    throw error;
+    return error;
   }
 };
 
