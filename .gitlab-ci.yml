@@ -7,6 +7,10 @@ cache:
 before_script:
   - npm install
 
+test_async:
+  script:
+   - npm run test
+
 pages:
   stage: deploy
   script:
@@ -17,7 +21,3 @@ pages:
   only:
   - master
   
- test:
-  stage: test
-  script:
-  - npm run test
