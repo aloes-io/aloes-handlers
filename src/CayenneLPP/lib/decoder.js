@@ -14,11 +14,12 @@ import {
 } from './common';
 import {logger} from '../../logger';
 
-//  pattern: '+appEui/+type/+method/+gatewayId/#device',
+/** @module cayenneDecoder */
 
 /**
  * Return a float value and
  * increment the buffer cursor
+ * @static
  * @return float
  */
 const getAnalogInput = (buffer, cursor) => {
@@ -30,6 +31,7 @@ const getAnalogInput = (buffer, cursor) => {
 
 /**
  * Return an integer value
+ * @static
  * @return integer
  */
 const getDigitalInput = (buffer, cursor) => {
@@ -40,6 +42,7 @@ const getDigitalInput = (buffer, cursor) => {
 /**
  * Return a luminosity in Lux and
  * increment the buffer cursor
+ * @static
  * @return integer
  */
 const getLuminosity = (buffer, cursor) => {
@@ -50,6 +53,7 @@ const getLuminosity = (buffer, cursor) => {
 
 /**
  * Return an integer value
+ * @static
  * @return integer
  */
 const getPresence = (buffer, cursor) => {
@@ -60,6 +64,7 @@ const getPresence = (buffer, cursor) => {
 /**
  * Return a temperature and
  * increment the buffer cursor
+ * @static
  * @return float
  */
 const getTemperature = (buffer, cursor) => {
@@ -71,6 +76,7 @@ const getTemperature = (buffer, cursor) => {
 /**
  * Return a relative humidity value in percents and
  * increment the buffer cursor
+ * @static
  * @returns float
  */
 const getRelativeHumidity = (buffer, cursor) => {
@@ -80,6 +86,12 @@ const getRelativeHumidity = (buffer, cursor) => {
   return {'5700': value};
 };
 
+/**
+ * Return axis coordinates and
+ * increment the buffer cursor
+ * @static
+ * @return object
+ */
 const getAccelerometer = (buffer, cursor) => {
   const x = buffer.readInt16BE((cursor += 1));
   const y = buffer.readInt16BE((cursor += 1));
@@ -91,16 +103,34 @@ const getAccelerometer = (buffer, cursor) => {
   };
 };
 
+/**
+ * Return a pressure and
+ * increment the buffer cursor
+ * @static
+ * @return float
+ */
 const getBarometer = (buffer, cursor) => {
   const value = buffer.readInt16BE((cursor += 1));
   return {'5700': value};
 };
 
+/**
+ * Return a timestamp and
+ * increment the buffer cursor
+ * @static
+ * @return float
+ */
 const getUnixTime = (buffer, cursor) => {
   const value = buffer.readInt32BE((cursor += 1));
   return {'5506': value};
 };
 
+/**
+ * Return axis coordinates and
+ * increment the buffer cursor
+ * @static
+ * @return object
+ */
 const getGyrometer = (buffer, cursor) => {
   const x = buffer.readInt16BE((cursor += 1));
   const y = buffer.readInt16BE((cursor += 1));
@@ -112,6 +142,12 @@ const getGyrometer = (buffer, cursor) => {
   };
 };
 
+/**
+ * Return location coordinates and
+ * increment the buffer cursor
+ * @static
+ * @return object
+ */
 const getLocation = (buffer, cursor) => {
   const latitude = buffer.readInt16BE((cursor += 1));
   const longitude = buffer.readInt16BE((cursor += 1));
@@ -124,6 +160,12 @@ const getLocation = (buffer, cursor) => {
   };
 };
 
+/**
+ * Decode LoraWan buffer containing a Cayenne payload
+ * @static
+ * @param {object} buffer - Decoded LoraWan packet.
+ * @returns {object} Decoded channels
+ */
 const cayenneBufferDecoder = buffer => {
   try {
     const channels = {};
@@ -191,6 +233,14 @@ const cayenneBufferDecoder = buffer => {
     return error;
   }
 };
+
+/**
+ * Find corresponding OMA object to incoming CayenneLPP datas
+ * pattern - '+appEui/+type/+method/+gatewayId/#device'
+ * @static
+ * @param {object} msg - Decoded MQTT packet.
+ * @returns {object} composed instance
+ */
 const cayenneToOmaObject = (packet, protocol) => {
   try {
     if (!packet || packet === null) {
@@ -241,6 +291,13 @@ const cayenneToOmaObject = (packet, protocol) => {
   }
 };
 
+/**
+ * Find corresponding OMA resource to incoming CayenneLPP datas
+ * pattern - '+appEui/+type/+method/+gatewayId/#device'
+ * @static
+ * @param {object} msg - Decoded MQTT packet.
+ * @returns {object} composed instance
+ */
 const cayenneToOmaResources = (packet, protocol) => {
   try {
     if (!packet || packet == null) {
@@ -283,6 +340,14 @@ const cayenneToOmaResources = (packet, protocol) => {
   }
 };
 
+/**
+ * Convert incoming CayenneLPP data to Aloes Client sensor instance
+ * pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
+ * @static
+ * @param {object} packet - Incoming MQTT packet.
+ * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
+ * @returns {object} composed sensor instance
+ */
 const cayenneDecoder = (packet, protocol) => {
   try {
     if (!protocol.packet || !protocol.packet.getBuffers()) {

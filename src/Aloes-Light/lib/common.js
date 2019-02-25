@@ -2,6 +2,7 @@ const protocolRef = {
   pattern: '+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId',
    validators: {
     prefixedDevEui: 'string',
+    suffixedDevEui: 'string',
     nodeId: 'number',
     sensorId: 'number',
     subType: 'number',

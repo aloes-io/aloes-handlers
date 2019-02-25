@@ -2,8 +2,17 @@ import mqttPattern from 'mqtt-pattern';
 import {logger} from '../../logger';
 import protocolRef from './common';
 
+/** @module aloesClientEncoder */
+
+/**
+ * Try to convert incoming route to AloesClient routing
+ * collectionPattern - '+userId/+collectionName/+method'
+ * instancePattern - '+userId/+collectionName/+method/+modelId'
+ * @static
+ * @param {object} options - Protocol paramters ( coming from patternDetector ).
+ */
+
 const aloesClientEncoder = options => {
-  //  "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType",
   try {
     let topic;
     if (

@@ -5,5 +5,5 @@ import {mySensorsPatternDetector} from './lib/detector';
 module.exports = {
 	mySensorsEncoder,
 	mySensorsDecoder,
-	mySensorsPatternDetector
+	mySensorsPatternDetector,
 };

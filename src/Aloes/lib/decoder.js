@@ -3,6 +3,17 @@ import {aloesLightEncoder} from '../../Aloes-Light';
 import {cayenneEncoder} from '../../CayenneLPP';
 import {mySensorsEncoder} from '../../MySensors';
 
+/** @module aloesClientDecoder */
+
+/**
+ * Convert compatible incoming data to Aloes Client
+ * pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
+ * @static
+ * @param {object} packet - Incoming MQTT packet.
+ * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
+ * @returns {object} composed instance
+ */
+
 const aloesClientDecoder = (packet, protocol) => {
   try {
     logger(4, 'handlers', 'aloesClientDecoder:req', protocol);
@@ -21,9 +32,6 @@ const aloesClientDecoder = (packet, protocol) => {
           break;
         case 'cayenneLPP':
           decodedPayload = cayenneEncoder(instance, protocol);
-          break;
-        case 'nodeWebcam': // Req
-          //  await clientToMySensors(app, newPayload);
           break;
         default:
           decodedPayload = 'Protocol not supported yet';

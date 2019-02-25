@@ -22,6 +22,11 @@ import {
   mySensorsPatternDetector,
 } from './MySensors';
 
+/**
+ * Aloes Handlers.
+ * @module aloesHandlers
+ */
+
 // const isEmpty = obj => {
 //   const hasOwnProperty = Object.prototype.hasOwnProperty;
 //   // null and undefined are "empty"
@@ -34,6 +39,13 @@ import {
 //   }
 //   return true;
 // };
+
+/**
+ * Retrieve routing pattern from MQTT packet.topic and supported protocols
+ * @static
+ * @param {object} packet - The MQTT packet.
+ * @returns {object} found pattern.name and pattern.params
+ */
 
 const patternDetector = packet => {
   try {
@@ -60,6 +72,13 @@ const patternDetector = packet => {
     return error;
   }
 };
+
+/**
+ * Encode incoming supported protocol
+ * @static
+ * @param {object} options - .data being the instance, pattern being the description of the source protocol
+ * @returns {object} encoded MQTT route
+ */
 
 const publish = options => {
   logger(4, 'handlers', 'publish:req', options);
@@ -142,6 +161,15 @@ const publish = options => {
 //   }
 //   return value;
 // };x
+
+/**
+ * Update and validate AloesClient Sensor instance
+ * @static
+ * @param {object} sensor - sensor instance formatted as AloesClient protocol
+ * @param {number} resource - OMA resource ID to update
+ * @param {string} value - new value to update sensor with
+ * @returns {object} updated sensor instance
+ */
 
 const updateAloesSensors = (sensor, resource, value) => {
   logger(4, 'handlers', 'updateAloesSensors:req', {

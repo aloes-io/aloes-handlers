@@ -25,12 +25,17 @@ import {
 } from './common';
 import {logger} from '../../logger';
 
-//  pattern: '+appEui/+type/+method/+gatewayId/#device',
+/** @module cayenneEncoder */
 
 // Data ID + Data Type + Data Size
 const maxSize = 13;
 const maxChannelValue = 99;
 
+/**
+ * @description Validate chosen channel
+ * @static
+ * @param {int} channel The channel selected
+ */
 const validate = channel => {
   if (channel > maxChannelValue) {
     throw new Error('Channels above 100 are reserved.');
@@ -38,12 +43,14 @@ const validate = channel => {
 };
 
 /**
-    @description Creates a payload with type LPP_ANALOG_INPUT.
-    type = DataTypes.TYPE.ANALOG_SENSOR
-    unit = DataTypes.UNIT.ANALOG
-    @param {int} channel The channel for this sensor.
-    @param {float} value A floating point number accurate to two decimal place. lodash.floor(value, 2)
-    */
+ * @description Creates a payload with type ANALOG_INPUT.
+ * unit = UNIT.UNDEFINED
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {float} value A floating point number accurate to two decimal place. lodash.floor(value, 2)
+ */
 const addAnalogInput = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + ANALOG_INPUT_SIZE > maxSize) {
@@ -60,12 +67,14 @@ const addAnalogInput = (buffer, cursor, channel, value) => {
 };
 
 /**
-    @description Creates a payload with type LPP_DIGITAL_INPUT.
-    type = DataTypes.TYPE.DIGITAL_SENSOR
-    unit = DataTypes.UNIT.DIGITAL
-    @param {int} channel The channel for this sensor.
-    @param {int} value The value, unsigned int8, should be 0 or 1.
-    */
+ * @description Creates a payload with type DIGITAL_INPUT.
+ * unit = UNIT.UNDEFINED
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {int} value The value, unsigned int8, should be 0 or 1.
+ */
 const addDigitalInput = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + DIGITAL_INPUT_SIZE > maxSize) {
@@ -78,12 +87,14 @@ const addDigitalInput = (buffer, cursor, channel, value) => {
 };
 
 /**
-    @description Creates a payload with type LPP_LUMINOSITY.
-    type = DataTypes.TYPE.LUMINOSITY
-    unit = DataTypes.UNIT.LUX
-    @param {int} channel The channel for this sensor.
-    @param {float} value An unsigned int16 value. 0-65535.
-    */
+ * @description Creates a payload with type LUMINOSITY.
+ * unit = UNIT.LUX
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {float} value An unsigned int16 value. 0-65535.
+ */
 const addLuminosity = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + LUMINOSITY_SIZE > maxSize) {
@@ -108,12 +119,14 @@ const addPresence = (buffer, cursor, channel, value) => {
 };
 
 /**
-    @description Creates a payload with type LPP_TEMPERATURE.
-    type = DataTypes.TYPE.TEMPERATURE
-    unit = DataTypes.UNIT.CELSIUS
-    @param {int} channel The channel for this sensor.
-    @param {float} value A floating point number accurate to one decimal place. lodash.floor(value, 1)
-    */
+ * @description Creates a payload with type TEMPERATURE.
+ * unit = UNIT.CELSIUS
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {float} value A floating point number accurate to one decimal place. lodash.floor(value, 1)
+ */
 const addTemperature = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + TEMPERATURE_SIZE > maxSize) {
@@ -128,12 +141,14 @@ const addTemperature = (buffer, cursor, channel, value) => {
 };
 
 /**
-    @description Creates a payload with type LPP_HUMIDITY.
-    type = DataTypes.TYPE.RELATIVE_HUMIDITY
-    unit = DataTypes.UNIT.PERCENT
-    @param {int} channel The channel for this sensor.
-    @param {float} value A floating point number (%) accurate to one decimal place in 0.5 increments. Math.floor10(value, -1)
-    */
+ * @description Creates a payload with type HUMIDITY.
+ * unit = UNIT.PERCENT
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {float} value A floating point number (%) accurate to one decimal place in 0.5 increments. Math.floor10(value, -1)
+ */
 const addRelativeHumidity = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + HUMIDITY_SIZE > maxSize) {
@@ -147,6 +162,15 @@ const addRelativeHumidity = (buffer, cursor, channel, value) => {
   return cursor;
 };
 
+/**
+ * @description Creates a payload with type ACCELEROMETER.
+ * unit = UNIT.UNDEFINED
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {object} value Object containing X, Y, Z value
+ */
 const addAccelerometer = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + ACCELEROMETER_SIZE > maxSize) {
@@ -163,6 +187,15 @@ const addAccelerometer = (buffer, cursor, channel, value) => {
   return cursor;
 };
 
+/**
+ * @description Creates a payload with type BAROMETER.
+ * unit = UNIT.PRESSURE
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {float} value A floating point number accurate to one decimal place. lodash.floor(value, 1)
+ */
 const addBarometer = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + BAROMETER_SIZE > maxSize) {
@@ -176,12 +209,21 @@ const addBarometer = (buffer, cursor, channel, value) => {
   return cursor;
 };
 
+/**
+ * @description Creates a payload with type UNIXTIME.
+ * unit = UNIT.UNDEFINED
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {object} value Date() object
+ */
 const addUnixTime = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + UNIXTIME_SIZE > maxSize) {
     return 0;
   }
-  const timestamp = new Date();
+  const timestamp = value || new Date();
   buffer.writeUInt8(channel, (cursor += 1));
   buffer[(cursor += 1)] = UNIXTIME;
   buffer.writeInt32BE(timestamp, cursor);
@@ -189,6 +231,15 @@ const addUnixTime = (buffer, cursor, channel, value) => {
   return cursor;
 };
 
+/**
+ * @description Creates a payload with type GYROMETER.
+ * unit = UNIT.UNDEFINED
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {object} value Object containing X, Y, Z value
+ */
 const addGyrometer = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + GYROMETER_SIZE > maxSize) {
@@ -205,6 +256,15 @@ const addGyrometer = (buffer, cursor, channel, value) => {
   return cursor;
 };
 
+/**
+ * @description Creates a payload with type LOCATION.
+ * unit = UNIT.UNDEFINED
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ * @param {int} channel The channel for this sensor.
+ * @param {object} value Object containing latitude and longitude value
+ */
 const addLocation = (buffer, cursor, channel, value) => {
   validate(channel, value);
   if (cursor + LOCATION_SIZE > maxSize) {
@@ -225,10 +285,25 @@ const addLocation = (buffer, cursor, channel, value) => {
   return cursor;
 };
 
+/**
+ * @description Reading the composed buffer from 0 to the cursor position.
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} cursor - Writing position.
+ */
 const getPayload = (buffer, cursor) => {
   const buff = buffer.slice(0, cursor);
   return buff;
 };
+
+/**
+ * Filling the buffer with desired sensor parameters and value
+ * @static
+ * @param {object} buffer - Empty buffer.
+ * @param {int} type - CayenneLPP type.
+ * @param {int} channel - CayenneLPP Channel ( max value: 99 ).
+ * @param {float} value - sensor value.
+ */
 
 const cayenneBufferEncoder = (buffer, type, channel, value) => {
   try {
@@ -289,6 +364,13 @@ const cayenneBufferEncoder = (buffer, type, channel, value) => {
     return error;
   }
 };
+
+/**
+ * Convert incoming Aloes Client data to CayenneLPP
+ * pattern - '+appEui/+type/+method/+gatewayId/#device'
+ * @static
+ * @param {object} packet - Sensor instance.
+ */
 
 const cayenneEncoder = instance => {
   try {

@@ -3,13 +3,14 @@ import {omaObjects, omaViews} from 'oma-json';
 import {logger} from '../../logger';
 import protocolRef from './common';
 
-// device as argument ?
-// function merge(a, b, prop) {
-//   let reduced = a.filter(
-//     aitem => !b.find(bitem => aitem[prop] === bitem[prop]),
-//   );
-//   return reduced.concat(b);
-// }
+/** @module mySensorsDecoder */
+
+/**
+ * Find corresponding OMA object following a MySensors presentation message
+ * @static
+ * @param {object} msg - Decoded MQTT packet.
+ * @returns {object} composed instance
+ */
 
 const mySensorsToOmaObject = msg => {
   try {
@@ -38,7 +39,13 @@ const mySensorsToOmaObject = msg => {
   }
 };
 
-// sensor as argument ?
+/**
+ * Find corresponding OMA resource to incoming MySensors datas
+ * @static
+ * @param {object} msg - Decoded MQTT packet.
+ * @returns {object} composed instance
+ */
+
 const mySensorsToOmaResources = msg => {
   try {
     logger(2, 'handlers', 'mySensorsToOmaResources:req', msg);
@@ -64,6 +71,15 @@ const mySensorsToOmaResources = msg => {
     throw error;
   }
 };
+
+/**
+ * Convert incoming MySensors data to Aloes Client
+ * pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
+ * @static
+ * @param {object} packet - Incoming MQTT packet.
+ * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
+ * @returns {object} composed instance
+ */
 
 const mySensorsDecoder = (packet, protocol) => {
   const decoded = {};

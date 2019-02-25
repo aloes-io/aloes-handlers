@@ -2,7 +2,14 @@ import loraPacket from 'lora-packet';
 import {logger} from '../../logger';
 import protocolRef from './common';
 
-//  pattern: '+appEui/+type/+method/+gatewayId/#device',
+/** @module cayennePatternDetector */
+
+/**
+ * Check incoming MQTT packet.payload against CayenneLPP
+ * pattern '+appEui/+type/+method/+gatewayId/#device'
+ * @param {object} packet - The MQTT packet, including LoraWan PHYPayload.
+ * @returns {object} found pattern.name and pattern.params
+ */
 
 const cayennePatternDetector = payload => {
   try {

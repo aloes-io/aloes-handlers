@@ -175,6 +175,9 @@ mqttBroker.on('published', async packet => {
   }
   packet.payload = JSON.parse(packet.payload);
   logger(2, 'mqtt-broker', 'onPublish:req', pattern);
+  
+  // example 
+
   if (
     pattern.name === 'aloesClient' &&
     pattern.params.method === 'POST' &&

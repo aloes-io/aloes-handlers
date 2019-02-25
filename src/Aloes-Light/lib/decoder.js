@@ -3,6 +3,15 @@ import {omaObjects, omaResources, omaViews} from 'oma-json';
 import {logger} from '../../logger';
 import protocolRef from './common';
 
+/** @module aloesLightDecoder */
+
+/**
+ * Find corresponding OMA object following a AloesLight presentation message
+ * @static
+ * @param {object} msg - Decoded MQTT packet.
+ * @returns {object} composed instance
+ */
+
 const aloesLightToOmaObject = msg => {
   try {
     logger(4, 'handlers', 'aloesLightToOmaObject:req', msg);
@@ -34,6 +43,13 @@ const aloesLightToOmaObject = msg => {
   }
 };
 
+/**
+ * Find corresponding OMA resource to incoming AloesLight datas
+ * @memberof AloesLight
+ * @static
+ * @param {object} msg - Decoded MQTT packet.
+ * @returns {object} composed instance
+ */
 const aloesLightToOmaResources = msg => {
   try {
     logger(4, 'handlers', 'aloesLightToOmaResources:req', msg);
@@ -61,6 +77,15 @@ const aloesLightToOmaResources = msg => {
     throw error;
   }
 };
+
+/**
+ * Convert incoming AloesLight data to Aloes Client
+ * pattern - '+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId'
+ * @static
+ * @param {object} packet - Incoming MQTT packet.
+ * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
+ * @returns {object} composed instance
+ */
 
 const aloesLightDecoder = (packet, protocol) => {
   try {

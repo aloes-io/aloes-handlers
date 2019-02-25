@@ -2,8 +2,16 @@ import mqttPattern from 'mqtt-pattern';
 import {logger} from '../../logger';
 import protocolRef from './common';
 
+/** @module mySensorsEncoder */
+
+/**
+ * Convert incoming Aloes Client data to MySensors protocol
+ * pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
+ * @param {object} packet - Sensor instance.
+ * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
+ */
+
 const mySensorsEncoder = (instance, protocol) => {
-  //  "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType",
   try {
     if (
       instance &&
