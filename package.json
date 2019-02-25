@@ -24,7 +24,7 @@
     "mysensors-encoder-test": "mocha --require @babel/register ./src/MySensors/test/encoder.spec.js",
     "mysensors-tests": "npm run mysensors-detector-test; npm run mysensors-decoder-test; npm run mysensors-encoder-test",
     "test": "npm run aloes-tests; npm run aloes-light-tests; npm run cayenne-tests; npm run mysensors-tests",
-    "doc": "jsdoc -c ./jsdoc-conf.json",
+    "build-doc": "node_modules/.bin/jsdoc -c ./jsdoc-conf.json",
     "build": "npx babel src --out-dir dist --ignore './src/**/test/*.spec.js'",
     "build-lib": "npx babel ./src --ignore './src/**/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
     "prePublish": "npm run lint; npm run test; npm run build",
