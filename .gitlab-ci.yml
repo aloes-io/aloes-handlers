@@ -1,7 +1,5 @@
 image: node:latest
 
-# This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
   - node_modules/
@@ -11,17 +9,11 @@ test_async:
    - npm install
    - npm run test
 
-build_docs:
-  script:
-   - npm install
-   - npm run build-doc
-
 pages:
   stage: deploy
   script:
-  - mkdir .jsdoc
-  - cp -r jsdoc/* .jsdoc
-  - mv .jsdoc jsdoc
+   - npm install
+   - npm run build-doc
   artifacts:
     paths:
     - jsdoc
