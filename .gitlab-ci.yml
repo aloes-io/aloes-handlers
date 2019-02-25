@@ -1,21 +1,23 @@
-image: node:latest
+image: node:8.9.4
 
 cache:
   paths:
   - node_modules/
 
-test_async:
-  script:
-   - npm install
-   - npm run test
+before_script:
+  - npm install
 
 pages:
   stage: deploy
   script:
-   - npm install
    - npm run build-doc
   artifacts:
     paths:
     - jsdoc
   only:
   - master
+  
+ test:
+  stage: test
+  script:
+  - npm run test
