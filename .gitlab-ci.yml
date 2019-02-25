@@ -14,16 +14,16 @@ test_async:
 build_docs:
   script:
    - npm install
-   - npm run doc
+   - npm run build-doc
 
 pages:
   stage: deploy
   script:
-  - mkdir .docs
-  - cp -r jsdoc/* .docs
-  - mv .docs docs
+  - mkdir .jsdoc
+  - cp -r jsdoc/* .jsdoc
+  - mv .jsdoc jsdoc
   artifacts:
     paths:
-    - docs
+    - jsdoc
   only:
   - master
