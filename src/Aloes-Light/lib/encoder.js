@@ -7,7 +7,6 @@ import protocolRef from './common';
 /**
  * Convert incoming Aloes Client data to AloesLight protocol
  * pattern - '+prefixedDevEui/+method/+omaObjectId/+sensorId/+omaResourceId'
- * @static
  * @param {object} packet - Sensor instance.
  * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
  */

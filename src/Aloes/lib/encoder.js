@@ -8,7 +8,6 @@ import protocolRef from './common';
  * Try to convert incoming route to AloesClient routing
  * collectionPattern - '+userId/+collectionName/+method'
  * instancePattern - '+userId/+collectionName/+method/+modelId'
- * @static
  * @param {object} options - Protocol paramters ( coming from patternDetector ).
  */
 

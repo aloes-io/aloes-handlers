@@ -162,7 +162,6 @@ const getLocation = (buffer, cursor) => {
 
 /**
  * Decode LoraWan buffer containing a Cayenne payload
- * @static
  * @param {object} buffer - Decoded LoraWan packet.
  * @returns {object} Decoded channels
  */
@@ -343,7 +342,6 @@ const cayenneToOmaResources = (packet, protocol) => {
 /**
  * Convert incoming CayenneLPP data to Aloes Client sensor instance
  * pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
- * @static
  * @param {object} packet - Incoming MQTT packet.
  * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
  * @returns {object} composed sensor instance

@@ -17,5 +17,6 @@
 coverage
 node_modules
 npm-debug.log
-dist/*
+public
+dist
 aloes-handlers.min.js

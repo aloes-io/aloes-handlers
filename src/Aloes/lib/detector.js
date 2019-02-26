@@ -8,7 +8,6 @@ import protocolRef from './common';
  * Check incoming MQTT packet against AloesClient API
  * collectionPattern - '+userId/+collectionName/+method'
  * instancePattern - '+userId/+collectionName/+method/+modelId'
- * @static
  * @param {object} packet - The MQTT packet.
  * @returns {object} found pattern.name and pattern.params
  */

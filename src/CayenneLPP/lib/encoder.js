@@ -368,7 +368,6 @@ const cayenneBufferEncoder = (buffer, type, channel, value) => {
 /**
  * Convert incoming Aloes Client data to CayenneLPP
  * pattern - '+appEui/+type/+method/+gatewayId/#device'
- * @static
  * @param {object} packet - Sensor instance.
  */
 

@@ -75,7 +75,6 @@ const mySensorsToOmaResources = msg => {
 /**
  * Convert incoming MySensors data to Aloes Client
  * pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
- * @static
  * @param {object} packet - Incoming MQTT packet.
  * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
  * @returns {object} composed instance
