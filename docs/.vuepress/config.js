@@ -1,5 +1,5 @@
 module.exports = {
-	base: '/',
+	base: '/aloes-handlers/',
 	dest: 'public',
 	themeConfig: {
 		logo: '/assets/img/logo.png',
@@ -15,4 +15,11 @@ module.exports = {
 	},
 	siteTitle: 'Aloes - Handlers',
 	title: 'Aloes - Handlers',
+	description: 'Encode / decode MQTT stream from IoT devices to Web browsers.',
+	lang: 'en-US',
+	home: 'true',
+	heroImage: '/aloes-handlers/assets/img/logo.png',
+	actionText: 'Docs →',
+	actionLink: '/api/',
+	footer: 'Getlarge',
 };
