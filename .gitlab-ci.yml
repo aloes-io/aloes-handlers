@@ -7,6 +7,9 @@ cache:
 before_script:
   - npm install
 
+before_script:
+  - npm install
+
 test_async:
   script:
     - npm run test
