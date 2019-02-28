@@ -9,6 +9,25 @@
 <dd></dd>
 </dl>
 
+## Objects
+
+<dl>
+<dt><a href="#protocolRef">protocolRef</a> : <code>object</code></dt>
+<dd><p>References used to validate payloads</p>
+</dd>
+</dl>
+
+## External
+
+<dl>
+<dt><a href="#external_OmaObjects">OmaObjects</a></dt>
+<dd><p>Oma Object References.</p>
+</dd>
+<dt><a href="#external_OmaResources">OmaResources</a></dt>
+<dd><p>Oma Resources References.</p>
+</dd>
+</dl>
+
 <a name="module_mySensorsDecoder"></a>
 
 ## mySensorsDecoder
@@ -90,3 +109,34 @@ pattern - "+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType"
 | packet | <code>object</code> | Sensor instance. |
 | protocol | <code>object</code> | Protocol paramters ( coming from patternDetector ). |
 
+<a name="protocolRef"></a>
+
+## protocolRef : <code>object</code>
+References used to validate payloads
+
+**Kind**: global namespace  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| pattern | <code>string</code> | The pattern used by MySensors devices. |
+| validators | <code>object</code> | Check inputs / build outputs |
+| validators.nodeId | <code>array</code> |  |
+| validators.methods | <code>array</code> | [0, 1, 2, 3, 4]. |
+| labelsPresentation | <code>array</code> | Labels used by Mysensors to identify sensor type in presentation commands. |
+| labelsSet | <code>array</code> | Labels used by Mysensors to identify sensor type in Set/req commands. |
+
+<a name="external_OmaObjects"></a>
+
+## OmaObjects
+Oma Object References.
+
+**Kind**: global external  
+**See**: [https://api.aloes.io/api/omaObjects](https://api.aloes.io/api/omaObjects)  
+<a name="external_OmaResources"></a>
+
+## OmaResources
+Oma Resources References.
+
+**Kind**: global external  
+**See**: [https://api.aloes.io/api/omaResources](https://api.aloes.io/api/omaResources)  

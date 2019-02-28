@@ -1,4 +1,23 @@
 /* LPP_TYPE = IPSO_OBJECT_ID - 3200 */
+/**
+ * Oma Object References.
+ * @external OmaObjects
+ * @see {@link https://api.aloes.io/api/omaObjects}
+ */
+
+/**
+ * Oma Resources References.
+ * @external OmaResources
+ * @see {@link https://api.aloes.io/api/omaResources}
+ */
+
+/**
+ * References used to validate payloads
+ * @namespace
+ * @property {string}  pattern - The pattern used by CayenneLPP devices.
+ * @property {object}  validators - Check inputs / build outputs
+ * @property {array}   validators.methods - [0, 1, 2, 3, 4].
+ */
 const protocolRef = {
 	pattern: '+appEui/+type/+method/+gatewayId/#device',
 	pattern2: '+appEui/+gatewayId/+direction/+type/#device',
