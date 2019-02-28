@@ -28,11 +28,11 @@
     "docs:aloeslight": "jsdoc2md ./src/Aloes-Light/lib/* > ./docs/aloeslight/README.md",
     "docs:cayennelpp": "jsdoc2md ./src/CayenneLPP/lib/* > ./docs/cayennelpp/README.md",
     "docs:mysensors": "jsdoc2md ./src/MySensors/lib/* > ./docs/mysensors/README.md",
-    "docs:main": "jsdoc2md ./src/* > ./docs/api/README.md -c ./jsdoc-conf.json",
-    "docs:md": "npm run docs:aloesclient ; npm run docs:aloeslight ; npm run docs:cayennelpp ; npm run docs:mysensors",
-    "docs:dev": "npm run docs:md ; cp ./README.md ./docs/. ; vuepress dev docs",
-    "docs:build": "npm run docs:md ; cp ./README.md ./docs/. ; vuepress build docs",
-    "docs:serve": "light-server -s public -p 7000 --servePrefix /aloes-handlers",
+    "docs:main": "jsdoc2md ./src/* > ./docs/api/README.md",
+    "docs:md": "npm run docs:main ; npm run docs:aloesclient ; npm run docs:aloeslight ; npm run docs:cayennelpp ; npm run docs:mysensors",
+    "docs:dev": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress dev docs",
+    "docs:build": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress build docs",
+    "docs:serve": "light-server -s public -p 7000 --servePrefix /aloes-handlers/",
     "build-lib": "npx babel src --out-dir dist --ignore './src/**/test/*.spec.js'",
     "build-lib-min": "npx babel ./src --ignore './src/**/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
     "prePublish": "npm run lint; npm run test; npm run build-lib",
@@ -51,6 +51,10 @@
     "Interoperability"
   ],
   "license": "ISC",
+  "engines": {
+    "node": ">=9.0.0",
+    "npm": ">=6.0.0"
+  },
   "dependencies": {
     "lodash.floor": "^4.0.4",
     "lora-packet": "^0.7.7",
@@ -158,7 +162,8 @@
   },
   "eslintIgnore": [
     "/dist/",
-    "/jsdoc/",
+    "/public/",
+    "/docs/",
     "/node_modules/",
     "/src/**/test/*.spec.js",
     "aloes-handlers.min.js"

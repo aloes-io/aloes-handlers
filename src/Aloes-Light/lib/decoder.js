@@ -11,7 +11,6 @@ import protocolRef from './common';
  * @param {object} msg - Decoded MQTT packet.
  * @returns {object} composed instance
  */
-
 const aloesLightToOmaObject = msg => {
   try {
     logger(4, 'handlers', 'aloesLightToOmaObject:req', msg);
@@ -85,7 +84,6 @@ const aloesLightToOmaResources = msg => {
  * @param {object} protocol - Protocol paramters ( coming from patternDetector ).
  * @returns {object} composed instance
  */
-
 const aloesLightDecoder = (packet, protocol) => {
   try {
     logger(4, 'handlers', 'aloesLightDecoder:req', protocol);

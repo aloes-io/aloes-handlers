@@ -1,3 +1,25 @@
+/**
+ * Oma Object References.
+ * @external OmaObjects
+ * @see {@link https://api.aloes.io/api/omaObjects}
+ */
+
+/**
+ * Oma Resources References.
+ * @external OmaResources
+ * @see {@link https://api.aloes.io/api/omaResources}
+ */
+
+/**
+ * References used to validate payloads
+ * @namespace
+ * @property {string}  pattern - The pattern used by MySensors devices.
+ * @property {object}  validators - Check inputs / build outputs
+ * @property {array}   validators.nodeId
+ * @property {array}   validators.methods - [0, 1, 2, 3, 4].
+ * @property {array}   labelsPresentation - Labels used by Mysensors to identify sensor type in presentation commands.
+ * @property {array}   labelsSet - Labels used by Mysensors to identify sensor type in Set/req commands.
+ */
 const protocolRef = {
 	pattern: '+prefixedDevEui/+nodeId/+sensorId/+method/+ack/+subType',
 	validators: {

@@ -1,25 +1,28 @@
 module.exports = {
+	title: 'Aloes - Handlers',
 	base: '/aloes-handlers/',
 	dest: 'public',
 	themeConfig: {
-		logo: '/assets/img/logo.png',
-		nav: [{text: 'Home', link: '/'}, {text: 'API', link: '/api/'}],
+		logo: '/logo.png',
+		repo: 'https://framagit.org/aloes/aloes-handlers',
+		repoLabel: 'Git',
+		docsDir: 'docs',
+		nav: [{text: 'Readme', link: '/readme/'}, {text: 'Core', link: '/api/'}],
 		sidebar: [
-			'/',
-			['/api/', 'Handlers'],
+			['/readme/', 'Readme'],
+			['/api/', 'Core'],
 			['/aloesclient/', 'AloesClient'],
 			['/aloeslight/', 'AloesLight'],
 			['/cayennelpp/', 'CayenneLPP'],
 			['/mysensors/', 'MySensors'],
 		],
+		serviceWorker: {
+			updatePopup: true, // Boolean | Object, default to undefined.
+			// If set to true, the default text config will be:
+			// updatePopup: {
+			//    message: "New content is available.",
+			//    buttonText: "Refresh"
+			// }
+		},
 	},
-	siteTitle: 'Aloes - Handlers',
-	title: 'Aloes - Handlers',
-	description: 'Encode / decode MQTT stream from IoT devices to Web browsers.',
-	lang: 'en-US',
-	home: 'true',
-	heroImage: '/aloes-handlers/assets/img/logo.png',
-	actionText: 'Docs →',
-	actionLink: '/api/',
-	footer: 'Getlarge',
 };

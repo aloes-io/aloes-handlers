@@ -11,7 +11,6 @@ import protocolRef from './common';
  * @param {object} msg - Decoded MQTT packet.
  * @returns {object} composed instance
  */
-
 const mySensorsToOmaObject = msg => {
   try {
     logger(2, 'handlers', 'mySensorsToOmaObject:req', msg);
@@ -45,7 +44,6 @@ const mySensorsToOmaObject = msg => {
  * @param {object} msg - Decoded MQTT packet.
  * @returns {object} composed instance
  */
-
 const mySensorsToOmaResources = msg => {
   try {
     logger(2, 'handlers', 'mySensorsToOmaResources:req', msg);
