@@ -15,8 +15,8 @@ const mySensorsEncoder = (instance, protocol) => {
   try {
     if (
       instance &&
-      instance.protocolName &&
-      instance.protocolName.toLowerCase() === 'mysensors'
+      instance.messageProtocol &&
+      instance.messageProtocol.toLowerCase() === 'mysensors'
     ) {
       let topic = null;
       const params = {

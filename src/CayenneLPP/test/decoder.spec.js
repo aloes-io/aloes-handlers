@@ -28,7 +28,6 @@ describe('cayenneDecoder - test 1', () => {
     'nativeResource',
     'resource',
     'resources',
-    'protocolName',
     // 'inputPath',
     // 'outputPath',
     // 'inPrefix',
@@ -84,11 +83,11 @@ describe('cayenneDecoder - test 2', () => {
     'nativeResource',
     'resource',
     'resources',
-    // 'inputPath',
     'packet',
-    // 'inPrefix',
-    // 'outPrefix',
     'value',
+    'colors',
+    'icons',
+    'name',
   ];
 
   it('decoded should contain 2 channels', () => {
@@ -139,6 +138,9 @@ describe('cayenneDecoder - test 3', () => {
     // 'inPrefix',
     // 'outPrefix',
     'value',
+    'colors',
+    'icons',
+    'name',
   ];
 
   it('decoded should contain 2 channels', () => {

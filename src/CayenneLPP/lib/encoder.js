@@ -375,8 +375,8 @@ const cayenneEncoder = instance => {
   try {
     if (
       instance &&
-      instance.protocolName &&
-      instance.protocolName.toLowerCase() === 'cayennelpp'
+      instance.messageProtocol &&
+      instance.messageProtocol.toLowerCase() === 'cayennelpp'
     ) {
       logger(4, 'handlers', 'cayenneEncoder:req', instance);
       const buffer = Buffer.alloc(maxSize);

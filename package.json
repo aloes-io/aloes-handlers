@@ -33,9 +33,9 @@
     "docs:dev": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress dev docs",
     "docs:build": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress build docs",
     "docs:serve": "light-server -s public -p 7000 --servePrefix /aloes-handlers/",
-    "build-lib": "npx babel src --out-dir dist --ignore './src/**/test/*.spec.js'",
-    "build-lib-min": "npx babel ./src --ignore './src/**/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
-    "prePublish": "npm run lint; npm run test; npm run build-lib",
+    "lib:build": "npx babel src --out-dir dist --ignore './src/**/test/*.spec.js'",
+    "lib:build-min": "npx babel ./src --ignore './src/**/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
+    "prePublish": "npm run lint; npm run test; npm run lib:build",
     "example": "nodemon --exec babel-node ./examples/index.js"
   },
   "files": [

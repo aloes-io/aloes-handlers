@@ -22,7 +22,7 @@ const aloesClientDecoder = (packet, protocol) => {
     if (protocolKeys.length === 3 || protocolKeys.length === 4) {
       let decodedPayload;
       logger(4, 'handlers', 'aloesClientDecoder:req', instance);
-      switch (instance.protocolName) {
+      switch (instance.messageProtocol) {
         case 'aloesLight':
           decodedPayload = aloesLightEncoder(instance, protocol);
           break;

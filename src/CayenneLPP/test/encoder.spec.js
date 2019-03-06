@@ -23,7 +23,8 @@ describe('cayenneEncoder - test 1', () => {
     pattern: pattern.name,
     method: 'POST',
     data: {
-      protocolName: 'cayenneLPP',
+      transportProtocol: 'loraWan',
+      messageProtocol: 'cayenneLPP',
       type: 3200,
       nativeType: '0',
       resource: 5500,
@@ -84,7 +85,8 @@ describe('cayenneEncoder - test 2', () => {
     pattern: pattern.name,
     method: 'PUT',
     data: {
-      protocolName: 'cayenneLPP',
+      transportProtocol: 'loraWan',
+      messageProtocol: 'cayenneLPP',
       type: 3202,
       nativeType: '2',
       resource: 5600,
