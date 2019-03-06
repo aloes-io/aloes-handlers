@@ -65,7 +65,6 @@ describe('mySensorsDecoder - test 2', () => {
 	const keys = [
 		'name',
 		'devEui',
-		'protocolName',
 		'type',
 		'nativeSensorId',
 		'nativeNodeId',

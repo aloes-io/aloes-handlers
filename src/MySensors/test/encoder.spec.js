@@ -14,7 +14,8 @@ describe('mySensorsEncoder - test 1', () => {
 		method: 'POST',
 		data: {
 			type: 3300,
-			protocolName: 'mySensors',
+			transportProtocol: 'mySensors',
+			messageProtocol: 'mySensors',
 			nativeResource: 4,
 			nativeNodeId: pattern.params.nodeId,
 			nativeSensorId: pattern.params.sensorId,
@@ -73,7 +74,8 @@ describe('mySensorsEncoder - test 2', () => {
 		method: 'PUT',
 		data: {
 			type: 3300,
-			protocolName: 'mySensors',
+			transportProtocol: 'mySensors',
+			messageProtocol: 'mySensors',
 			nativeResource: 4,
 			nativeNodeId: pattern.params.nodeId,
 			nativeSensorId: pattern.params.sensorId,
@@ -132,7 +134,8 @@ describe('mySensorsEncoder - test 3', () => {
 		method: 'PUT',
 		data: {
 			type: 3300,
-			protocolName: 'mySensors',
+			transportProtocol: 'mySensors',
+			messageProtocol: 'mySensors',
 			nativeResource: 23,
 			nativeNodeId: pattern.params.nodeId,
 			nativeSensorId: pattern.params.sensorId,

@@ -264,8 +264,8 @@ const cayenneToOmaObject = (packet, protocol) => {
       };
 
       return {
-        packet: packet.toString('hex'),
-        protocolName: 'cayenneLPP',
+        packet,
+        //  protocolName: 'cayenneLPP',
         name: omaObject.name,
         icons: omaView.icons,
         colors: omaView.resources,
@@ -318,7 +318,7 @@ const cayenneToOmaResources = (packet, protocol) => {
         ...channels[nativeType],
       };
       return {
-        packet: packet.toString('hex'),
+        packet,
         nativeType,
         nativeResource,
         nativeSensorId: index,
@@ -360,13 +360,20 @@ const cayenneDecoder = (packet, protocol) => {
         protocol.method === 'Unconfirmed Data Up' ||
         protocol.method === 'Confirmed Data Up'
       ) {
-        //  if (protocol.packet.getFCnt() > 1) {
-        return cayenneToOmaResources(packet, protocol);
+        //  if (protocol.packet.getFCnt() < 1) {
+        return cayenneToOmaObject(packet, protocol);
         //  }
-        //  return cayenneToOmaObject(protocol.packet);
       }
       if (protocol.method === 'Join Request') {
         return cayenneToOmaObject(packet, protocol);
+      }
+      if (
+        protocol.method === 'Unconfirmed Data Down' ||
+        protocol.method === 'Confirmed Data Down'
+      ) {
+        //  if (protocol.packet.getFCnt() > 1) {
+        return cayenneToOmaResources(packet, protocol);
+        //  }
       }
       return new Error('Error: Invalid method');
     }

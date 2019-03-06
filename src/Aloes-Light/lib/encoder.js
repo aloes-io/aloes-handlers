@@ -15,8 +15,8 @@ const aloesLightEncoder = (instance, protocol) => {
   try {
     if (
       instance &&
-      instance.protocolName &&
-      instance.protocolName.toLowerCase() === 'aloeslight'
+      instance.messageProtocol &&
+      instance.messageProtocol.toLowerCase() === 'aloeslight'
     ) {
       let topic = null;
       const params = {

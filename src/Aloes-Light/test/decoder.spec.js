@@ -14,7 +14,6 @@ describe('aloesLightDecoder - test 1', () => {
 	const keys = [
 		'name',
 		'devEui',
-		'protocolName',
 		'type',
 		'nativeSensorId',
 		'nativeType',
@@ -71,7 +70,6 @@ describe('aloesLightDecoder - test 2', () => {
 	const keys = [
 		'name',
 		'devEui',
-		'protocolName',
 		'type',
 		'nativeSensorId',
 		'nativeType',

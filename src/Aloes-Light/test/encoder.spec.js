@@ -17,7 +17,8 @@ describe('aloesLightEncoder - test 1', () => {
     method: 'HEAD',
     data: {
       devEui: pattern.params.prefixedDevEui.split('-')[0],
-      protocolName: 'aloesLight',
+      transportProtocol: 'aloesLight',
+      messageProtocol: 'aloesLight',
       type: Number(pattern.params.omaObjectId),
       resources: {'5700': null, '5750': 'awesome'},
       nativeSensorId: pattern.params.sensorId,
@@ -77,7 +78,8 @@ describe('aloesLightEncoder - test 2', () => {
     method: 'HEAD',
     data: {
       devEui: pattern.params.prefixedDevEui.split('-')[0],
-      protocolName: 'aloesLight',
+      transportProtocol: 'aloesLight',
+      messageProtocol: 'aloesLight',
       type: Number(pattern.params.omaObjectId),
       resources: {'5700': null, '5750': 'awesome'},
       nativeSensorId: pattern.params.sensorId,
@@ -136,7 +138,8 @@ describe('aloesLightEncoder - test 3', () => {
     method: 'POST',
     data: {
       devEui: pattern.params.prefixedDevEui.split('-')[0],
-      protocolName: 'aloesLight',
+      transportProtocol: 'aloesLight',
+      messageProtocol: 'aloesLight',
       type: Number(pattern.params.omaObjectId),
       resources: {'5910': null, '5911': 0},
       nativeSensorId: pattern.params.sensorId,
@@ -199,7 +202,8 @@ describe('aloesLightEncoder - test 4', () => {
     method: 'POST',
     data: {
       devEui: pattern.params.prefixedDevEui.split('-')[0],
-      protocolName: 'aloesLight',
+      transportProtocol: 'aloesLight',
+      messageProtocol: 'aloesLight',
       type: Number(pattern.params.omaObjectId),
       nativeSensorId: pattern.params.sensorId,
       resource: pattern.params.omaResourceId,
