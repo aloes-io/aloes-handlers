@@ -1,8 +1,7 @@
 require('@babel/register');
 
 import {assert} from 'chai';
-import {updateAloesSensors} from '../..';
-import {aloesClientEncoder} from '../lib/encoder';
+import {aloesClientEncoder, updateAloesSensors} from '../lib/encoder';
 import {aloesClientPatternDetector} from '../lib/detector';
 
 // collectionPattern: '+userId/+collectionName/+method',

@@ -5,16 +5,6 @@
 
 [Full Docs](https://aloes.frama.io/aloes-handlers/)
 
-WIP :
-
-- Compatibility with CayenneLPP
-
-Next :
-
-- Octoprint HTTP / MQTT Connector
-- separate each protocol into distinct libraries
-- Snip handler ?
-
 ---
 
 ## Installation

@@ -9,7 +9,7 @@ features:
 - title: Aloes Client API
   details: Delivering standard interfaces to interact with IoT devices/sensors from any webservices.
 - title: Interoperability
-  details: Compatible with MySensors, CayenneLPP, LoraWAN, ...
+  details: Used by iot-agent
 actionText: Docs →
 actionLink: /readme/
 footer: Getlarge

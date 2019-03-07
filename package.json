@@ -7,36 +7,17 @@
   "jsdelivr": "aloes-handlers.min.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
-    "test:aloes-detector": "mocha --require @babel/register './src/Aloes/test/detector.spec.js'",
-    "test:aloes-decoder": "mocha --require @babel/register './src/Aloes/test/decoder.spec.js'",
-    "test:aloes-encoder": "mocha --require @babel/register './src/Aloes/test/encoder.spec.js'",
-    "test:aloes": "npm run test:aloes-detector; npm run test:aloes-decoder; npm run test:aloes-encoder",
-    "test:aloes-light-detector": "mocha --require @babel/register './src/Aloes-Light/test/detector.spec.js'",
-    "test:aloes-light-decoder": "mocha --require @babel/register './src/Aloes-Light/test/decoder.spec.js'",
-    "test:aloes-light-encoder": "mocha --require @babel/register './src/Aloes-Light/test/encoder.spec.js'",
-    "test:aloes-light": "npm run test:aloes-light-detector; npm run test:aloes-light-decoder; npm run test:aloes-light-encoder",
-    "test:cayenne-detector": "mocha --require @babel/register ./src/CayenneLPP/test/detector.spec.js",
-    "test:cayenne-decoder": "mocha --require @babel/register ./src/CayenneLPP/test/decoder.spec.js",
-    "test:cayenne-encoder": "mocha --require @babel/register ./src/CayenneLPP/test/encoder.spec.js",
-    "test:cayenne": "npm run test:cayenne-detector; npm run test:cayenne-decoder; npm run test:cayenne-encoder",
-    "test:mysensors-detector": "mocha --require @babel/register ./src/MySensors/test/detector.spec.js",
-    "test:mysensors-decoder": "mocha --require @babel/register ./src/MySensors/test/decoder.spec.js",
-    "test:mysensors-encoder": "mocha --require @babel/register ./src/MySensors/test/encoder.spec.js",
-    "test:mysensors": "npm run test:mysensors-detector; npm run test:mysensors-decoder; npm run test:mysensors-encoder",
-    "test": "npm run test:aloes; npm run test:aloes-light; npm run test:cayenne; npm run test:mysensors",
-    "docs:aloesclient": "jsdoc2md ./src/Aloes/lib/* > ./docs/aloesclient/README.md",
-    "docs:aloeslight": "jsdoc2md ./src/Aloes-Light/lib/* > ./docs/aloeslight/README.md",
-    "docs:cayennelpp": "jsdoc2md ./src/CayenneLPP/lib/* > ./docs/cayennelpp/README.md",
-    "docs:mysensors": "jsdoc2md ./src/MySensors/lib/* > ./docs/mysensors/README.md",
-    "docs:main": "jsdoc2md ./src/* > ./docs/api/README.md",
-    "docs:md": "npm run docs:main ; npm run docs:aloesclient ; npm run docs:aloeslight ; npm run docs:cayennelpp ; npm run docs:mysensors",
+    "test:aloes-detector": "mocha --require @babel/register './src/test/detector.spec.js'",
+    "test:aloes-encoder": "mocha --require @babel/register './src/test/encoder.spec.js'",
+    "test:aloes": "npm run test:aloes-detector; npm run test:aloes-encoder",
+    "test": "npm run test:aloes",
+    "docs:md": "jsdoc2md -c jsdoc-conf.json ./src/*/* > ./docs/aloesclient/README.md",
     "docs:dev": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress dev docs",
     "docs:build": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress build docs",
     "docs:serve": "light-server -s public -p 7000 --servePrefix /aloes-handlers/",
-    "lib:build": "npx babel src --out-dir dist --ignore './src/**/test/*.spec.js'",
-    "lib:build-min": "npx babel ./src --ignore './src/**/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
-    "prePublish": "npm run lint; npm run test; npm run lib:build",
-    "example": "nodemon --exec babel-node ./examples/index.js"
+    "lib:build": "npx babel src --out-dir dist --ignore './src/test/*.spec.js'",
+    "lib:build-min": "npx babel ./src --ignore './src/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
+    "prePublish": "npm run lint; npm run test; npm run lib:build"
   },
   "files": [
     "dist/*",
@@ -56,8 +37,6 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
-    "lodash.floor": "^4.0.4",
-    "lora-packet": "^0.7.7",
     "mqtt-pattern": "^1.2.0",
     "oma-json": "^1.0.6"
   },
@@ -77,7 +56,6 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "acorn": "^6.1.0",
-    "async-mqtt": "^2.0.0",
     "babel-eslint": "^8.2.6",
     "babel-preset-minify": "^0.5.0",
     "chai": "^4.2.0",
@@ -91,14 +69,11 @@
     "jsdoc-to-markdown": "^4.0.1",
     "light-server": "^2.6.0",
     "mocha": "^5.2.0",
-    "mosca": "^2.8.3",
     "nodemon": "^1.18.8",
     "prettier": "1.16.1",
     "vuepress": "^1.0.0-alpha.42"
   },
   "peerDependencies": {
-    "lodash.floor": "^4.0.4",
-    "lora-packet": "^0.7.7",
     "mqtt-pattern": "^1.2.0",
     "oma-json": "^1.0.5"
   },
@@ -165,7 +140,7 @@
     "/public/",
     "/docs/",
     "/node_modules/",
-    "/src/**/test/*.spec.js",
+    "/src/test/*.spec.js",
     "aloes-handlers.min.js"
   ],
   "repository": {

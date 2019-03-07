@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /**
- * @module logger
+ * @method logger
  * @param {int} priority - Logger mode.
  * @param {string} collectionName - service name.
  * @param {string} command - service command to log.
