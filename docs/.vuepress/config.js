@@ -7,15 +7,8 @@ module.exports = {
 		repo: 'https://framagit.org/aloes/aloes-handlers',
 		repoLabel: 'Git',
 		docsDir: 'docs',
-		nav: [{text: 'Readme', link: '/readme/'}, {text: 'Core', link: '/api/'}],
-		sidebar: [
-			['/readme/', 'Readme'],
-			['/api/', 'Core'],
-			['/aloesclient/', 'AloesClient'],
-			['/aloeslight/', 'AloesLight'],
-			['/cayennelpp/', 'CayenneLPP'],
-			['/mysensors/', 'MySensors'],
-		],
+		nav: [{text: 'AloesClient', link: '/aloesclient/'}],
+		sidebar: [['/readme/', 'Readme'], ['/aloesclient/', 'AloesClient']],
 		serviceWorker: {
 			updatePopup: true, // Boolean | Object, default to undefined.
 			// If set to true, the default text config will be:

@@ -1,17 +1,16 @@
 import mqttPattern from 'mqtt-pattern';
-import {logger} from '../../logger';
+import {logger} from '../logger';
 import protocolRef from './common';
 
-/** @module aloesClientPatternDetector */
 
 /**
  * Check incoming MQTT packet against AloesClient API
  * collectionPattern - '+userId/+collectionName/+method'
  * instancePattern - '+userId/+collectionName/+method/+modelId'
+ * @method aloesClientPatternDetector
  * @param {object} packet - The MQTT packet.
  * @returns {object} found pattern.name and pattern.params
  */
-
 const aloesClientPatternDetector = packet => {
   try {
     const pattern = {name: 'empty', params: {}};
