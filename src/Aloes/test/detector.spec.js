@@ -11,7 +11,8 @@ describe('aloesClientPatternDetector - test 1', () => {
     topic: '1/Sensor/POST',
     payload: Buffer.from(
       JSON.stringify({
-        protocolName: 'aloesLight',
+        transportProtocol: 'aloesLight',
+        messageProtocol: 'aloesLight',
         devEui: '3322321',
         type: 3300,
         nativeSensorId: 4,
@@ -53,7 +54,8 @@ describe('aloesClientPatternDetector - test 2', () => {
     payload: Buffer.from(
       JSON.stringify({
         id: 1,
-        protocolName: 'aloesLight',
+        transportProtocol: 'aloesLight',
+        messageProtocol: 'aloesLight',
         devEui: '3322321',
         type: 3306,
         nativeSensorId: 4,
@@ -95,7 +97,8 @@ describe('aloesClientPatternDetector - test 3', () => {
     payload: Buffer.from(
       JSON.stringify({
         id: 1,
-        protocolName: 'mySensors',
+        transportProtocol: 'mySensors',
+        messageProtocol: 'mySensors',
         devEui: '3322321',
         type: 3300,
         nativeNodeId: 3,
@@ -138,7 +141,8 @@ describe('aloesClientPatternDetector - test 4', () => {
     topic: '1/IoTAgent/PUT',
     payload: Buffer.from(
       JSON.stringify({
-        protocolName: 'mySensors',
+        transportProtocol: 'mySensors',
+        messageProtocol: 'mySensors',
         devEui: '3322321',
         type: 3306,
         nativeSensorId: 4,

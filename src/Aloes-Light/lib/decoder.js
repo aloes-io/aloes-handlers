@@ -27,7 +27,6 @@ const aloesLightToOmaObject = msg => {
 
     const decoded = {
       ...msg,
-      //  protocolName: 'aloesLight',
       resources: foundOmaObject.resources,
       name: foundOmaObject.name,
       icons: foundOmaViews.icons,

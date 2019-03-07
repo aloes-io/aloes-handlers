@@ -265,7 +265,6 @@ const cayenneToOmaObject = (packet, protocol) => {
 
       return {
         packet,
-        //  protocolName: 'cayenneLPP',
         name: omaObject.name,
         icons: omaView.icons,
         colors: omaView.resources,

@@ -128,6 +128,6 @@ $ mqtt pub -t '2894413-in/1/3349/2/5911' -h 'localhost' -p 1883 -m "1" -u '5c265
 - by mocking a browser MQTT packet ({aloesClient_topic}{aloesClient_payload} )
 
 ```bash
-$ mqtt pub -t '5c24e1514a603a651d1ddfd5/Sensor/POST' -h 'localhost' -p 1883 -m '{"id": "5c62c4de3c6d59223afdf891","name": "Bitmap", "type": 3349, "devEui": "2894413", "resources": { "5750": "app-name", "5910": null, "5911": true, "5912": "" }, "value": true, "resource": 5911, "frameCounter": 248, "protocolName": "aloesLight", "protocolVersion": "", "nativeSensorId": "2", "nativeNodeId": "", "nativeType": 3349, "nativeResource": 5910, "accountId": "5c24e1514a603a651d1ddfd5", "deviceId": "5c2657ad36bb1052f87cf417", "inPrefix": "-in", "outPrefix": "-out"}' -u '5c24e1514a603a651d1ddfd5' -P 'DregdyAV9eE5WLQtUl82mVh6uzcYSsJjXx0Kf8TcXB7SSYRpysEJ1OfPuWUlNiyZ'
+$ mqtt pub -t '5c24e1514a603a651d1ddfd5/Sensor/POST' -h 'localhost' -p 1883 -m '{"id": "5c62c4de3c6d59223afdf891","name": "Bitmap", "type": 3349, "devEui": "2894413", "resources": { "5750": "app-name", "5910": null, "5911": true, "5912": "" }, "value": true, "resource": 5911, "frameCounter": 248, "transportProtocol": "aloesLight", "messageProtocol": "aloesLight", "protocolVersion": "", "nativeSensorId": "2", "nativeNodeId": "", "nativeType": 3349, "nativeResource": 5910, "accountId": "5c24e1514a603a651d1ddfd5", "deviceId": "5c2657ad36bb1052f87cf417", "inPrefix": "-in", "outPrefix": "-out"}' -u '5c24e1514a603a651d1ddfd5' -P 'DregdyAV9eE5WLQtUl82mVh6uzcYSsJjXx0Kf8TcXB7SSYRpysEJ1OfPuWUlNiyZ'
 
 ```
