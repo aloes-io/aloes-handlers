@@ -2,7 +2,6 @@ import mqttPattern from 'mqtt-pattern';
 import {logger} from '../logger';
 import protocolRef from './common';
 
-
 /**
  * Check incoming MQTT packet against AloesClient API
  * collectionPattern - '+userId/+collectionName/+method'
@@ -32,7 +31,18 @@ const aloesClientPatternDetector = packet => {
       const methodExists = protocolRef.validators.methods.some(
         meth => meth === aloesClientProtocol.method,
       );
-      if (methodExists && collectionExists) {
+
+      if (
+        methodExists &&
+        collectionExists &&
+        aloesClientProtocol.collectionName.toLowerCase() === 'iotagent'
+      ) {
+        pattern.name = 'aloesClient';
+        pattern.subType = 'iot';
+        pattern.direction = 'tx';
+        pattern.params = aloesClientProtocol;
+        return pattern;
+      } else if (methodExists && collectionExists) {
         pattern.name = 'aloesClient';
         pattern.subType = 'web';
         pattern.direction = 'rx';
