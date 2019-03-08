@@ -77,7 +77,6 @@ const parseValue = value => {
     } else if (value === 'false' || value === '0') {
       value = Boolean(false);
     }
-    //  sensor.value = {[resource]: sensor.value};
   } else if (typeof value === 'number') {
     value = Number(value);
   } else if (typeof value === 'boolean') {
@@ -95,8 +94,7 @@ const parseValue = value => {
  * @returns {object} updated sensor instance
  */
 const updateAloesSensors = (sensor, resource, value) => {
-  const newvalue = parseValue(value);
-  console.log('new sensor value:', newvalue);
+  value = parseValue(value);
   try {
     logger(4, 'handlers', 'updateAloesSensors:req', {
       sensor,
