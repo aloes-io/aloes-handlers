@@ -1,14 +1,14 @@
 {
   "name": "aloes-handlers",
-  "version": "1.1.7",
+  "version": "1.1.9",
   "description": "Encode / decode MQTT stream from IoT devices to Web browsers.",
   "main": "./dist/index.js",
   "unpkg": "aloes-handlers.min.js",
   "jsdelivr": "aloes-handlers.min.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
-    "test:aloes-detector": "mocha --require @babel/register './src/test/detector.spec.js'",
-    "test:aloes-encoder": "mocha --require @babel/register './src/test/encoder.spec.js'",
+    "test:aloes-detector": "export NODE_ENV=test; mocha --require @babel/register './src/test/detector.spec.js'",
+    "test:aloes-encoder": "export NODE_ENV=test; mocha --require @babel/register './src/test/encoder.spec.js'",
     "test:aloes": "npm run test:aloes-detector; npm run test:aloes-encoder",
     "test": "npm run test:aloes",
     "docs:md": "jsdoc2md -c jsdoc-conf.json ./src/*/* > ./docs/aloesclient/README.md",
