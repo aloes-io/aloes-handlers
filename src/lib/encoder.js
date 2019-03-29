@@ -25,7 +25,7 @@ const aloesClientEncoder = options => {
         modelId: options.modelId,
         method: options.method,
       };
-      logger(4, 'handlers', 'aloesClientEncoder:req', params);
+      logger(4, 'aloes-handlers', 'encoder:req', params);
       if (options.method === 'POST') {
         topic = mqttPattern.fill(protocolRef.collectionPattern, params);
       } else if (options.method === 'HEAD') {
@@ -39,13 +39,13 @@ const aloesClientEncoder = options => {
       } else {
         topic = null;
       }
-      if (!topic || topic === null) return 'Method not supported yet';
-      logger(4, 'handlers', 'aloesClientEncoder:res', topic);
+      if (!topic || topic === null) throw new Error('Method not supported yet');
+      logger(3, 'aloes-handlers', 'encoder:res', topic);
       return {topic, payload: options.data};
     }
-    return new Error('Error: Wrong protocol input');
+    throw new Error('Wrong protocol input');
   } catch (error) {
-    logger(4, 'handlers', 'aloesClientEncoder:err', error);
+    logger(2, 'aloes-handlers', 'encoder:err', error);
     return error;
   }
 };
@@ -59,7 +59,8 @@ const aloesClientEncoder = options => {
 const parseValue = value => {
   if (typeof value === 'object') {
     if (value.type && value.type === 'Buffer') {
-      value = Buffer(value);
+      //  value = Buffer(value);
+      return value;
     } else if (value instanceof String) {
       if (value.toString() === 'true') {
         value = Boolean(true);
@@ -96,7 +97,7 @@ const parseValue = value => {
 const updateAloesSensors = (sensor, resource, value) => {
   value = parseValue(value);
   try {
-    logger(4, 'handlers', 'updateAloesSensors:req', {
+    logger(4, 'aloes-handlers', 'updateAloesSensors:req', {
       sensor,
       resource,
       value,
@@ -706,12 +707,12 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
     }
     sensor.resource = resource;
-    logger(4, 'handlers', 'updateAloesSensors:res', {
+    logger(4, 'aloes-handlers', 'updateAloesSensors:res', {
       sensor,
     });
     return sensor;
   } catch (error) {
-    throw error;
+    return error;
   }
 };
 
