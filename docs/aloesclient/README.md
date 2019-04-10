@@ -14,9 +14,9 @@
 collectionPattern - &#39;+userId/+collectionName/+method&#39;
 instancePattern - &#39;+userId/+collectionName/+method/+modelId&#39;</p>
 </dd>
-<dt><a href="#aloesClientEncoder">aloesClientEncoder(options)</a></dt>
-<dd><p>Try to convert incoming route to AloesClient routing
-collectionPattern - &#39;+userId/+collectionName/+method&#39;
+<dt><a href="#aloesClientEncoder">aloesClientEncoder(options)</a> ⇒ <code>object</code></dt>
+<dd><p>Try to convert incoming route to AloesClient routing</p>
+<p>collectionPattern - &#39;+userId/+collectionName/+method&#39;
 instancePattern - &#39;+userId/+collectionName/+method/+modelId&#39;</p>
 </dd>
 <dt><a href="#parseValue">parseValue(value)</a> ⇒ <code>object</code></dt>
@@ -73,12 +73,14 @@ instancePattern - '+userId/+collectionName/+method/+modelId'
 
 <a name="aloesClientEncoder"></a>
 
-## aloesClientEncoder(options)
+## aloesClientEncoder(options) ⇒ <code>object</code>
 Try to convert incoming route to AloesClient routing
+
 collectionPattern - '+userId/+collectionName/+method'
 instancePattern - '+userId/+collectionName/+method/+modelId'
 
 **Kind**: global function  
+**Returns**: <code>object</code> - MQTT topic and payload to send  
 
 | Param | Type | Description |
 | --- | --- | --- |
