@@ -1,5 +1,5 @@
 import mqttPattern from 'mqtt-pattern';
-import {logger} from '../logger';
+import logger from 'aloes-logger';
 import protocolRef from './common';
 
 /**

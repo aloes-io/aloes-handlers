@@ -1,5 +1,5 @@
 import mqttPattern from 'mqtt-pattern';
-import {logger} from '../logger';
+import logger from 'aloes-logger';
 import protocolRef from './common';
 
 /**
@@ -80,11 +80,14 @@ const parseValue = value => {
     } else if (value === 'false' || value === '0') {
       value = Boolean(false);
     }
-  } else if (typeof value === 'number') {
-    value = Number(value);
-  } else if (typeof value === 'boolean') {
-    value = Boolean(value);
+    // if only contains value between 0 and 9
+    // value = Number(value)
   }
+  // else if (typeof value === 'number') {
+  //   value = Number(value);
+  // } else if (typeof value === 'boolean') {
+  //   value = Boolean(value);
+  // }
   return value;
 };
 
@@ -100,22 +103,20 @@ const updateAloesSensors = (sensor, resource, value) => {
   try {
     value = parseValue(value);
     logger(4, 'aloes-handlers', 'updateAloesSensors:req', {
-      sensor,
       resource,
-      value,
     });
     switch (Number(sensor.type)) {
       case 3200: // digital input
-        value = value.toString();
+        //  value = value.toString();
         if (resource === 5500) {
-          value = Boolean(value);
+          //  value = Boolean(value);
           sensor.resources[resource] = value;
-          sensor.value = Number(sensor.resources[resource]);
+          sensor.value = value;
           if (value) sensor.resources['5501'] += 1;
           else sensor.resources['5501'] = 0;
         } else if (resource === 5502) {
           sensor.value = value;
-          sensor.resources[resource] = Boolean(value); // polarity
+          sensor.resources[resource] = value;
         } else if (resource === 5503) {
           sensor.value = value;
           sensor.resources[resource] = Number(value); // debounce
@@ -127,11 +128,11 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3201: // digital output
-        value = value.toString();
+        //  value = value.toString();
         if (resource === 5550) {
-          value = Boolean(value);
+          //  value = Boolean(value);
           sensor.resources[resource] = value;
-          sensor.value = Number(sensor.resources[resource]);
+          sensor.value = value;
         } else if (resource === 5551) {
           sensor.value = value;
           sensor.resources[resource] = Boolean(value); // polarity
@@ -140,7 +141,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3202: // analog input
-        value = value.toString();
+        //  value = value.toString();
         if (resource === 5600) {
           sensor.resources[resource] = Number(value);
           sensor.value = sensor.resources[resource];
@@ -157,7 +158,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3203: // analog output
-        value = value.toString();
+        //  value = value.toString();
         if (resource === 5650) {
           sensor.resources[resource] = Number(value);
           sensor.value = sensor.resources[resource];
@@ -169,7 +170,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3300: // generic sensor
-        value = value.toString();
+        //  value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = sensor.resources[resource];
@@ -188,7 +189,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3301: // illuminance sensor
-        value = value.toString();
+        //  value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = sensor.resources[resource];
@@ -208,11 +209,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
 
       case 3302: // presence sensor
-        value = value.toString();
         if (resource === 5500) {
-          value = Boolean(value);
           sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
           if (value) sensor.resources['5501'] += 1;
           else sensor.resources['5501'] = 0;
         } else if (resource === 5903 || resource === 5904) {
@@ -226,10 +225,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3303: // temperature sensor
-        value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5701) {
           sensor.resources[resource] = value; // units
         } else if (resource === 5601 || resource === 5602) {
@@ -245,10 +243,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3304: // humidity sensor
-        value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5701) {
           sensor.resources[resource] = value; // units
         } else if (resource === 5601 || resource === 5602) {
@@ -264,7 +261,6 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3306: // actuation
-        value = value.toString();
         if (resource === 5851) {
           sensor.resources[resource] = Number(value); // dimmer
           sensor.value = sensor.resources[resource];
@@ -272,8 +268,8 @@ const updateAloesSensors = (sensor, resource, value) => {
             sensor.resources['5850'] = false;
           }
         } else if (resource === 5850) {
-          sensor.resources[resource] = Boolean(value); // switch
-          sensor.value = Number(sensor.resources[resource]);
+          sensor.resources[resource] = value; // switch
+          sensor.value = value;
           if (value) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date();
@@ -291,10 +287,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3308: // set point
-        value = value.toString();
         if (resource === 5900) {
           sensor.resources[resource] = Number(value); // set point value
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5701) {
           sensor.resources[resource] = value; // unit
         } else if (resource === 5706) {
@@ -312,17 +307,15 @@ const updateAloesSensors = (sensor, resource, value) => {
         //  sensor.value = sensor.resources["5550"];
         break;
       case 3311: // light control
-        value = value.toString();
         if (resource === 5851) {
           sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
           if (sensor.resources['5851'] === 0) {
             sensor.resources['5850'] = 0;
           }
         } else if (resource === 5850) {
-          value = Boolean(value);
-          sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.resources[resource] = value;
+          sensor.value = value;
           if (value) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date();
@@ -339,7 +332,6 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3312: // power control
-        value = value.toString();
         if (resource === 5851) {
           sensor.value = value;
           sensor.resources[resource] = Number(value);
@@ -347,8 +339,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             sensor.resources['5850'] = 0;
           }
         } else if (resource === 5850) {
-          value = Boolean(value);
-          sensor.resources[resource] = Number(value);
+          sensor.resources[resource] = value;
           sensor.value = value;
           if (value) {
             //  sensor.value = value;
@@ -370,10 +361,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3313: // accelerometer
-        value = value.toString();
         if (resource === 5702 || resource === 5703 || resource === 5704) {
           sensor.resources[resource] = Number(value); // X || Y || Z
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5603 || resource === 5604) {
           sensor.value = value;
           sensor.resources[resource] = Number(value); // min / max range
@@ -382,10 +372,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3314: // magnetometer
-        value = value.toString();
         if (resource === 5702 || resource === 5703 || resource === 5704) {
           sensor.resources[resource] = Number(value); // X || Y || Z
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5705) {
           sensor.value = value;
           sensor.resources[resource] = value; // compass direction
@@ -394,10 +383,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3315: // barometer
-        value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5701) {
           sensor.resources[resource] = value; // units
         } else if (resource === 5601 || resource === 5602) {
@@ -413,10 +401,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3331: // energy
-        value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = value; // value
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5822) {
           sensor.value = value;
           sensor.resources[resource] = value; // reset cumulative enery
@@ -441,14 +428,13 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3333: // time
-        value = value.toString();
         if (resource === 5506) {
           if (value) {
             sensor.resources[resource] = value; // current time
           } else if (!value) {
             sensor.resources[resource] = new Date(); // current time
           }
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5507) {
           sensor.value = value;
           sensor.resources[resource] = Number(value); // fraactionnal time s
@@ -457,10 +443,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3334: // gyrometer
-        value = value.toString();
         if (resource === 5702 || resource === 5703 || resource === 5704) {
           sensor.resources[resource] = Number(value); // X || Y || Z value
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5537 || resource === 5538) {
           sensor.value = value;
           sensor.resources[resource] = Number(value); // transition / remaining time in s
@@ -487,36 +472,36 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3335: // color sensor
-        value = value.toString();
         if (resource === 5706) {
           sensor.resources[resource] = value; // color
+          sensor.value = value;
         } else if (resource === 5701) {
           sensor.resources[resource] = value; // unit
         } else if (resource === 5750) {
           sensor.resources[resource] = value; // app_name
         }
-        sensor.value = sensor.resources['5706'];
         break;
       case 3336: // location
-        value = value.toString();
         if (resource === 5514 || resource === 5515) {
           sensor.resources[resource] = value; // lat || lng
+          sensor.value = [sensor.resources['5514'], sensor.resources['5515']];
         } else if (resource === 5516) {
           sensor.resources[resource] = value; // uncertainity in meters
+          sensor.value = value;
         } else if (resource === 5705) {
           sensor.resources[resource] = Number(value); // compass direction 0  -360°
+          sensor.value = value;
         } else if (resource === 5518) {
           sensor.resources[resource] = new Date(); // timestamp
+          sensor.value = value;
         } else if (resource === 5750) {
           sensor.resources[resource] = value; // app_name
         }
-        sensor.value = [sensor.resources['5514'], sensor.resources['5515']];
         break;
       case 3337: // positioner
-        value = value.toString();
         if (resource === 5536) {
           sensor.resources[resource] = Number(value); // current position 0-100 %
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5537 || resource === 5538) {
           sensor.value = value;
           sensor.resources[resource] = Number(value); // transition / remaining time in s
@@ -540,21 +525,19 @@ const updateAloesSensors = (sensor, resource, value) => {
           sensor.resources[resource] = value; // buffer input
           sensor.value = value; // buffer input
         } else if (resource === 5523) {
-          value = value.toString();
           sensor.resources[resource] = value; // Trigger
           sensor.value = value;
         } else if (resource === 5548) {
           sensor.value = value;
-          sensor.resources[resource] = Number(value.toString()); // volume %
+          sensor.resources[resource] = Number(value); // volume %
         } else if (resource === 5524) {
           sensor.value = value;
-          sensor.resources[resource] = Number(value.toString()); // duration s
+          sensor.resources[resource] = Number(value); // duration s
         } else if (resource === 5750) {
-          sensor.resources[resource] = value.toString(); // app_name
+          sensor.resources[resource] = value; // app_name
         }
         break;
       case 3340: // timer
-        value = value.toString();
         if (resource === 5826) {
           sensor.value = value;
           sensor.resources[resource] = Number(value); // timer mode 0-4
@@ -580,7 +563,6 @@ const updateAloesSensors = (sensor, resource, value) => {
         // }
         break;
       case 3341: // text display
-        value = value.toString();
         if (resource === 5527) {
           sensor.resources[resource] = value;
           sensor.value = value;
@@ -607,8 +589,8 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3342: // switch
-        value = Boolean(value.toString());
         if (resource === 5500) {
+          sensor.value = value;
           if (value) {
             sensor.resources['5501'] += 1; // counter
             if (sensor.resources['5852'] === 0) {
@@ -624,16 +606,14 @@ const updateAloesSensors = (sensor, resource, value) => {
               sensor.resources['5854'] -= new Date();
             }
           }
-          sensor.resources['5500'] = Boolean(value);
-          sensor.value = Number(sensor.resources['5500']);
+          sensor.resources['5500'] = value;
         } else if (resource === 5750) {
           sensor.resources[resource] = value; // app_name
         }
         break;
       case 3343: // dimmer
         if (resource === 5548) {
-          value = Number(value.toString());
-          sensor.resources['5548'] = value;
+          sensor.resources['5548'] = Number(value);
           if (sensor.resources['5548'] > 0) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date();
@@ -645,11 +625,10 @@ const updateAloesSensors = (sensor, resource, value) => {
               sensor.resources['5854'] = new Date();
             else sensor.resources['5854'] -= new Date();
           }
-          sensor.value = sensor.resources['5548'];
+          sensor.value = value;
         }
         break;
       case 3344: // up/down control
-        value = value.toString();
         if (resource === 5532) {
           //  todo check resource type
           sensor.resources['5542'] = 0;
@@ -664,10 +643,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3345: // joystick
-        value = value.toString();
         if (resource === 5702 || resource === 5703 || resource === 5704) {
           sensor.resources[resource] = Number(value); // X || Y || Z
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5500) {
           value = Boolean(value);
           sensor.value = value;
@@ -685,9 +663,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3347: // push button
-        value = value.toString();
         if (resource === 5500) {
-          value = Boolean(value);
           sensor.value = value;
           sensor.resources['5500'] = value; // input value
           if (value) {
@@ -701,11 +677,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3349: // bitmap
         if (resource === 5911) {
-          value = Boolean(value.toString());
           sensor.value = value;
           sensor.resources[resource] = value; // bitmap input reset
         } else if (resource === 5912) {
-          value = value.toString();
           sensor.value = value;
           sensor.resources[resource] = value; // element description
         } else if (resource === 5910) {
@@ -716,17 +690,14 @@ const updateAloesSensors = (sensor, resource, value) => {
           sensor.value = value; // buffer input
           //  sensor.value = Uint8Array.from(value).buffer;
         } else if (resource === 5750) {
-          value = value.toString();
           sensor.resources[resource] = value; // app name
         }
         break;
       case 3350: // stopwatch
-        value = value.toString();
         if (resource === 5544) {
           sensor.resources[resource] = Number(value); // cumulative time in s- 0  = reset
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5850) {
-          value = Boolean(value);
           sensor.resources[resource] = value;
           sensor.value = value;
           if (value) {
@@ -740,10 +711,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       default:
         // CATCH 3301 until 3305 - 3315 - 3316 until 3330 - 3346
-        value = value.toString();
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
-          sensor.value = sensor.resources[resource];
+          sensor.value = value;
         } else if (resource === 5701) {
           sensor.resources[resource] = value; // units
         } else if (resource === 5601 || resource === 5602) {
@@ -767,7 +737,7 @@ const updateAloesSensors = (sensor, resource, value) => {
     }
     sensor.resource = resource;
     logger(4, 'aloes-handlers', 'updateAloesSensors:res', {
-      sensor,
+      resource: sensor.resource,
     });
     return sensor;
   } catch (error) {

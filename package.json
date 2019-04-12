@@ -37,6 +37,7 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
+    "aloes-logger": "^1.0.4",
     "mqtt-pattern": "^1.2.0",
     "oma-json": "^1.0.6"
   },
