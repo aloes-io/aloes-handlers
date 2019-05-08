@@ -113,7 +113,7 @@ describe('aloesClientEncoder - test 2', () => {
 
 describe('aloesClientEncoder - test 3', () => {
   let packet = {
-    topic: '1/Sensor/PUT',
+    topic: '1/Sensor/PUT/1',
     payload: Buffer.from(
       JSON.stringify({
         id: 1,
@@ -215,6 +215,49 @@ describe('aloesClientEncoder - test 4', () => {
   });
 
   it(`encoded topic should be ${packet.topic}`, () => {
-    assert.strictEqual(packet.topic, encoded.topic);
+    assert.strictEqual(`${packet.topic}`, encoded.topic);
+  });
+});
+
+describe('aloesClientEncoder - test 5', () => {
+  let packet = {
+    topic: '1/IoTAgent/PUT',
+    payload: Buffer.from(
+      JSON.stringify({
+        transportProtocol: 'mySensors',
+        messageProtocol: 'mySensors',
+        devEui: '3322321',
+        type: 3306,
+        nativeSensorId: 4,
+        nativeNodeId: 4,
+        nativeResource: 2,
+        resource: 5850,
+        resources: {'5850': 5},
+        inputPath: `3322321-in/4/4/1/0/2`,
+        outputPath: `3322321-out/4/4/1/0/2`,
+        inPrefix: '-in',
+        outPrefix: '-out',
+        value: 5,
+      }),
+    ),
+  };
+  const pattern = aloesClientPatternDetector(packet);
+  const options = {
+    pattern: pattern.name,
+    userId: pattern.params.userId,
+    collectionName: pattern.params.collectionName,
+    modelId: pattern.params.modelId,
+    method: pattern.params.method,
+    //  data: JSON.parse(packet.payload),
+  };
+  const encoded = aloesClientEncoder(options);
+  //  const updatedSensor = updateAloesSensors(JSON.parse(packet.payload), 5850, 1);
+
+  it('encoded should exist', () => {
+    assert.typeOf(encoded, 'string');
+  });
+
+  it(`encoded topic should be ${packet.topic}/#`, () => {
+    assert.strictEqual(`${packet.topic}/#`, encoded);
   });
 });

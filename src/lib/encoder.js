@@ -27,23 +27,38 @@ const aloesClientEncoder = options => {
         modelId: options.modelId,
         method: options.method,
       };
+      let pattern;
       logger(4, 'aloes-handlers', 'encoder:req', params);
+
+      if (params.modelId && params.modelId !== null) {
+        pattern = protocolRef.instancePattern;
+      } else if (options.data && options.data !== null) {
+        pattern = protocolRef.collectionPattern;
+      } else {
+        params.modelId = `#`;
+        pattern = protocolRef.instancePattern;
+      }
+      logger(4, 'aloes-handlers', 'encoder:req', pattern);
+
       if (options.method === 'POST') {
-        topic = mqttPattern.fill(protocolRef.collectionPattern, params);
+        topic = `${mqttPattern.fill(pattern, params)}`;
       } else if (options.method === 'HEAD') {
-        topic = mqttPattern.fill(protocolRef.instancePattern, params);
+        topic = `${mqttPattern.fill(pattern, params)}`;
       } else if (options.method === 'STREAM') {
-        topic = mqttPattern.fill(protocolRef.instancePattern, params);
+        topic = `${mqttPattern.fill(pattern, params)}`;
       } else if (options.method === 'DELETE') {
-        topic = mqttPattern.fill(protocolRef.collectionPattern, params);
+        topic = `${mqttPattern.fill(pattern, params)}`;
       } else if (options.method === 'PUT') {
-        topic = mqttPattern.fill(protocolRef.collectionPattern, params);
+        topic = `${mqttPattern.fill(pattern, params)}`;
       } else {
         topic = null;
       }
       if (!topic || topic === null) throw new Error('Method not supported yet');
       logger(3, 'aloes-handlers', 'encoder:res', topic);
-      return {topic, payload: options.data};
+      if (options.data) {
+        return {topic, payload: options.data};
+      }
+      return topic;
     }
     throw new Error('Wrong protocol input');
   } catch (error) {
