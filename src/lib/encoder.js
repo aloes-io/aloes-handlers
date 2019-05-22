@@ -55,10 +55,10 @@ const aloesClientEncoder = options => {
       }
       if (!topic || topic === null) throw new Error('Method not supported yet');
       logger(3, 'aloes-handlers', 'encoder:res', topic);
-      if (options.data) {
+      if (options.data && options.data !== null) {
         return {topic, payload: options.data};
       }
-      return topic;
+      return {topic};
     }
     throw new Error('Wrong protocol input');
   } catch (error) {
@@ -558,9 +558,9 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5826) {
           sensor.value = value.toString();
           sensor.resources[resource] = Number(value); // timer mode 0-4
-        } else if (resource === 5521 || resource === 5525) {
+        } else if (resource === 5521 || resource === 5525 || resource === 5538) {
           sensor.value = value.toString();
-          sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds
+          sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds || time left
         } else if (resource === 5523) {
           sensor.value = value.toString();
           sensor.resources[resource] = value; // event trigger
