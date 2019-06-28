@@ -540,7 +540,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             return sensor;
           }
           sensor.resources[resource] = value; // buffer input
-          sensor.value = value; // buffer input
+          //  sensor.value = value; // buffer input
         } else if (resource === 5523) {
           sensor.resources[resource] = value; // Trigger
           sensor.value = value.toString();
@@ -707,8 +707,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             return sensor;
           }
           sensor.resources[resource] = value; // buffer input
-          sensor.value = value; // buffer input
-          //  sensor.value = Uint8Array.from(value).buffer;
+          //  sensor.value = value; // buffer input
         } else if (resource === 5750) {
           sensor.resources[resource] = value; // app name
         }
