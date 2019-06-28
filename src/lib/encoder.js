@@ -532,14 +532,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3339: // audio clip
         if (resource === 5522) {
-          // if (typeof value === 'string') {
-          //   value = Buffer.from(value);
-          //  // value = Buffer.from(value);
-          // }
           if (!value.length) {
             return sensor;
           }
-          sensor.resources[resource] = value; // buffer input
+          sensor.resources[resource] = Buffer.from(value, 'utf-8').toJSON();
           //  sensor.value = value; // buffer input
         } else if (resource === 5523) {
           sensor.resources[resource] = value; // Trigger
@@ -558,7 +554,11 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5826) {
           sensor.value = value.toString();
           sensor.resources[resource] = Number(value); // timer mode 0-4
-        } else if (resource === 5521 || resource === 5525 || resource === 5538) {
+        } else if (
+          resource === 5521 ||
+          resource === 5525 ||
+          resource === 5538
+        ) {
           sensor.value = value.toString();
           sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds || time left
         } else if (resource === 5523) {
@@ -700,13 +700,10 @@ const updateAloesSensors = (sensor, resource, value) => {
           sensor.value = value;
           sensor.resources[resource] = value; // element description
         } else if (resource === 5910) {
-          // if (typeof value === 'string') {
-          //   value = Buffer.from(value);
-          // }
           if (!value.length) {
             return sensor;
           }
-          sensor.resources[resource] = value; // buffer input
+          sensor.resources[resource] = Buffer.from(value, 'utf-8').toJSON();
           //  sensor.value = value; // buffer input
         } else if (resource === 5750) {
           sensor.resources[resource] = value; // app name
