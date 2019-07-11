@@ -67,12 +67,12 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "identity-obj-proxy": "^3.0.0",
-    "jsdoc-to-markdown": "^4.0.1",
+    "jsdoc-to-markdown": "^5.0.0",
     "light-server": "^2.6.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.8",
     "prettier": "1.16.1",
-    "vuepress": "^1.0.0-alpha.46"
+    "vuepress": "^1.0.0-alpha.47"
   },
   "peerDependencies": {
     "mqtt-pattern": "^1.2.0",

@@ -25,8 +25,6 @@ instancePattern - &#39;+userId/+collectionName/+method/+modelId&#39;</p>
 <dt><a href="#updateAloesSensors">updateAloesSensors(sensor, resource, value)</a> ⇒ <code>object</code></dt>
 <dd><p>Update and validate AloesClient Sensor instance</p>
 </dd>
-<dt><a href="#logger">logger(priority, collectionName, command, content)</a></dt>
-<dd></dd>
 </dl>
 
 ## External
@@ -111,18 +109,6 @@ Update and validate AloesClient Sensor instance
 | sensor | <code>object</code> | sensor instance formatted as AloesClient protocol |
 | resource | <code>number</code> | [OMA Resources](/aloes/#omaresources)  ID to update |
 | value | <code>string</code> | new value to update sensor with |
-
-<a name="logger"></a>
-
-## logger(priority, collectionName, command, content)
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| priority | <code>int</code> | Logger mode. |
-| collectionName | <code>string</code> | service name. |
-| command | <code>string</code> | service command to log. |
-| content | <code>string</code> | log content. |
 
 <a name="external_OmaObjects"></a>
 

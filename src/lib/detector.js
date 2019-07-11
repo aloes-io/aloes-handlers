@@ -41,15 +41,14 @@ const aloesClientPatternDetector = packet => {
         pattern.subType = 'iot';
         pattern.direction = 'tx';
         pattern.params = aloesClientProtocol;
-        //  return pattern;
+        return pattern;
       } else if (methodExists && collectionExists) {
         pattern.name = 'aloesClient';
         pattern.subType = 'web';
         pattern.direction = 'rx';
         pattern.params = aloesClientProtocol;
-        //  return pattern;
+        return pattern;
       }
-      return pattern;
     }
     if (mqttPattern.matches(protocolRef.instancePattern, packet.topic)) {
       logger(
@@ -80,15 +79,14 @@ const aloesClientPatternDetector = packet => {
         pattern.subType = 'iot';
         pattern.direction = 'tx';
         pattern.params = aloesClientProtocol;
-        //  return pattern;
+        return pattern;
       } else if (methodExists && collectionExists) {
         pattern.name = 'aloesClient';
         pattern.subType = 'web';
         pattern.direction = 'rx';
         pattern.params = aloesClientProtocol;
-        //  return pattern;
+        return pattern;
       }
-      return pattern;
     }
     return pattern;
   } catch (error) {

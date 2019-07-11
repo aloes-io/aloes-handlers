@@ -26,9 +26,10 @@ const protocolRef = {
     userId: 'string',
     collectionName: [
       'Account',
+      'Application',
       'Device',
       'Sensor',
-      'VirtualObject',
+      'Measurement',
       'IoTAgent',
     ],
     modelId: 'string',
