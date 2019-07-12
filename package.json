@@ -1,6 +1,6 @@
 {
   "name": "aloes-handlers",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Encode / decode MQTT stream from IoT devices to Web browsers.",
   "main": "./dist/index.js",
   "unpkg": "aloes-handlers.min.js",
