@@ -4,8 +4,8 @@ import protocolRef from './common';
 
 /**
  * Check incoming MQTT packet against AloesClient API
- * collectionPattern - '+userId/+collectionName/+method'
- * instancePattern - '+userId/+collectionName/+method/+modelId'
+ * collectionPattern - '+userId/+collection/+method'
+ * instancePattern - '+userId/+collection/+method/+modelId'
  * @method aloesClientPatternDetector
  * @param {object} packet - The MQTT packet.
  * @returns {object} found pattern.name and pattern.params
@@ -25,17 +25,17 @@ const aloesClientPatternDetector = packet => {
         packet.topic,
       );
       logger(2, 'aloes-handlers', 'patternDetector:res', aloesClientProtocol);
-      const collectionExists = protocolRef.validators.collectionName.some(
-        collection => collection === aloesClientProtocol.collectionName,
+      const collectionExists = protocolRef.validators.collections.some(
+        collection => collection === aloesClientProtocol.collection.toLowerCase(),
       );
       const methodExists = protocolRef.validators.methods.some(
-        meth => meth === aloesClientProtocol.method,
+        meth => meth === aloesClientProtocol.method.toUpperCase(),
       );
 
       if (
         methodExists &&
         collectionExists &&
-        aloesClientProtocol.collectionName.toLowerCase() === 'iotagent'
+        aloesClientProtocol.collection.toLowerCase() === 'iotagent'
       ) {
         pattern.name = 'aloesClient';
         pattern.subType = 'iot';
@@ -62,10 +62,10 @@ const aloesClientPatternDetector = packet => {
         packet.topic,
       );
       const methodExists = protocolRef.validators.methods.some(
-        meth => meth === aloesClientProtocol.method,
+        meth => meth === aloesClientProtocol.method.toUpperCase(),
       );
-      const collectionExists = protocolRef.validators.collectionName.some(
-        collection => collection === aloesClientProtocol.collectionName,
+      const collectionExists = protocolRef.validators.collections.some(
+        collection => collection === aloesClientProtocol.collection.toLowerCase(),
       );
       // add another property to differentiate subtype, direction ?
       logger(3, 'aloes-handlers', 'patternDetector:res', aloesClientProtocol);
@@ -73,7 +73,7 @@ const aloesClientPatternDetector = packet => {
       if (
         methodExists &&
         collectionExists &&
-        aloesClientProtocol.collectionName.toLowerCase() === 'iotagent'
+        aloesClientProtocol.collection.toLowerCase() === 'iotagent'
       ) {
         pattern.name = 'aloesClient';
         pattern.subType = 'iot';

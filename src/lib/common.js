@@ -9,28 +9,28 @@
  * @external OmaResources
  * @see {@link https://api.aloes.io/api/omaResources}
  */
- /**
+/**
  * References used to validate payloads
  * @namespace
  * @property {string}  collectionPattern - The pattern used by Aloes Client Collection [].
  * @property {string}  instancePattern - The pattern used by Aloes Client instance.
  * @property {object}  validators - Check inputs / build outputs
  * @property {array}   validators.userId
- * @property {array}   validators.collectionName
+ * @property {array}   validators.collection
  * @property {array}   validators.methods - [0, 1, 2, 3, 4].
  */
 const protocolRef = {
-  collectionPattern: '+userId/+collectionName/+method',
-  instancePattern: '+userId/+collectionName/+method/+modelId',
+  collectionPattern: '+userId/+collection/+method',
+  instancePattern: '+userId/+collection/+method/+modelId',
   validators: {
     userId: 'string',
-    collectionName: [
-      'Account',
-      'Application',
-      'Device',
-      'Sensor',
-      'Measurement',
-      'IoTAgent',
+    collections: [
+      'account',
+      'application',
+      'device',
+      'sensor',
+      'measurement',
+      'iotagent',
     ],
     modelId: 'string',
     methods: ['HEAD', 'POST', 'GET', 'PUT', 'DELETE', 'STREAM'],

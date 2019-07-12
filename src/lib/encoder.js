@@ -5,11 +5,11 @@ import protocolRef from './common';
 /**
  * Try to convert incoming route to AloesClient routing
  *
- * collectionPattern - '+userId/+collectionName/+method'
- * instancePattern - '+userId/+collectionName/+method/+modelId'
+ * collectionPattern - '+userId/+collection/+method'
+ * instancePattern - '+userId/+collection/+method/+modelId'
  * @module aloesClientEncoder
  * @method
- * @param {object} options - Protocol paramters ( coming from patternDetector ).
+ * @param {object} options - Protocol parameters ( coming from patternDetector ).
  * @returns {object} MQTT topic and payload to send
  */
 const aloesClientEncoder = options => {
@@ -23,7 +23,7 @@ const aloesClientEncoder = options => {
     ) {
       const params = {
         userId: options.userId,
-        collectionName: options.collectionName,
+        collection: options.collection,
         modelId: options.modelId,
         method: options.method,
       };
