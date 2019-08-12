@@ -551,7 +551,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         }
         break;
       case 3340: // timer
-        if (resource === 5826) {
+        if (resource === 5526) {
           sensor.value = value.toString();
           sensor.resources[resource] = Number(value); // timer mode 0-4
         } else if (
@@ -566,7 +566,7 @@ const updateAloesSensors = (sensor, resource, value) => {
           sensor.resources[resource] = value; // event trigger
         } else if (resource === 5534) {
           sensor.resources[resource] = Number(value); // timer counter
-        } else if (resource === 5850) {
+        } else if (resource === 5850 || resource === 5543) {
           sensor.value = value.toString();
           sensor.resources[resource] = Number(value);
         } else if (resource === 5750) {
