@@ -4,8 +4,8 @@ import {assert} from 'chai';
 import {aloesClientEncoder, updateAloesSensors} from '../lib/encoder';
 import {aloesClientPatternDetector} from '../lib/detector';
 
-// collectionPattern: '+userId/+collectionName/+method',
-// instancePattern: '+userId/+collectionName/+method/+modelId',
+// collectionPattern: '+userId/+collection/+method',
+// instancePattern: '+userId/+collection/+method/+modelId',
 
 describe('aloesClientEncoder - test 1', () => {
   const packet = {
@@ -31,7 +31,7 @@ describe('aloesClientEncoder - test 1', () => {
   const options = {
     pattern: pattern.name,
     userId: pattern.params.userId,
-    collectionName: pattern.params.collectionName,
+    collection: pattern.params.collection,
     modelId: pattern.params.modelId,
     method: pattern.params.method,
     data: JSON.parse(packet.payload),
@@ -86,7 +86,7 @@ describe('aloesClientEncoder - test 2', () => {
   const options = {
     pattern: pattern.name,
     userId: pattern.params.userId,
-    collectionName: pattern.params.collectionName,
+    collection: pattern.params.collection,
     modelId: pattern.params.modelId,
     method: pattern.params.method,
     data: JSON.parse(packet.payload),
@@ -138,7 +138,7 @@ describe('aloesClientEncoder - test 3', () => {
   const options = {
     pattern: pattern.name,
     userId: pattern.params.userId,
-    collectionName: pattern.params.collectionName,
+    collection: pattern.params.collection,
     modelId: pattern.params.modelId,
     method: pattern.params.method,
     data: JSON.parse(packet.payload),
@@ -194,7 +194,7 @@ describe('aloesClientEncoder - test 4', () => {
   const options = {
     pattern: pattern.name,
     userId: pattern.params.userId,
-    collectionName: pattern.params.collectionName,
+    collection: pattern.params.collection,
     modelId: pattern.params.modelId,
     method: pattern.params.method,
     data: JSON.parse(packet.payload),
@@ -245,7 +245,7 @@ describe('aloesClientEncoder - test 5', () => {
   const options = {
     pattern: pattern.name,
     userId: pattern.params.userId,
-    collectionName: pattern.params.collectionName,
+    collection: pattern.params.collection,
     modelId: pattern.params.modelId,
     method: pattern.params.method,
     //  data: JSON.parse(packet.payload),
@@ -254,10 +254,14 @@ describe('aloesClientEncoder - test 5', () => {
   //  const updatedSensor = updateAloesSensors(JSON.parse(packet.payload), 5850, 1);
 
   it('encoded should exist', () => {
-    assert.typeOf(encoded, 'string');
+    assert.typeOf(encoded, 'object');
+  });
+
+  it('encoded contains topic', () => {
+    assert.typeOf(encoded.topic, 'string');
   });
 
   it(`encoded topic should be ${packet.topic}/#`, () => {
-    assert.strictEqual(`${packet.topic}/#`, encoded);
+    assert.strictEqual(`${packet.topic}/#`, encoded.topic);
   });
 });

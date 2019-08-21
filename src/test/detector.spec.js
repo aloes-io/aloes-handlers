@@ -3,8 +3,8 @@ require('@babel/register');
 import {assert} from 'chai';
 import {aloesClientPatternDetector} from '../lib/detector';
 
-// collectionPattern: '+userId/+collectionName/+method',
-// instancePattern: '+userId/+collectionName/+method/+modelId',
+// collectionPattern: '+userId/+collection/+method',
+// instancePattern: '+userId/+collection/+method/+modelId',
 
 describe('aloesClientPatternDetector - test 1', () => {
   const packet = {
@@ -29,7 +29,7 @@ describe('aloesClientPatternDetector - test 1', () => {
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
   const patternKeys = ['params', 'name', 'subType', 'direction'];
-  const paramsKeys = ['userId', 'collectionName', 'method'];
+  const paramsKeys = ['userId', 'collection', 'method'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
@@ -72,7 +72,7 @@ describe('aloesClientPatternDetector - test 2', () => {
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
   const patternKeys = ['params', 'name', 'subType', 'direction'];
-  const paramsKeys = ['userId', 'collectionName', 'method', 'modelId'];
+  const paramsKeys = ['userId', 'collection', 'method', 'modelId'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
@@ -117,7 +117,7 @@ describe('aloesClientPatternDetector - test 3', () => {
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
   const patternKeys = ['params', 'name', 'subType', 'direction'];
-  const paramsKeys = ['userId', 'collectionName', 'method', 'modelId'];
+  const paramsKeys = ['userId', 'collection', 'method', 'modelId'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
@@ -161,7 +161,7 @@ describe('aloesClientPatternDetector - test 4', () => {
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
   const patternKeys = ['params', 'name', 'subType', 'direction'];
-  const paramsKeys = ['userId', 'collectionName', 'method'];
+  const paramsKeys = ['userId', 'collection', 'method'];
 
   it('pattern should exist', () => {
     assert.typeOf(pattern, 'object');
