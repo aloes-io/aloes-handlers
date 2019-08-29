@@ -11,13 +11,13 @@
 <dl>
 <dt><a href="#aloesClientPatternDetector">aloesClientPatternDetector(packet)</a> ⇒ <code>object</code></dt>
 <dd><p>Check incoming MQTT packet against AloesClient API
-collectionPattern - &#39;+userId/+collectionName/+method&#39;
-instancePattern - &#39;+userId/+collectionName/+method/+modelId&#39;</p>
+collectionPattern - &#39;+userId/+collection/+method&#39;
+instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
 </dd>
 <dt><a href="#aloesClientEncoder">aloesClientEncoder(options)</a> ⇒ <code>object</code></dt>
 <dd><p>Try to convert incoming route to AloesClient routing</p>
-<p>collectionPattern - &#39;+userId/+collectionName/+method&#39;
-instancePattern - &#39;+userId/+collectionName/+method/+modelId&#39;</p>
+<p>collectionPattern - &#39;+userId/+collection/+method&#39;
+instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
 </dd>
 <dt><a href="#parseValue">parseValue(value)</a> ⇒ <code>object</code></dt>
 <dd><p>Parse incoming sensor value to get an object instance from it</p>
@@ -52,15 +52,15 @@ References used to validate payloads
 | instancePattern | <code>string</code> | The pattern used by Aloes Client instance. |
 | validators | <code>object</code> | Check inputs / build outputs |
 | validators.userId | <code>array</code> |  |
-| validators.collectionName | <code>array</code> |  |
+| validators.collection | <code>array</code> |  |
 | validators.methods | <code>array</code> | [0, 1, 2, 3, 4]. |
 
 <a name="aloesClientPatternDetector"></a>
 
 ## aloesClientPatternDetector(packet) ⇒ <code>object</code>
 Check incoming MQTT packet against AloesClient API
-collectionPattern - '+userId/+collectionName/+method'
-instancePattern - '+userId/+collectionName/+method/+modelId'
+collectionPattern - '+userId/+collection/+method'
+instancePattern - '+userId/+collection/+method/+modelId'
 
 **Kind**: global function  
 **Returns**: <code>object</code> - found pattern.name and pattern.params  
@@ -74,15 +74,15 @@ instancePattern - '+userId/+collectionName/+method/+modelId'
 ## aloesClientEncoder(options) ⇒ <code>object</code>
 Try to convert incoming route to AloesClient routing
 
-collectionPattern - '+userId/+collectionName/+method'
-instancePattern - '+userId/+collectionName/+method/+modelId'
+collectionPattern - '+userId/+collection/+method'
+instancePattern - '+userId/+collection/+method/+modelId'
 
 **Kind**: global function  
 **Returns**: <code>object</code> - MQTT topic and payload to send  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | <code>object</code> | Protocol paramters ( coming from patternDetector ). |
+| options | <code>object</code> | Protocol parameters ( coming from patternDetector ). |
 
 <a name="parseValue"></a>
 
@@ -116,11 +116,11 @@ Update and validate AloesClient Sensor instance
 Oma Object References.
 
 **Kind**: global external  
-**See**: [https://api.aloes.io/api/omaObjects](https://api.aloes.io/api/omaObjects)  
+**See**: [https://supervisor.aloes.io/api/omaObjects](https://supervisor.aloes.io/api/omaObjects)  
 <a name="external_OmaResources"></a>
 
 ## OmaResources
 Oma Resources References.
 
 **Kind**: global external  
-**See**: [https://api.aloes.io/api/omaResources](https://api.aloes.io/api/omaResources)  
+**See**: [https://supervisor.aloes.io/api/omaResources](https://supervisor.aloes.io/api/omaResources)  
