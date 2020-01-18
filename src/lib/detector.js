@@ -1,3 +1,5 @@
+/* Copyright 2019 Edouard Maleix, read LICENSE */
+
 import mqttPattern from 'mqtt-pattern';
 import logger from 'aloes-logger';
 import protocolRef from './common';

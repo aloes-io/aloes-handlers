@@ -1,7 +1,6 @@
 {
   "name": "aloes-handlers",
   "version": "1.2.11",
-  "description": "Encode / decode MQTT stream from IoT devices to Web browsers.",
   "main": "./dist/index.js",
   "unpkg": "aloes-handlers.min.js",
   "jsdelivr": "aloes-handlers.min.js",
@@ -25,13 +24,13 @@
     "aloes-handlers.min.js",
     "README.md"
   ],
-  "author": "getlarge",
+  "author": "Edouard Maleix <ed@getlarge.eu> (https://getlarge.eu)",
   "keywords": [
     "IoT",
     "MQTT",
     "Interoperability"
   ],
-  "license": "ISC",
+  "license": "AGPL-3.0-or-later",
   "engines": {
     "node": ">=9.0.0",
     "npm": ">=6.0.0"
@@ -147,5 +146,9 @@
   "repository": {
     "type": "git",
     "url": "https://framagit.org/aloes/aloes-handlers"
-  }
+  },
+  "contributors": [
+    "Edouard Maleix <ed@getlarge.eu> (https://getlarge.eu)"
+  ],
+  "description": "Encode / decode MQTT stream from IoT devices to Web browsers."
 }

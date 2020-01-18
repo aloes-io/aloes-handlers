@@ -1,3 +1,5 @@
+/* Copyright 2019 Edouard Maleix, read LICENSE */
+
 import mqttPattern from 'mqtt-pattern';
 import logger from 'aloes-logger';
 import protocolRef from './common';
@@ -181,7 +183,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -204,7 +206,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -237,7 +239,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -256,7 +258,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -401,7 +403,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -432,7 +434,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5705) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -534,7 +536,7 @@ const updateAloesSensors = (sensor, resource, value) => {
           // }
           sensor.resources[resource] = Number(value); // current position 0-100 %
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -751,7 +753,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (Number(value) < sensor.resources['5601']) {
+          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);

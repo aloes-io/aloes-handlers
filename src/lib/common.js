@@ -1,14 +1,17 @@
+/* Copyright 2019 Edouard Maleix, read LICENSE */
+
 /**
  * Oma Object References.
  * @external OmaObjects
- * @see {@link https://supervisor.aloes.io/api/omaObjects}
+ * @see {@link https://aloes.io/app/api/omaObjects}
  */
 
 /**
  * Oma Resources References.
  * @external OmaResources
- * @see {@link https://supervisor.aloes.io/api/omaResources}
+ * @see {@link https://aloes.io/app/api/omaResources}
  */
+
 /**
  * References used to validate payloads
  * @namespace
@@ -25,11 +28,12 @@ const protocolRef = {
   validators: {
     userId: 'string',
     collections: [
-      'account',
+      'user',
       'application',
       'device',
       'sensor',
       'measurement',
+      'scheduler',
       'iotagent',
     ],
     modelId: 'string',

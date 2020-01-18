@@ -116,11 +116,11 @@ Update and validate AloesClient Sensor instance
 Oma Object References.
 
 **Kind**: global external  
-**See**: [https://supervisor.aloes.io/api/omaObjects](https://supervisor.aloes.io/api/omaObjects)  
+**See**: [https://aloes.io/app/api/omaObjects](https://aloes.io/app/api/omaObjects)  
 <a name="external_OmaResources"></a>
 
 ## OmaResources
 Oma Resources References.
 
 **Kind**: global external  
-**See**: [https://supervisor.aloes.io/api/omaResources](https://supervisor.aloes.io/api/omaResources)  
+**See**: [https://aloes.io/app/api/omaResources](https://aloes.io/app/api/omaResources)  
