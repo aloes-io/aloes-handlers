@@ -1,6 +1,6 @@
 {
   "name": "aloes-handlers",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "main": "./dist/index.js",
   "unpkg": "aloes-handlers.min.js",
   "jsdelivr": "aloes-handlers.min.js",
