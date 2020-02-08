@@ -17,11 +17,11 @@ You should have received a copy of the GNU Affero General Public License
 along with Aloes-handlers. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import {aloesClientEncoder, updateAloesSensors} from './lib/encoder';
-import {aloesClientPatternDetector} from './lib/detector';
+const {aloesClientEncoder, updateAloesSensors} = require('./lib/encoder');
+const {aloesClientPatternDetector} = require('./lib/detector');
 
 module.exports = {
-	aloesClientEncoder,
-	updateAloesSensors,
-	aloesClientPatternDetector,
+  aloesClientEncoder,
+  updateAloesSensors,
+  aloesClientPatternDetector,
 };

@@ -1,9 +1,7 @@
 /* Copyright 2019 Edouard Maleix, read LICENSE */
 
-require('@babel/register');
-
-import {assert} from 'chai';
-import {aloesClientPatternDetector} from '../lib/detector';
+const {assert} = require('chai');
+const {aloesClientPatternDetector} = require('../lib/detector');
 
 // collectionPattern: '+userId/+collection/+method',
 // instancePattern: '+userId/+collection/+method/+modelId',

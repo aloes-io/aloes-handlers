@@ -1,8 +1,8 @@
 /* Copyright 2019 Edouard Maleix, read LICENSE */
 
-import mqttPattern from 'mqtt-pattern';
-import logger from 'aloes-logger';
-import protocolRef from './common';
+const mqttPattern = require('mqtt-pattern');
+const logger = require('aloes-logger');
+const protocolRef = require('./common');
 
 /**
  * Try to convert incoming route to AloesClient routing
@@ -14,7 +14,7 @@ import protocolRef from './common';
  * @param {object} options - Protocol parameters ( coming from patternDetector ).
  * @returns {object} MQTT topic and payload to send
  */
-const aloesClientEncoder = options => {
+const aloesClientEncoder = (options) => {
   try {
     let topic;
     if (
@@ -65,7 +65,7 @@ const aloesClientEncoder = options => {
     throw new Error('Wrong protocol input');
   } catch (error) {
     logger(2, 'aloes-handlers', 'encoder:err', error);
-    return error;
+    return null;
   }
 };
 
@@ -75,7 +75,7 @@ const aloesClientEncoder = options => {
  * @param {any} value - new value to update sensor with
  * @returns {object} updated sensor value
  */
-const parseValue = value => {
+const parseValue = (value) => {
   if (typeof value === 'object') {
     if (value.type && value.type === 'Buffer') {
       value = Buffer.from(value.data);
@@ -577,11 +577,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       case 3340: // timer
         if (resource === 5526) {
           sensor.resources[resource] = Number(value); // timer mode 0-4
-        } else if (
-          resource === 5521 ||
-          resource === 5525 ||
-          resource === 5538
-        ) {
+        } else if (resource === 5521 || resource === 5525 || resource === 5538) {
           sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds || time left
         } else if (resource === 5523) {
           sensor.resources[resource] = value.toString(); // event trigger
@@ -782,7 +778,7 @@ const updateAloesSensors = (sensor, resource, value) => {
     });
     return sensor;
   } catch (error) {
-    return error;
+    return null;
   }
 };
 

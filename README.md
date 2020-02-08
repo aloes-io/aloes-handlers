@@ -15,12 +15,6 @@ With npm :
 $ npm install aloes-handlers --save
 ```
 
-Via script tag :
-
-```html
-<script src="https://unpkg.com/aloes-handlers"></script>
-```
-
 ## Linting
 
 With ESLint
@@ -48,13 +42,4 @@ $ npm run docs:dev
 ```bash
 $ npm run docs:build
 $ npm run docs:serve
-```
-
-## Build
-
-With Babel
-
-```bash
-$ npm run lib:build
-$ npm run lib:build-min
 ```

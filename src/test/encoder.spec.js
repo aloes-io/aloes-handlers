@@ -1,10 +1,8 @@
 /* Copyright 2019 Edouard Maleix, read LICENSE */
 
-require('@babel/register');
-
-import {assert} from 'chai';
-import {aloesClientEncoder, updateAloesSensors} from '../lib/encoder';
-import {aloesClientPatternDetector} from '../lib/detector';
+const {assert} = require('chai');
+const {aloesClientEncoder, updateAloesSensors} = require('../lib/encoder');
+const {aloesClientPatternDetector} = require('../lib/detector');
 
 // collectionPattern: '+userId/+collection/+method',
 // instancePattern: '+userId/+collection/+method/+modelId',
@@ -39,11 +37,7 @@ describe('aloesClientEncoder - test 1', () => {
     data: JSON.parse(packet.payload),
   };
   const encoded = aloesClientEncoder(options);
-  const updatedSensor = updateAloesSensors(
-    JSON.parse(packet.payload),
-    5700,
-    23,
-  );
+  const updatedSensor = updateAloesSensors(JSON.parse(packet.payload), 5700, 23);
   // console.log('Aloes Client - test1 - updateSensor', updatedSensor);
 
   it('encoded should exist', () => {
@@ -146,11 +140,7 @@ describe('aloesClientEncoder - test 3', () => {
     data: JSON.parse(packet.payload),
   };
   const encoded = aloesClientEncoder(options);
-  const updatedSensor = updateAloesSensors(
-    JSON.parse(packet.payload),
-    5750,
-    'awesome',
-  );
+  const updatedSensor = updateAloesSensors(JSON.parse(packet.payload), 5750, 'awesome');
   // console.log('Aloes Client - test1 - updateSensor', updatedSensor);
 
   it('encoded should exist', () => {

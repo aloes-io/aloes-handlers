@@ -1,13 +1,11 @@
 {
   "name": "aloes-handlers",
   "version": "1.2.12",
-  "main": "./dist/index.js",
-  "unpkg": "aloes-handlers.min.js",
-  "jsdelivr": "aloes-handlers.min.js",
+  "main": "./src/index.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
-    "test:aloes-detector": "export NODE_ENV=test; mocha --require @babel/register './src/test/detector.spec.js'",
-    "test:aloes-encoder": "export NODE_ENV=test; mocha --require @babel/register './src/test/encoder.spec.js'",
+    "test:aloes-detector": "export NODE_ENV=test; mocha './src/test/detector.spec.js'",
+    "test:aloes-encoder": "export NODE_ENV=test; mocha './src/test/encoder.spec.js'",
     "test:aloes": "npm run test:aloes-detector; npm run test:aloes-encoder",
     "test": "npm run test:aloes",
     "docs:md": "jsdoc2md -c jsdoc-conf.json ./src/*/* > ./docs/aloesclient/README.md",
@@ -19,9 +17,8 @@
     "prePublish": "npm run lint; npm run test; npm run lib:build"
   },
   "files": [
-    "dist/*",
+    "src/*",
     "package.json",
-    "aloes-handlers.min.js",
     "README.md"
   ],
   "author": "Edouard Maleix <ed@getlarge.eu> (https://getlarge.eu)",
@@ -36,70 +33,21 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
-    "aloes-logger": "^1.0.4",
+    "aloes-logger": "^1.0.5",
     "mqtt-pattern": "^1.2.0",
-    "oma-json": "^1.0.6"
+    "oma-json": "^1.0.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.3.4",
-    "@babel/node": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-function-sent": "^7.0.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "acorn": "^6.1.0",
-    "babel-eslint": "^8.2.6",
-    "babel-preset-minify": "^0.5.0",
     "chai": "^4.2.0",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^11.3.0",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "identity-obj-proxy": "^3.0.0",
-    "jsdoc-to-markdown": "^5.0.0",
-    "light-server": "^2.6.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.8",
+    "jsdoc-to-markdown": "^5.0.3",
+    "light-server": "^2.6.4",
+    "mocha": "^7.0.1",
     "prettier": "1.16.1",
-    "vuepress": "^1.0.0-alpha.47"
-  },
-  "peerDependencies": {
-    "mqtt-pattern": "^1.2.0",
-    "oma-json": "^1.0.5"
-  },
-  "mocha.requires": [
-    "@babel/register"
-  ],
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-syntax-dynamic-import",
-      "@babel/plugin-syntax-import-meta",
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-proposal-json-strings",
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      "@babel/plugin-proposal-function-sent",
-      "@babel/plugin-proposal-export-namespace-from",
-      "@babel/plugin-proposal-numeric-separator",
-      "@babel/plugin-proposal-throw-expressions"
-    ]
+    "vuepress": "^1.3.0"
   },
   "prettier": {
     "bracketSpacing": false,
@@ -114,15 +62,13 @@
       "node": true
     },
     "extends": [
-      "airbnb-base",
       "prettier"
     ],
     "plugins": [
-      "babel"
+      "prettier"
     ],
     "parserOptions": {
-      "ecmaVersion": 2018,
-      "parser": "babel-eslint"
+      "ecmaVersion": 2018
     },
     "rules": {
       "import/no-unresolved": "off",
@@ -140,8 +86,7 @@
     "/public/",
     "/docs/",
     "/node_modules/",
-    "/src/test/*.spec.js",
-    "aloes-handlers.min.js"
+    "/src/test/*.spec.js"
   ],
   "repository": {
     "type": "git",
