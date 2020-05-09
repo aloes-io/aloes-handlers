@@ -12,57 +12,57 @@ const protocolRef = require('./common');
  * @module aloesClientEncoder
  * @method
  * @param {object} options - Protocol parameters ( coming from patternDetector ).
- * @returns {object} MQTT topic and payload to send
+ * @throws {Error} 'Wrong protocol input'
+ * @returns {object | null} MQTT topic and payload to send
  */
 const aloesClientEncoder = (options) => {
-  try {
-    let topic;
-    if (
-      options &&
-      options !== null &&
-      options.pattern &&
-      options.pattern.toLowerCase() === 'aloesclient'
-    ) {
-      const params = {
-        userId: options.userId,
-        collection: options.collection,
-        modelId: options.modelId,
-        method: options.method,
-      };
-      let pattern;
-      logger(4, 'aloes-handlers', 'encoder:req', params);
-
-      if (params.modelId && params.modelId !== null) {
-        pattern = protocolRef.instancePattern;
-      } else if (options.data && options.data !== null) {
-        pattern = protocolRef.collectionPattern;
-      } else {
-        params.modelId = `#`;
-        pattern = protocolRef.instancePattern;
-      }
-      logger(4, 'aloes-handlers', 'encoder:req', pattern);
-
-      if (options.method === 'POST') {
-        topic = `${mqttPattern.fill(pattern, params)}`;
-      } else if (options.method === 'HEAD') {
-        topic = `${mqttPattern.fill(pattern, params)}`;
-      } else if (options.method === 'STREAM') {
-        topic = `${mqttPattern.fill(pattern, params)}`;
-      } else if (options.method === 'DELETE') {
-        topic = `${mqttPattern.fill(pattern, params)}`;
-      } else if (options.method === 'PUT') {
-        topic = `${mqttPattern.fill(pattern, params)}`;
-      } else {
-        topic = null;
-      }
-      if (!topic || topic === null) throw new Error('Method not supported yet');
-      logger(3, 'aloes-handlers', 'encoder:res', topic);
-      if (options.data && options.data !== null) {
-        return {topic, payload: options.data};
-      }
-      return {topic};
-    }
+  let topic;
+  if (
+    !options ||
+    !options.pattern ||
+    options.pattern.toLowerCase() !== 'aloesclient'
+  ) {
     throw new Error('Wrong protocol input');
+  }
+  try {
+    const params = {
+      userId: options.userId,
+      collection: options.collection,
+      modelId: options.modelId,
+      method: options.method,
+    };
+    let pattern;
+    logger(4, 'aloes-handlers', 'encoder:req', params);
+
+    if (params.modelId && params.modelId !== null) {
+      pattern = protocolRef.instancePattern;
+    } else if (options.data && options.data !== null) {
+      pattern = protocolRef.collectionPattern;
+    } else {
+      params.modelId = `#`;
+      pattern = protocolRef.instancePattern;
+    }
+    logger(4, 'aloes-handlers', 'encoder:req', pattern);
+
+    if (options.method === 'POST') {
+      topic = `${mqttPattern.fill(pattern, params)}`;
+    } else if (options.method === 'HEAD') {
+      topic = `${mqttPattern.fill(pattern, params)}`;
+    } else if (options.method === 'STREAM') {
+      topic = `${mqttPattern.fill(pattern, params)}`;
+    } else if (options.method === 'DELETE') {
+      topic = `${mqttPattern.fill(pattern, params)}`;
+    } else if (options.method === 'PUT') {
+      topic = `${mqttPattern.fill(pattern, params)}`;
+    } else {
+      topic = null;
+    }
+    if (!topic || topic === null) throw new Error('Method not supported yet');
+    logger(3, 'aloes-handlers', 'encoder:res', topic);
+    if (options.data && options.data !== null) {
+      return {topic, payload: options.data};
+    }
+    return {topic};
   } catch (error) {
     logger(2, 'aloes-handlers', 'encoder:err', error);
     return null;
@@ -73,7 +73,7 @@ const aloesClientEncoder = (options) => {
  * Parse incoming sensor value to get an object instance from it
  * @method parseValue
  * @param {any} value - new value to update sensor with
- * @returns {object} updated sensor value
+ * @returns {any} updated sensor value
  */
 const parseValue = (value) => {
   if (typeof value === 'object') {
@@ -111,7 +111,7 @@ const parseValue = (value) => {
  * @param {object} sensor - sensor instance formatted as AloesClient protocol
  * @param {number} resource - [OMA Resources]{@link /aloes/#omaresources}  ID to update
  * @param {string} value - new value to update sensor with
- * @returns {object} updated sensor instance
+ * @returns {object | null} updated sensor instance
  */
 const updateAloesSensors = (sensor, resource, value) => {
   try {
@@ -183,7 +183,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -206,7 +209,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -239,7 +245,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -258,7 +267,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -403,7 +415,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -434,7 +449,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5705) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -536,7 +554,10 @@ const updateAloesSensors = (sensor, resource, value) => {
           // }
           sensor.resources[resource] = Number(value); // current position 0-100 %
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);
@@ -577,7 +598,11 @@ const updateAloesSensors = (sensor, resource, value) => {
       case 3340: // timer
         if (resource === 5526) {
           sensor.resources[resource] = Number(value); // timer mode 0-4
-        } else if (resource === 5521 || resource === 5525 || resource === 5538) {
+        } else if (
+          resource === 5521 ||
+          resource === 5525 ||
+          resource === 5538
+        ) {
           sensor.resources[resource] = Number(value); // delay duration seconds || miniumum offtime seconds || time left
         } else if (resource === 5523) {
           sensor.resources[resource] = value.toString(); // event trigger
@@ -749,7 +774,10 @@ const updateAloesSensors = (sensor, resource, value) => {
         if (resource === 5700) {
           sensor.resources[resource] = Number(value);
           sensor.value = value.toString();
-          if (sensor.resources['5601'] === undefined || Number(value) < sensor.resources['5601']) {
+          if (
+            sensor.resources['5601'] === undefined ||
+            Number(value) < sensor.resources['5601']
+          ) {
             sensor.resources['5601'] = Number(value);
           } else if (Number(value) > sensor.resources['5602']) {
             sensor.resources['5602'] = Number(value);

@@ -28,7 +28,7 @@ describe('aloesClientPatternDetector - test 1', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const patternKeys = ['params', 'name', 'direction'];
   const paramsKeys = ['userId', 'collection', 'method'];
 
   it('pattern should exist', () => {
@@ -71,7 +71,7 @@ describe('aloesClientPatternDetector - test 2', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const patternKeys = ['params', 'name', 'direction'];
   const paramsKeys = ['userId', 'collection', 'method', 'modelId'];
 
   it('pattern should exist', () => {
@@ -116,7 +116,7 @@ describe('aloesClientPatternDetector - test 3', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const patternKeys = ['params', 'name', 'direction'];
   const paramsKeys = ['userId', 'collection', 'method', 'modelId'];
 
   it('pattern should exist', () => {
@@ -160,7 +160,7 @@ describe('aloesClientPatternDetector - test 4', () => {
   };
   const pattern = aloesClientPatternDetector(packet);
   const params = pattern.params;
-  const patternKeys = ['params', 'name', 'subType', 'direction'];
+  const patternKeys = ['params', 'name', 'direction'];
   const paramsKeys = ['userId', 'collection', 'method'];
 
   it('pattern should exist', () => {
