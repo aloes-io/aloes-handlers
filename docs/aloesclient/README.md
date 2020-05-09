@@ -9,20 +9,20 @@
 ## Functions
 
 <dl>
-<dt><a href="#aloesClientPatternDetector">aloesClientPatternDetector(packet)</a> ⇒ <code>object</code></dt>
+<dt><a href="#aloesClientPatternDetector">aloesClientPatternDetector(packet)</a> ⇒ <code>object</code> | <code>null</code></dt>
 <dd><p>Check incoming MQTT packet against AloesClient API
 collectionPattern - &#39;+userId/+collection/+method&#39;
 instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
 </dd>
-<dt><a href="#aloesClientEncoder">aloesClientEncoder(options)</a> ⇒ <code>object</code></dt>
+<dt><a href="#aloesClientEncoder">aloesClientEncoder(options)</a> ⇒ <code>object</code> | <code>null</code></dt>
 <dd><p>Try to convert incoming route to AloesClient routing</p>
 <p>collectionPattern - &#39;+userId/+collection/+method&#39;
 instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
 </dd>
-<dt><a href="#parseValue">parseValue(value)</a> ⇒ <code>object</code></dt>
+<dt><a href="#parseValue">parseValue(value)</a> ⇒ <code>any</code></dt>
 <dd><p>Parse incoming sensor value to get an object instance from it</p>
 </dd>
-<dt><a href="#updateAloesSensors">updateAloesSensors(sensor, resource, value)</a> ⇒ <code>object</code></dt>
+<dt><a href="#updateAloesSensors">updateAloesSensors(sensor, resource, value)</a> ⇒ <code>object</code> | <code>null</code></dt>
 <dd><p>Update and validate AloesClient Sensor instance</p>
 </dd>
 </dl>
@@ -57,13 +57,13 @@ References used to validate payloads
 
 <a name="aloesClientPatternDetector"></a>
 
-## aloesClientPatternDetector(packet) ⇒ <code>object</code>
+## aloesClientPatternDetector(packet) ⇒ <code>object</code> \| <code>null</code>
 Check incoming MQTT packet against AloesClient API
 collectionPattern - '+userId/+collection/+method'
 instancePattern - '+userId/+collection/+method/+modelId'
 
 **Kind**: global function  
-**Returns**: <code>object</code> - found pattern.name and pattern.params  
+**Returns**: <code>object</code> \| <code>null</code> - pattern  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -71,14 +71,18 @@ instancePattern - '+userId/+collection/+method/+modelId'
 
 <a name="aloesClientEncoder"></a>
 
-## aloesClientEncoder(options) ⇒ <code>object</code>
+## aloesClientEncoder(options) ⇒ <code>object</code> \| <code>null</code>
 Try to convert incoming route to AloesClient routing
 
 collectionPattern - '+userId/+collection/+method'
 instancePattern - '+userId/+collection/+method/+modelId'
 
 **Kind**: global function  
-**Returns**: <code>object</code> - MQTT topic and payload to send  
+**Returns**: <code>object</code> \| <code>null</code> - MQTT topic and payload to send  
+**Throws**:
+
+- <code>Error</code> 'Wrong protocol input'
+
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -86,11 +90,11 @@ instancePattern - '+userId/+collection/+method/+modelId'
 
 <a name="parseValue"></a>
 
-## parseValue(value) ⇒ <code>object</code>
+## parseValue(value) ⇒ <code>any</code>
 Parse incoming sensor value to get an object instance from it
 
 **Kind**: global function  
-**Returns**: <code>object</code> - updated sensor value  
+**Returns**: <code>any</code> - updated sensor value  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -98,11 +102,11 @@ Parse incoming sensor value to get an object instance from it
 
 <a name="updateAloesSensors"></a>
 
-## updateAloesSensors(sensor, resource, value) ⇒ <code>object</code>
+## updateAloesSensors(sensor, resource, value) ⇒ <code>object</code> \| <code>null</code>
 Update and validate AloesClient Sensor instance
 
 **Kind**: global function  
-**Returns**: <code>object</code> - updated sensor instance  
+**Returns**: <code>object</code> \| <code>null</code> - updated sensor instance  
 
 | Param | Type | Description |
 | --- | --- | --- |
