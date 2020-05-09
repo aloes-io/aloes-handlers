@@ -1,6 +1,6 @@
 {
   "name": "aloes-handlers",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "main": "./src/index.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
@@ -14,7 +14,7 @@
     "docs:serve": "light-server -s public -p 7000 --servePrefix /aloes-handlers/",
     "lib:build": "npx babel src --out-dir dist --ignore './src/test/*.spec.js'",
     "lib:build-min": "npx babel ./src --ignore './src/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
-    "prePublish": "npm run lint; npm run test; npm run lib:build"
+    "prePublish": "npm run lint ; npm run test"
   },
   "files": [
     "src/*",
@@ -29,25 +29,25 @@
   ],
   "license": "AGPL-3.0-or-later",
   "engines": {
-    "node": ">=9.0.0",
+    "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
   "dependencies": {
     "aloes-logger": "^1.0.5",
     "mqtt-pattern": "^1.2.0",
-    "oma-json": "^1.0.7"
+    "oma-json": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-prettier": "^2.6.2",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
     "identity-obj-proxy": "^3.0.0",
     "jsdoc-to-markdown": "^5.0.3",
     "light-server": "^2.6.4",
-    "mocha": "^7.0.1",
-    "prettier": "1.16.1",
-    "vuepress": "^1.3.0"
+    "mocha": "^7.1.2",
+    "prettier": "^2.0.5",
+    "vuepress": "^1.4.1"
   },
   "prettier": {
     "bracketSpacing": false,
@@ -95,5 +95,6 @@
   "contributors": [
     "Edouard Maleix <ed@getlarge.eu> (https://getlarge.eu)"
   ],
-  "description": "Encode / decode MQTT stream from IoT devices to Web browsers."
+  "description": "Encode / decode MQTT stream from IoT devices to Web browsers.",
+  "types": "types/index.d.ts"
 }
