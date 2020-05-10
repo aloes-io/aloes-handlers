@@ -1,4 +1,4 @@
-/* Copyright 2019 Edouard Maleix, read LICENSE */
+/* Copyright 2020 Edouard Maleix, read LICENSE */
 
 const {assert} = require('chai');
 const {aloesClientPatternDetector} = require('../lib/detector');

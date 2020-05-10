@@ -9,7 +9,9 @@ const protocolRef = require('./common');
  * Try to convert incoming route to AloesClient routing
  *
  * collectionPattern - '+userId/+collection/+method'
+ * 
  * instancePattern - '+userId/+collection/+method/+modelId'
+ * 
  * @module aloesClientEncoder
  * @method
  * @param {object} options - Protocol parameters ( coming from patternDetector ).
@@ -70,54 +72,64 @@ const aloesClientEncoder = (options) => {
   }
 };
 
-/**
- * Parse incoming sensor value to get an object instance from it
- * @method parseValue
- * @param {any} value - new value to update sensor with
- * @returns {any} updated sensor value
- */
-const parseValue = (value) => {
-  if (typeof value === 'object') {
-    if (value.type && value.type === 'Buffer') {
-      value = Buffer.from(value.data);
-      // value = value.toString('utf-8');
-    } else if (value instanceof String) {
-      if (value.toString() === 'true') {
-        value = Boolean(true);
-      } else if (value.toString() === 'false') {
-        value = Boolean(false);
-      } else {
-        value = value.toString();
-      }
-    } else if (value instanceof Number) {
-      value = Number(value);
-    }
-  }
-  //  else if (Buffer.isBuffer(value)) {
-  //   value = value;
-  // }
-  if (typeof value === 'string') {
-    if (value === 'true') {
-      value = Boolean(true);
-    } else if (value === 'false') {
-      value = Boolean(false);
-    }
-  }
-  return value;
-};
+// /**
+//  * Parse incoming sensor value to get an object instance from it
+//  * @method parseValue
+//  * @param {any} value - new value to update sensor with
+//  * @returns {any} updated sensor value
+//  */
+// const parseValue = (value) => {
+//   if (typeof value === 'object') {
+//     if (value.type && value.type === 'Buffer') {
+//       value = Buffer.from(value.data);
+//       // value = value.toString('utf-8');
+//     } else if (value instanceof String) {
+//       if (value.toString() === 'true') {
+//         value = Boolean(true);
+//       } else if (value.toString() === 'false') {
+//         value = Boolean(false);
+//       } else {
+//         value = value.toString();
+//       }
+//     } else if (value instanceof Number) {
+//       value = Number(value);
+//     }
+//   }
+//   //  else if (Buffer.isBuffer(value)) {
+//   //   value = value;
+//   // }
+//   if (typeof value === 'string') {
+//     if (value === 'true') {
+//       value = Boolean(true);
+//     } else if (value === 'false') {
+//       value = Boolean(false);
+//     }
+//   }
+//   return value;
+// };
 
+/**
+ * References of OMAResources types
+ *
+ * used to cast incoming sensor value to the correct type
+ *
+ * @namespace
+ * @property {function} Float - convert value to number
+ * @property {function} Integer - convert value to number
+ * @property {function} String - convert value to string
+ * @property {function} Boolean - convert value to boolean
+ * @property {function} Time - convert value to number
+ * @property {function} Opaque - convert value to buffer
+ * @property {function} null - convert value to null
+ */
 const convertValueFromResourceTypes = {
   Float: (value) => Number(value),
   Integer: (value) => Number(value),
   String: (value) => value.toString(),
   Boolean: (value) => {
     if (typeof value === 'string') {
-      if (value === 'true') {
-        return Boolean(true);
-      } else if (value === 'false') {
+      if (value === 'false') {
         return Boolean(false);
-      } else if (value === '1') {
-        return Boolean(true);
       } else if (value === '0') {
         return Boolean(false);
       }
@@ -137,6 +149,12 @@ const convertValueFromResourceTypes = {
   null: () => null,
 };
 
+/**
+ * Cast incoming sensor value based on its OMAResource type
+ * @method setResourceValue
+ * @param {any} value - value to cast
+ * @returns {any}
+ */
 const setResourceValue = (resourceType, value) =>
   convertValueFromResourceTypes[resourceType]
     ? convertValueFromResourceTypes[resourceType](value)

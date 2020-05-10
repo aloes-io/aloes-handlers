@@ -4,23 +4,27 @@
 <dt><a href="#protocolRef">protocolRef</a> : <code>object</code></dt>
 <dd><p>References used to validate payloads</p>
 </dd>
+<dt><a href="#convertValueFromResourceTypes">convertValueFromResourceTypes</a> : <code>object</code></dt>
+<dd><p>References of OMAResources types</p>
+<p>used to cast incoming sensor value to the correct type</p>
+</dd>
 </dl>
 
 ## Functions
 
 <dl>
 <dt><a href="#aloesClientPatternDetector">aloesClientPatternDetector(packet)</a> ⇒ <code>object</code> | <code>null</code></dt>
-<dd><p>Check incoming MQTT packet against AloesClient API
-collectionPattern - &#39;+userId/+collection/+method&#39;
-instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
+<dd><p>Check incoming MQTT packet against AloesClient API</p>
+<p>collectionPattern - &#39;+userId/+collection/+method&#39;</p>
+<p>instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
 </dd>
 <dt><a href="#aloesClientEncoder">aloesClientEncoder(options)</a> ⇒ <code>object</code> | <code>null</code></dt>
 <dd><p>Try to convert incoming route to AloesClient routing</p>
-<p>collectionPattern - &#39;+userId/+collection/+method&#39;
-instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
+<p>collectionPattern - &#39;+userId/+collection/+method&#39;</p>
+<p>instancePattern - &#39;+userId/+collection/+method/+modelId&#39;</p>
 </dd>
-<dt><a href="#parseValue">parseValue(value)</a> ⇒ <code>any</code></dt>
-<dd><p>Parse incoming sensor value to get an object instance from it</p>
+<dt><a href="#setResourceValue">setResourceValue(value)</a> ⇒ <code>any</code></dt>
+<dd><p>Cast incoming sensor value based on its OMAResource type</p>
 </dd>
 <dt><a href="#updateAloesSensors">updateAloesSensors(sensor, resource, value)</a> ⇒ <code>object</code> | <code>null</code></dt>
 <dd><p>Update and validate AloesClient Sensor instance</p>
@@ -55,11 +59,33 @@ References used to validate payloads
 | validators.collection | <code>array</code> |  |
 | validators.methods | <code>array</code> | [0, 1, 2, 3, 4]. |
 
+<a name="convertValueFromResourceTypes"></a>
+
+## convertValueFromResourceTypes : <code>object</code>
+References of OMAResources types
+
+used to cast incoming sensor value to the correct type
+
+**Kind**: global namespace  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| Float | <code>function</code> | convert value to number |
+| Integer | <code>function</code> | convert value to number |
+| String | <code>function</code> | convert value to string |
+| Boolean | <code>function</code> | convert value to boolean |
+| Time | <code>function</code> | convert value to number |
+| Opaque | <code>function</code> | convert value to buffer |
+| null | <code>function</code> | convert value to null |
+
 <a name="aloesClientPatternDetector"></a>
 
 ## aloesClientPatternDetector(packet) ⇒ <code>object</code> \| <code>null</code>
 Check incoming MQTT packet against AloesClient API
+
 collectionPattern - '+userId/+collection/+method'
+
 instancePattern - '+userId/+collection/+method/+modelId'
 
 **Kind**: global function  
@@ -75,6 +101,7 @@ instancePattern - '+userId/+collection/+method/+modelId'
 Try to convert incoming route to AloesClient routing
 
 collectionPattern - '+userId/+collection/+method'
+
 instancePattern - '+userId/+collection/+method/+modelId'
 
 **Kind**: global function  
@@ -88,17 +115,16 @@ instancePattern - '+userId/+collection/+method/+modelId'
 | --- | --- | --- |
 | options | <code>object</code> | Protocol parameters ( coming from patternDetector ). |
 
-<a name="parseValue"></a>
+<a name="setResourceValue"></a>
 
-## parseValue(value) ⇒ <code>any</code>
-Parse incoming sensor value to get an object instance from it
+## setResourceValue(value) ⇒ <code>any</code>
+Cast incoming sensor value based on its OMAResource type
 
 **Kind**: global function  
-**Returns**: <code>any</code> - updated sensor value  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| value | <code>any</code> | new value to update sensor with |
+| value | <code>any</code> | value to cast |
 
 <a name="updateAloesSensors"></a>
 
@@ -106,7 +132,7 @@ Parse incoming sensor value to get an object instance from it
 Update and validate AloesClient Sensor instance
 
 **Kind**: global function  
-**Returns**: <code>object</code> \| <code>null</code> - updated sensor instance  
+**Returns**: <code>object</code> \| <code>null</code> - sensor  
 
 | Param | Type | Description |
 | --- | --- | --- |

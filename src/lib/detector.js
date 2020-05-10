@@ -1,4 +1,4 @@
-/* Copyright 2019 Edouard Maleix, read LICENSE */
+/* Copyright 2020 Edouard Maleix, read LICENSE */
 
 const mqttPattern = require('mqtt-pattern');
 const logger = require('aloes-logger');
@@ -6,8 +6,11 @@ const protocolRef = require('./common');
 
 /**
  * Check incoming MQTT packet against AloesClient API
+ * 
  * collectionPattern - '+userId/+collection/+method'
+ * 
  * instancePattern - '+userId/+collection/+method/+modelId'
+ * 
  * @method aloesClientPatternDetector
  * @param {object} packet - The MQTT packet.
  * @returns {object | null} pattern
