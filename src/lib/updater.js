@@ -75,8 +75,8 @@ const convertValueFromResourceTypes = {
   // }
   Opaque: (value) =>
     typeof value === 'number' || typeof value === 'boolean'
-      ? Buffer.from(value.toString())
-      : Buffer.from(value),
+      ? Buffer.from(value.toString()).toJSON()
+      : Buffer.from(value).toJSON(),
   null: () => null,
 };
 
@@ -115,15 +115,18 @@ const updateAloesSensors = (sensor, resource, value) => {
     const omaResource = omaResources.find((res) => res.value === resource);
 
     // value = parseValue(value);
-    value = setResourceValue(omaResource.type, value);
+    const parsedValue = setResourceValue(omaResource.type, value);
     sensor.resource = resource;
-    sensor.resources[resource] = value;
-    sensor.value = value ? value.toString() : null;
+    sensor.resources[resource] = parsedValue;
+    sensor.value =
+      !parsedValue && parsedValue !== false && parsedValue !== 0
+        ? null
+        : parsedValue.toString();
 
     switch (Number(sensor.type)) {
       case 3200: // digital input
         if (resource === 5500) {
-          if (value) sensor.resources['5501'] += 1;
+          if (parsedValue) sensor.resources['5501'] += 1;
           else sensor.resources['5501'] = 0;
         } else if (resource === 5505) {
           // Input Counter Reset
@@ -134,15 +137,15 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3202: // analog input
         if (resource === 5600) {
-          if (value < sensor.resources['5601']) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+          if (parsedValue < sensor.resources['5601']) {
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0;
           sensor.resources['5602'] = 0;
-          sensor.resources[resource] = value; //  reset min/max event
+          sensor.resources[resource] = parsedValue; //  reset min/max event
         }
         break;
       case 3203: // analog output
@@ -150,28 +153,28 @@ const updateAloesSensors = (sensor, resource, value) => {
       case 3300: // generic sensor
         if (resource === 5700) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0;
           sensor.resources['5602'] = 0;
-          sensor.resources[resource] = value; //  reset min/max event
+          sensor.resources[resource] = parsedValue; //  reset min/max event
         }
         break;
       case 3301: // illuminance sensor
         if (resource === 5700) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0; //  reset min/max event
@@ -180,38 +183,38 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3302: // presence sensor
         if (resource === 5500) {
-          if (value) sensor.resources['5501'] += 1;
+          if (parsedValue) sensor.resources['5501'] += 1;
           else sensor.resources['5501'] = 0;
         } else if (resource === 5505) {
-          sensor.resources[resource] = value; // Input Counter Reset
+          sensor.resources[resource] = parsedValue; // Input Counter Reset
           sensor.resources['5501'] = 0;
         }
         break;
       case 3303: // temperature sensor
         if (resource === 5700) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0; //  reset min/max event
           sensor.resources['5602'] = 0;
-          sensor.resources[resource] = value;
+          sensor.resources[resource] = parsedValue;
         }
         break;
       case 3304: // humidity sensor
         if (resource === 5700) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0; //  reset min/max event
@@ -220,15 +223,15 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3305: // power measurement
         if (resource === 5822) {
+          // reset cumulative energy
           sensor.resources['5805'] = 0;
           sensor.resources['5815'] = 0;
-          sensor.resources[resource] = value; // reset cumulative energy
         } else if (resource === 5605) {
+          // reset min/max measured
           sensor.resources['5801'] = 0;
           sensor.resources['5802'] = 0;
           sensor.resources['5811'] = 0;
           sensor.resources['5812'] = 0;
-          sensor.resources[resource] = value; // reset min/max measured
         }
         break;
       case 3306: // actuation
@@ -237,7 +240,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             sensor.resources['5850'] = false;
           }
         } else if (resource === 5850) {
-          if (value) {
+          if (parsedValue) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date().getTime();
             } else {
@@ -258,7 +261,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             sensor.resources['5850'] = 0;
           }
         } else if (resource === 5850) {
-          if (value) {
+          if (parsedValue) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date().getTime();
             } else {
@@ -275,7 +278,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             sensor.resources['5850'] = 0;
           }
         } else if (resource === 5850) {
-          if (value) {
+          if (parsedValue) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date().getTime();
             } else {
@@ -307,12 +310,12 @@ const updateAloesSensors = (sensor, resource, value) => {
       case 3315: // barometer
         if (resource === 5700) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0; //  reset min/max event
@@ -321,19 +324,19 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3331: // energy
         if (resource === 5822) {
+          // reset cumulative energy
           sensor.resources['5805'] = 0;
-          sensor.resources[resource] = value; // reset cumulative energy
         }
         break;
       case 3332: // direction
         if (resource === 5705) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           sensor.resources['5601'] = 0; // reset min/max event
@@ -362,13 +365,13 @@ const updateAloesSensors = (sensor, resource, value) => {
             z: sensor.resources['5704'],
           };
         } else if (resource === 5605) {
+          // reset min/max event
           sensor.resources['5508'] = 0;
           sensor.resources['5509'] = 0;
           sensor.resources['5510'] = 0;
           sensor.resources['5511'] = 0;
           sensor.resources['5512'] = 0;
           sensor.resources['5513'] = 0;
-          sensor.resources[resource] = value; // reset min/max event
         }
         break;
       case 3335: // color sensor
@@ -384,25 +387,25 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3337: // positioner
         if (resource === 5536) {
-          // if (Number(value) < sensor.resources['5519']) {
-          //   sensor.resources[resource] = Number(value);
-          //   sensor.value = value.toString();
-          // } else if (Number(value) > sensor.resources['5520']) {
-          //   sensor.resources[resource] = Number(value);
-          //   sensor.value = value.toString();
+          // if (Number(parsedValue) < sensor.resources['5519']) {
+          //   sensor.resources[resource] = Number(parsedValue);
+          //   sensor.parsedValue = parsedValue.toString();
+          // } else if ((parsedValue) > sensor.resources['5520']) {
+          //   sensor.resources[resource] = Number(parsedValue);
+          //   sensor.parsedValue = value.toString();
           // }
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
+          // reset min/max event
           sensor.resources['5601'] = 0;
           sensor.resources['5602'] = 0;
-          sensor.resources[resource] = value; // reset min/max event
         }
         break;
       case 3339: // audio clip
@@ -416,7 +419,7 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3342: // switch
         if (resource === 5500) {
-          if (value) {
+          if (parsedValue) {
             sensor.resources['5501'] += 1; // counter
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date().getTime();
@@ -435,7 +438,6 @@ const updateAloesSensors = (sensor, resource, value) => {
         break;
       case 3343: // dimmer
         if (resource === 5548) {
-          sensor.resources['5548'] = Number(value);
           if (sensor.resources['5548'] > 0) {
             if (sensor.resources['5852'] === 0) {
               sensor.resources['5852'] = new Date().getTime();
@@ -470,7 +472,7 @@ const updateAloesSensors = (sensor, resource, value) => {
             z: sensor.resources['5704'],
           };
         } else if (resource === 5500) {
-          if (value) {
+          if (parsedValue) {
             sensor.resources['5501'] += 1; // counter
           } else {
             sensor.resources['5501'] = 0; // counter
@@ -480,7 +482,7 @@ const updateAloesSensors = (sensor, resource, value) => {
       case 3347: // push button
         if (resource === 5500) {
           // input value
-          if (value) {
+          if (parsedValue) {
             sensor.resources['5501'] += 1; // counter
           } else {
             sensor.resources['5501'] = 0;
@@ -502,15 +504,15 @@ const updateAloesSensors = (sensor, resource, value) => {
           // }
           sensor.resources[resource] =
             typeof value === 'string'
-              ? Buffer.from(value, 'binary')
+              ? Buffer.from(value, 'binary').toJSON()
               : typeof value === 'number'
-              ? Buffer.from(value.toString())
-              : Buffer.from(value);
+              ? Buffer.from(value.toString()).toJSON()
+              : Buffer.from(value).toJSON();
         }
         break;
       case 3350: // stopwatch
         if (resource === 5850) {
-          if (value) {
+          if (parsedValue) {
             sensor.resources['5501'] += 1;
           } else {
             sensor.resources['5501'] = 0;
@@ -521,12 +523,12 @@ const updateAloesSensors = (sensor, resource, value) => {
         // CATCH 3301 until 3305 - 3315 - 3316 until 3330 - 3346
         if (resource === 5700) {
           if (
-            sensor.resources['5601'] === undefined ||
-            value < sensor.resources['5601']
+            (!sensor.resources['5601'] && sensor.resources['5601'] !== 0) ||
+            parsedValue < sensor.resources['5601']
           ) {
-            sensor.resources['5601'] = value;
-          } else if (value > sensor.resources['5602']) {
-            sensor.resources['5602'] = value;
+            sensor.resources['5601'] = parsedValue;
+          } else if (parsedValue > sensor.resources['5602']) {
+            sensor.resources['5602'] = parsedValue;
           }
         } else if (resource === 5605) {
           // reset min/max event

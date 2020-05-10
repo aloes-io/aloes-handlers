@@ -61,20 +61,24 @@ describe('aloesClientUpdate', () => {
           test: () => {
             sensor = updateAloesSensors(sensor, omaResourceId, sensorValue);
             if (Buffer.isBuffer(sensorValue)) {
-              assert.ok(Buffer.isBuffer(sensor.resources[omaResourceId]));
+              const buff = Buffer.from(sensor.resources[omaResourceId]);
+              assert.ok(Buffer.isBuffer(buff));
               assert.equal(
-                Buffer.byteLength(sensor.resources[omaResourceId]),
+                Buffer.byteLength(buff),
                 Buffer.byteLength(sensorValue),
               );
             } else if (sensor.value) {
-              if (!sensor.type === 3349 && !sensor.resource === 5910) {
-                // make exception for bitmap input hack
+              if (sensor.type === 3349 && sensor.resource === 5910) {
+                // make an exception for bitmap input hack
+                const buff = Buffer.from(sensor.resources[omaResourceId]);
+                assert.equal(buff.toString(), sensorValue.toString());
+              } else {
                 assert.typeOf(
                   sensor.resources[omaResourceId],
                   typeof sensorValue,
                 );
+                assert.equal(sensor.resources[omaResourceId], sensorValue);
               }
-              assert.equal(sensor.resources[omaResourceId], sensorValue);
             } else {
               assert.equal(sensor.resources[omaResourceId], sensorValue);
             }
