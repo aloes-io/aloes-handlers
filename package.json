@@ -4,10 +4,11 @@
   "main": "./src/index.js",
   "scripts": {
     "lint": "npx eslint --ext js .",
-    "test:aloes-detector": "export NODE_ENV=test; mocha './src/test/detector.spec.js'",
-    "test:aloes-encoder": "export NODE_ENV=test; mocha './src/test/encoder.spec.js'",
-    "test:aloes": "npm run test:aloes-detector; npm run test:aloes-encoder",
-    "test": "npm run test:aloes",
+    "test:detector": "export NODE_ENV=test; ./node_modules/.bin/mocha './src/test/detector.spec.js'",
+    "test:encoder": "export NODE_ENV=test; ./node_modules/.bin/mocha './src/test/encoder.spec.js'",
+    "test:updater": "export NODE_ENV=test; ./node_modules/.bin/mocha './src/test/updater.spec.js'",
+    "test": "npm run test:detector; npm run test:encoder ; npm run test:updater",
+    "test:cover": "./node_modules/.bin/nyc ./node_modules/.bin/mocha ./src/test/*.spec.js",
     "docs:md": "jsdoc2md -c jsdoc-conf.json ./src/*/* > ./docs/aloesclient/README.md",
     "docs:dev": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress dev docs",
     "docs:build": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress build docs",
@@ -45,6 +46,7 @@
     "jsdoc-to-markdown": "^5.0.3",
     "light-server": "^2.6.4",
     "mocha": "^7.1.2",
+    "nyc": "^15.0.1",
     "prettier": "^2.0.5",
     "vuepress": "^1.4.1"
   },
@@ -84,9 +86,29 @@
     "/dist/",
     "/public/",
     "/docs/",
-    "/node_modules/",
-    "/src/test/*.spec.js"
+    "/node_modules/"
   ],
+  "mocha": {
+    "recursive": true,
+    "check-leaks": true,
+    "bail": false,
+    "slow": 500,
+    "reporter": "spec",
+    "globals": ""
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "exclude": [
+      "**/*.spec.js"
+    ],
+    "report-dir": "./coverage",
+    "check-coverage": true,
+    "functions": 70,
+    "lines": 70
+  },
   "repository": {
     "type": "git",
     "url": "https://framagit.org/aloes/aloes-handlers"

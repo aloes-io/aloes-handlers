@@ -1,4 +1,4 @@
-image: node:10.10.0
+image: node:12.10.0
 
 cache:
   paths:
@@ -9,14 +9,18 @@ before_script:
 
 test_async:
   script:
-    - npm run test
-  only:
-    - dev
+    - npm run test:cover
+  artifacts:
+    paths:
+      - coverage
 
 pages:
   stage: deploy
+  dependencies:
+    - test_async
   script:
     - npm run docs:build
+    - cp -r coverage/* public/
   artifacts:
     paths:
       - public
