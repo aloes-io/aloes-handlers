@@ -17,8 +17,9 @@ You should have received a copy of the GNU Affero General Public License
 along with Aloes-handlers. If not, see <https://www.gnu.org/licenses/>.
 */
 
-const {aloesClientEncoder, updateAloesSensors} = require('./lib/encoder');
+const {aloesClientEncoder} = require('./lib/encoder');
 const {aloesClientPatternDetector} = require('./lib/detector');
+const {updateAloesSensors} = require('./lib/updater');
 const version = require('../package.json').version;
 
 module.exports = {
