@@ -12,8 +12,6 @@
     "docs:dev": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress dev docs",
     "docs:build": "npm run docs:md ; cp ./README.md ./docs/readme/. ; vuepress build docs",
     "docs:serve": "light-server -s public -p 7000 --servePrefix /aloes-handlers/",
-    "lib:build": "npx babel src --out-dir dist --ignore './src/test/*.spec.js'",
-    "lib:build-min": "npx babel ./src --ignore './src/test/*.spec.js' --presets minify --out-file ./aloes-handlers.min.js",
     "prePublish": "npm run lint ; npm run test"
   },
   "files": [
@@ -39,6 +37,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "declarative-test-structure-generator": "^0.2.3",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
@@ -95,6 +94,6 @@
   "contributors": [
     "Edouard Maleix <ed@getlarge.eu> (https://getlarge.eu)"
   ],
-  "description": "Encode / decode MQTT stream from IoT devices to Web browsers.",
+  "description": "Encode / decode MQTT packet from IoT devices to Web browsers.",
   "types": "types/index.d.ts"
 }
