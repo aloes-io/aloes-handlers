@@ -34,7 +34,7 @@
   "dependencies": {
     "aloes-logger": "^1.0.5",
     "mqtt-pattern": "^1.2.0",
-    "oma-json": "^1.1.1"
+    "oma-json": "^1.1.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

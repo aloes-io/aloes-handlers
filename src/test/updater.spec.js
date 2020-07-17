@@ -88,7 +88,5 @@ describe('aloesClientUpdate', () => {
       .filter((test) => test !== null);
   });
 
-  // console.log({testSuites});
-
   testGen.run(testSuites);
 });
