@@ -1,5 +1,7 @@
 # Aloes - Handlers
 
+[![pipeline status](https://framagit.org/aloes/aloes-handlers/badges/master/pipeline.svg)](https://framagit.org/aloes/aloes-handlers/-/commits/master) [![coverage report](https://framagit.org/aloes/aloes-handlers/badges/master/coverage.svg)](https://aloes.frama.io/aloes-handlers/lcov-report)
+
 - Encode / decode MQTT packet from IoT devices to Web browsers.
 - Use [Open Mobile Alliance](http://www.openmobilealliance.org/wp/OMNA/LwM2M/LwM2MRegistry.html) standards as main target / source protocol.
 
