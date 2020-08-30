@@ -56,7 +56,7 @@ const logger = require('aloes-logger');
 const convertValueFromResourceTypes = {
   Float: (value) => Number(value),
   Integer: (value) => Number(value),
-  String: (value) => value.toString(),
+  String: (value) => value !== null && value !== undefined ? value.toString() : '',
   Boolean: (value) => {
     if (typeof value === 'string') {
       if (value === 'false') {
@@ -68,16 +68,12 @@ const convertValueFromResourceTypes = {
     return Boolean(value);
   },
   Time: (value) => Number(value),
-  //    // if (typeof value === 'string') {
-  //   sensor.resources[resource] = Buffer.from(value, 'binary').toJSON();
-  // } else {
-  //   sensor.resources[resource] = Buffer.from(value).toJSON();
-  // }
   Opaque: (value) =>
     typeof value === 'number' || typeof value === 'boolean'
       ? Buffer.from(value.toString()).toJSON()
       : Buffer.from(value).toJSON(),
-  null: () => null,
+  // null: () => null,
+  null: (value) => value !== null && value !== undefined ? value.toString() : null,
 };
 
 /**
@@ -114,7 +110,6 @@ const updateAloesSensors = (sensor, resource, value) => {
 
     const omaResource = omaResources.find((res) => res.value === resource);
 
-    // value = parseValue(value);
     const parsedValue = setResourceValue(omaResource.type, value);
     sensor.resource = resource;
     sensor.resources[resource] = parsedValue;

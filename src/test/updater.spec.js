@@ -1,7 +1,7 @@
 /* Copyright 2020 Edouard Maleix, read LICENSE */
 
 const {assert} = require('chai');
-const testGen = require('declarative-test-structure-generator');
+const {api, run} = require('declarative-test-structure-generator');
 const {omaObjects, omaResources} = require('oma-json');
 const {updateAloesSensors} = require('../lib/updater');
 
@@ -88,5 +88,5 @@ describe('aloesClientUpdate', () => {
       .filter((test) => test !== null);
   });
 
-  testGen.run(testSuites);
+  run(testSuites, {api: api.mocha});
 });
